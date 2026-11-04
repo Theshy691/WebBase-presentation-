@@ -6,7 +6,7 @@
   <title>An Integrated Case, Records, & Scheduling System | Belde's Notarial & Legal Services</title>
   <meta name="description" content="A Business Case Presentation and Interactive System Simulation presented to Saint Louis University by Group 2 for Living in the IT Era.">
 
-  <!-- Tailwind CSS CDN with configuration -->
+  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -14,20 +14,15 @@
       theme: {
         extend: {
           colors: {
-            navy: {
-              50: '#F0F5FA',
-              100: '#E0ECF6',
-              200: '#B8D4ED',
-              700: '#1D4ED8',
-              800: '#15325B',
-              850: '#0F294A',
-              900: '#0A192F',
-              950: '#06101E',
-            },
-            royal: {
-              500: '#3B82F6',
-              600: '#2563EB',
-              700: '#1D4ED8',
+            obsidian: '#09090B',
+            noir: '#111114',
+            surface: '#18181D',
+            gold: {
+              300: '#E6D2A8',
+              400: '#D6BC83',
+              500: '#C5A059',
+              600: '#A8833E',
+              700: '#7A5F28',
             }
           },
           fontFamily: {
@@ -43,56 +38,62 @@
   <!-- Bespoke Stylesheet -->
   <link rel="stylesheet" href="css/styles.css">
 </head>
-<body class="legal-atmosphere text-slate-800 flex flex-col min-h-screen">
+<body class="legal-atmosphere text-[#EDEDF0] flex flex-col min-h-screen">
 
   <!-- Top App Navigation & Mode Control Bar -->
-  <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 px-4 py-2.5 shadow-xs">
+  <header class="sticky top-0 z-50 bg-[#09090B]/95 backdrop-blur-md border-b border-[#222228] px-4 py-2.5">
     <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3">
       
       <!-- Brand & Academic Context -->
       <div class="flex items-center gap-3">
-        <div class="w-9 h-9 rounded-md bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-900 font-serif font-bold text-base shadow-xs">
-          ⚖️
+        <div class="w-8 h-8 rounded bg-[#111114] border border-[#C5A059] flex items-center justify-center text-[#C5A059]">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/>
+            <path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/>
+            <path d="M7 21h10"/>
+            <path d="M12 3v18"/>
+            <path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/>
+          </svg>
         </div>
         <div>
-          <h1 class="text-xs sm:text-sm font-serif font-bold text-navy-900 tracking-wide uppercase">
+          <h1 class="text-xs sm:text-sm font-serif font-bold text-[#EDEDF0] tracking-wide uppercase">
             Belde's Notarial & Legal Services
           </h1>
-          <p class="text-[10px] text-slate-500 font-mono">
+          <p class="text-[10px] text-[#A0A0AB] font-mono">
             Saint Louis University • Living in the IT Era • Group 2
           </p>
         </div>
       </div>
 
       <!-- Mode Switcher Segmented Control -->
-      <div class="flex items-center gap-1.5 p-1 bg-slate-100 border border-slate-200 rounded-lg">
+      <div class="flex items-center gap-1.5 p-1 bg-[#111114] border border-[#222228] rounded">
         <button id="modePresBtn" onclick="setMode('presentation')" class="btn-primary text-xs py-1.5 px-3">
           <svg class="w-3.5 h-3.5 inline mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"/></svg>
           Presentation Deck
         </button>
         <button id="modeSimBtn" onclick="setMode('simulation')" class="btn-secondary text-xs py-1.5 px-3">
           <svg class="w-3.5 h-3.5 inline mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-          Live System Simulation
+          System Simulator
         </button>
       </div>
 
       <!-- Presentation Utility Controls -->
       <div class="flex items-center gap-2">
         <!-- Presentation Timer -->
-        <div class="flex items-center gap-1.5 bg-slate-50 border border-slate-200 px-2.5 py-1 rounded font-mono text-xs text-slate-700">
-          <span class="w-2 h-2 rounded-full bg-emerald-600"></span>
-          <span id="presentationTimer">00:00</span>
-          <button id="timerToggleBtn" onclick="toggleTimer()" class="text-[10px] text-blue-700 hover:text-blue-900 ml-1 font-bold">Start</button>
-          <button onclick="resetTimer()" class="text-[10px] text-slate-400 hover:text-slate-600">Reset</button>
+        <div class="flex items-center gap-1.5 bg-[#111114] border border-[#222228] px-2.5 py-1 rounded font-mono text-xs text-[#A0A0AB]">
+          <span class="w-2 h-2 rounded-full bg-[#C5A059]"></span>
+          <span id="presentationTimer" class="text-[#EDEDF0]">00:00</span>
+          <button id="timerToggleBtn" onclick="toggleTimer()" class="text-[10px] text-[#C5A059] hover:text-[#D6BC83] ml-1 font-bold">Start</button>
+          <button onclick="resetTimer()" class="text-[10px] text-[#666672] hover:text-[#A0A0AB]">Reset</button>
         </div>
 
         <!-- Fullscreen Button -->
-        <button onclick="toggleFullScreen()" title="Toggle Fullscreen (F)" class="p-1.5 bg-white hover:bg-slate-50 text-slate-600 hover:text-navy-900 border border-slate-200 rounded shadow-xs">
+        <button onclick="toggleFullScreen()" title="Toggle Fullscreen (F)" class="p-1.5 bg-[#111114] hover:bg-[#18181D] text-[#A0A0AB] hover:text-[#EDEDF0] border border-[#222228] rounded">
           <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/></svg>
         </button>
 
         <!-- Speaker Notes Toggle -->
-        <button onclick="toggleSpeakerNotes()" title="Speaker Notes (N)" class="p-1.5 bg-white hover:bg-slate-50 text-slate-600 hover:text-navy-900 border border-slate-200 rounded shadow-xs">
+        <button onclick="toggleSpeakerNotes()" title="Speaker Notes (N)" class="p-1.5 bg-[#111114] hover:bg-[#18181D] text-[#A0A0AB] hover:text-[#EDEDF0] border border-[#222228] rounded">
           <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 100-6 3 3 0 000 6z"/></svg>
         </button>
       </div>
@@ -101,18 +102,18 @@
   </header>
 
   <!-- Progress Bar for Presentation Slides -->
-  <div class="w-full bg-slate-200 h-1">
-    <div id="slideProgressBar" class="h-full bg-blue-600 transition-all duration-300" style="width: 7.14%;"></div>
+  <div class="w-full bg-[#111114] h-1">
+    <div id="slideProgressBar" class="h-full bg-[#C5A059] transition-all duration-300" style="width: 7.14%;"></div>
   </div>
 
   <!-- Speaker Notes Drawer (Collapsible) -->
-  <div id="speakerNotesDrawer" class="hidden bg-white border-b border-blue-200 px-6 py-3.5 text-xs z-40 shadow-md">
+  <div id="speakerNotesDrawer" class="hidden bg-[#111114] border-b border-[#222228] px-6 py-3.5 text-xs z-40">
     <div class="max-w-7xl mx-auto flex items-start justify-between gap-4">
       <div class="flex items-start gap-2.5">
-        <span class="px-2 py-0.5 rounded bg-blue-100 text-blue-900 font-mono font-bold shrink-0">SPEAKER NOTES</span>
-        <p id="speakerNotesText" class="text-slate-700 leading-relaxed font-sans"></p>
+        <span class="px-2 py-0.5 rounded bg-[rgba(197,160,89,0.12)] text-[#C5A059] font-mono font-bold shrink-0">DEFENSE NOTES</span>
+        <p id="speakerNotesText" class="text-[#A0A0AB] leading-relaxed font-sans"></p>
       </div>
-      <button onclick="toggleSpeakerNotes()" class="text-slate-400 hover:text-slate-700 text-xs font-mono">Close ✕</button>
+      <button onclick="toggleSpeakerNotes()" class="text-[#666672] hover:text-[#EDEDF0] text-xs font-mono">Close ✕</button>
     </div>
   </div>
 
@@ -127,39 +128,39 @@
       <!-- SLIDE 1: Title & Academic Credentials -->
       <section class="presentation-slide flex-1 flex flex-col justify-center items-center text-center py-6">
         <div class="max-w-4xl mx-auto">
-          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-blue-900 text-xs font-mono uppercase tracking-wider mb-6 font-bold shadow-xs">
-            <span class="w-2 h-2 rounded-full bg-blue-600"></span>
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded bg-[#111114] border border-[#C5A059]/40 text-[#C5A059] text-xs font-mono uppercase tracking-wider mb-8">
+            <span class="w-1.5 h-1.5 rounded-full bg-[#C5A059]"></span>
             Saint Louis University • Baguio City
           </div>
 
-          <h1 class="text-2xl sm:text-4xl lg:text-5xl font-serif font-black text-navy-900 leading-tight mb-4">
-            AN INTEGRATED CASE, RECORDS, AND SCHEDULING SYSTEM
+          <h1 class="text-2xl sm:text-4xl lg:text-5xl font-serif font-bold text-[#EDEDF0] leading-tight mb-4 tracking-tight">
+            An Integrated Case, Records, and Scheduling System
           </h1>
-          <p class="text-lg sm:text-xl font-serif text-blue-800 italic mb-8 font-semibold">
-            for Belde's Notarial and Legal Services
+          <p class="text-base sm:text-lg font-serif text-[#C5A059] italic mb-10">
+            For Belde's Notarial and Legal Services (Umingan, Pangasinan)
           </p>
 
-          <div class="p-6 bg-white rounded-lg border border-slate-200 shadow-sm max-w-2xl mx-auto mb-8 text-left">
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs font-mono">
+          <div class="p-6 bg-[#111114] rounded border border-[#222228] max-w-2xl mx-auto mb-10 text-left">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 text-xs font-mono">
               <div>
-                <p class="text-slate-400 uppercase font-semibold">Department & School</p>
-                <p class="text-navy-900 font-bold mt-0.5">Dept. of Political & Social Sciences</p>
-                <p class="text-slate-600">School of Teacher Education and Liberal Arts (STELA)</p>
+                <p class="text-[#666672] uppercase font-semibold text-[10px]">Academic Division</p>
+                <p class="text-[#EDEDF0] font-semibold mt-0.5">Department of Political and Social Sciences</p>
+                <p class="text-[#A0A0AB]">School of Teacher Education and Liberal Arts</p>
               </div>
               <div>
-                <p class="text-slate-400 uppercase font-semibold">Course & Schedule</p>
-                <p class="text-navy-900 font-bold mt-0.5">Living in the IT Era</p>
-                <p class="text-slate-600">MWF, 5:30 - 6:30 PM (P503)</p>
+                <p class="text-[#666672] uppercase font-semibold text-[10px]">Course & Schedule</p>
+                <p class="text-[#EDEDF0] font-semibold mt-0.5">Living in the IT Era</p>
+                <p class="text-[#A0A0AB]">MWF, 5:30 - 6:30 PM (P503)</p>
               </div>
-              <div class="sm:col-span-2 pt-3 border-t border-slate-100">
-                <p class="text-slate-400 uppercase font-semibold">Course Facilitator</p>
-                <p class="text-blue-900 font-bold mt-0.5">Ma. Clarissa B. Mabitazan</p>
+              <div class="sm:col-span-2 pt-3 border-t border-[#222228]">
+                <p class="text-[#666672] uppercase font-semibold text-[10px]">Course Facilitator</p>
+                <p class="text-[#C5A059] font-bold mt-0.5">Ma. Clarissa B. Mabitazan</p>
               </div>
             </div>
           </div>
 
-          <div class="text-xs text-slate-500 font-mono">
-            Presented by <strong class="text-slate-800 font-bold">Group 2</strong>: Aaron Kyle Belde, Laarnie Bitaga, Rhianne Paglingayen, Jermy Paras, Reyanne Romero, Cassandra Santiago, Julianna To
+          <div class="text-xs text-[#A0A0AB] font-mono">
+            Presented by <strong class="text-[#EDEDF0]">Group 2</strong>: Aaron Kyle Belde, Laarnie Bitaga, Rhianne Paglingayen, Jermy Paras, Reyanne Romero, Cassandra Santiago, Julianna To
           </div>
         </div>
       </section>
@@ -167,43 +168,42 @@
       <!-- SLIDE 2: Executive Summary & Project Scope -->
       <section class="presentation-slide hidden flex-1 flex flex-col justify-center py-6">
         <div class="max-w-5xl mx-auto w-full">
-          <div class="flex items-center justify-between border-b border-slate-200 pb-3 mb-6">
-            <div>
-              <span class="text-xs font-mono text-blue-700 font-bold uppercase">Section I • Executive Summary</span>
-              <h2 class="text-2xl sm:text-3xl font-serif font-bold text-navy-900">Modernizing the Solo Legal Practice</h2>
-            </div>
-            <span class="legal-badge badge-navy font-mono">UMINGAN, PANGASINAN</span>
+          <div class="flex items-baseline justify-between border-b border-[#222228] pb-4 mb-6">
+            <h2 class="text-2xl sm:text-3xl font-serif font-bold text-[#EDEDF0]">Executive Summary & Operational Context</h2>
+            <span class="legal-badge badge-gold font-mono">FOUNDED JULY 2004</span>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
             <div class="legal-card p-5">
-              <div class="w-10 h-10 rounded-md bg-blue-50 border border-blue-200 flex items-center justify-center text-blue-900 mb-3 font-mono font-bold">01</div>
-              <h3 class="font-serif font-bold text-base text-slate-900 mb-2">The Solo-Practitioner Firm</h3>
-              <p class="text-xs text-slate-600 leading-relaxed">
-                Founded in July 2004 by Atty. Allan P. Belde, the firm provides community legal assistance across litigation, property, family law, and notarization with strict fidelity and zero backlog toleration.
+              <span class="text-xs font-mono text-[#C5A059] font-bold">01 / The Solo Practice</span>
+              <h3 class="font-serif font-bold text-base text-[#EDEDF0] mt-1.5 mb-2">Community Legal Heritage</h3>
+              <p class="text-xs text-[#A0A0AB] leading-relaxed">
+                Founded by Atty. Allan P. Belde in Poblacion West, Umingan, Pangasinan. Delivering representation with fidelity, zero backlog tolerance, and full ethical adherence.
               </p>
             </div>
 
             <div class="legal-card p-5">
-              <div class="w-10 h-10 rounded-md bg-amber-50 border border-amber-200 flex items-center justify-center text-amber-800 mb-3 font-mono font-bold">02</div>
-              <h3 class="font-serif font-bold text-base text-slate-900 mb-2">The Operational Bottlenecks</h3>
-              <p class="text-xs text-slate-600 leading-relaxed">
-                Physical steel filing cabinets, fragmented communication across Messenger and emails, and manual scheduling create administrative overhead that slows down case tracking.
+              <span class="text-xs font-mono text-[#C5A059] font-bold">02 / The Bottleneck</span>
+              <h3 class="font-serif font-bold text-base text-[#EDEDF0] mt-1.5 mb-2">Manual Records Latency</h3>
+              <p class="text-xs text-[#A0A0AB] leading-relaxed">
+                Physical folders in steel filing cabinets and fragmented communication across Messenger and email create operational friction as client caseload expands.
               </p>
             </div>
 
             <div class="legal-card p-5">
-              <div class="w-10 h-10 rounded-md bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-800 mb-3 font-mono font-bold">03</div>
-              <h3 class="font-serif font-bold text-base text-slate-900 mb-2">The Digital Solution</h3>
-              <p class="text-xs text-slate-600 leading-relaxed">
-                A unified, secure online portal and administrative database integrating 24/7 case monitoring, centralized calendaring, e-receipts, and an out-of-band OTP financial callback verification.
+              <span class="text-xs font-mono text-[#C5A059] font-bold">03 / The System</span>
+              <h3 class="font-serif font-bold text-base text-[#EDEDF0] mt-1.5 mb-2">Integrated Platform</h3>
+              <p class="text-xs text-[#A0A0AB] leading-relaxed">
+                A secure digital portal enabling 24/7 case tracking, appointment scheduling, 5-second e-receipt generation, and out-of-band OTP financial callback verification.
               </p>
             </div>
           </div>
 
-          <div class="p-4 bg-blue-50/70 rounded-lg border border-blue-200 text-xs text-slate-700 flex items-center gap-3">
-            <svg class="w-5 h-5 text-blue-700 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-            <span><strong>Scope Boundary:</strong> The system is limited to administrative coordination, case tracking, and records storage. It does not replace legal judgment or Atty. Belde's exclusive responsibility for case filings and court appearances.</span>
+          <div class="p-4 bg-[#111114] rounded border border-[#222228] text-xs text-[#A0A0AB] flex items-center gap-3">
+            <div class="w-5 h-5 text-[#C5A059] shrink-0">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+            </div>
+            <span><strong class="text-[#EDEDF0]">Scope Demarcation:</strong> The system provides administrative coordination, case tracking, and records storage. It does not replace legal judgment or Atty. Belde's exclusive responsibility for court pleadings and appearances.</span>
           </div>
         </div>
       </section>
@@ -211,52 +211,49 @@
       <!-- SLIDE 3: Firm Profile: Belde's Legal Services -->
       <section class="presentation-slide hidden flex-1 flex flex-col justify-center py-6">
         <div class="max-w-5xl mx-auto w-full">
-          <div class="flex items-center justify-between border-b border-slate-200 pb-3 mb-6">
-            <div>
-              <span class="text-xs font-mono text-blue-700 font-bold uppercase">Section I • Firm Profile</span>
-              <h2 class="text-2xl sm:text-3xl font-serif font-bold text-navy-900">Belde's Notarial and Legal Services</h2>
-            </div>
-            <span class="legal-badge badge-emerald font-mono">ESTABLISHED JULY 2004</span>
+          <div class="flex items-baseline justify-between border-b border-[#222228] pb-4 mb-6">
+            <h2 class="text-2xl sm:text-3xl font-serif font-bold text-[#EDEDF0]">Belde's Notarial and Legal Services</h2>
+            <span class="legal-badge badge-slate font-mono">UMINGAN, PANGASINAN</span>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <div class="space-y-4">
               <div class="legal-card p-5 text-xs">
-                <h3 class="font-serif font-bold text-sm text-navy-900 mb-1">Office Location & Heritage</h3>
-                <p class="text-slate-600 leading-relaxed">
-                  Located along Cariño St., Poblacion West, Umingan, Pangasinan. Serving community clients and surrounding municipalities with dedication for over two decades.
+                <h3 class="font-serif font-bold text-sm text-[#C5A059] mb-1">Location & Heritage</h3>
+                <p class="text-[#A0A0AB] leading-relaxed">
+                  Located along Cariño St., Poblacion West, Umingan, Pangasinan. Serving local clients and surrounding regional courts across Tayug and eastern Pangasinan for over twenty years.
                 </p>
               </div>
 
               <div class="legal-card p-5 text-xs">
-                <h3 class="font-serif font-bold text-sm text-navy-900 mb-1">Founding Purpose & Mission</h3>
-                <p class="text-slate-700 leading-relaxed italic font-serif">
-                  "To render legal services to the community, uphold the rule of law, and represent the client with fidelity and zeal."
+                <h3 class="font-serif font-bold text-sm text-[#C5A059] mb-1">Mission & Vision</h3>
+                <p class="text-[#EDEDF0] leading-relaxed italic font-serif text-sm">
+                  "To uphold the rule of law and represent the client with fidelity and zeal."
                 </p>
-                <p class="text-slate-500 mt-2 font-mono">— Atty. Allan P. Belde, Founder & Solo Practitioner</p>
+                <p class="text-[#666672] mt-2 font-mono">— Atty. Allan P. Belde, Founder & Solo Practitioner</p>
               </div>
             </div>
 
             <div class="legal-card p-5">
-              <h3 class="text-xs font-mono uppercase text-slate-500 font-bold tracking-wider mb-3">Six Core Legal Practice Areas</h3>
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs font-mono">
-                <div class="p-2.5 rounded bg-slate-50 border border-slate-200 text-slate-800">
-                  <span class="text-blue-700 font-bold">01.</span> Litigation & Dispute (Civil, Criminal, Admin)
+              <h3 class="text-xs font-mono uppercase text-[#666672] font-semibold tracking-wider mb-3">Six Core Legal Practice Areas</h3>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs font-mono">
+                <div class="p-2.5 rounded bg-[#09090B] border border-[#222228] text-[#EDEDF0]">
+                  <span class="text-[#C5A059] font-bold">1.</span> Litigation & Dispute
                 </div>
-                <div class="p-2.5 rounded bg-slate-50 border border-slate-200 text-slate-800">
-                  <span class="text-blue-700 font-bold">02.</span> Family Law (Annulment, Adoption, Support)
+                <div class="p-2.5 rounded bg-[#09090B] border border-[#222228] text-[#EDEDF0]">
+                  <span class="text-[#C5A059] font-bold">2.</span> Family Law & Support
                 </div>
-                <div class="p-2.5 rounded bg-slate-50 border border-slate-200 text-slate-800">
-                  <span class="text-blue-700 font-bold">03.</span> Land & Property (Title, Real Estate, Estates)
+                <div class="p-2.5 rounded bg-[#09090B] border border-[#222228] text-[#EDEDF0]">
+                  <span class="text-[#C5A059] font-bold">3.</span> Land & Property
                 </div>
-                <div class="p-2.5 rounded bg-slate-50 border border-slate-200 text-slate-800">
-                  <span class="text-blue-700 font-bold">04.</span> Notarial Services & Documentation
+                <div class="p-2.5 rounded bg-[#09090B] border border-[#222228] text-[#EDEDF0]">
+                  <span class="text-[#C5A059] font-bold">4.</span> Notarial Documentation
                 </div>
-                <div class="p-2.5 rounded bg-slate-50 border border-slate-200 text-slate-800">
-                  <span class="text-blue-700 font-bold">05.</span> Estate Planning, Settlement & Probate
+                <div class="p-2.5 rounded bg-[#09090B] border border-[#222228] text-[#EDEDF0]">
+                  <span class="text-[#C5A059] font-bold">5.</span> Estate Settlement & Probate
                 </div>
-                <div class="p-2.5 rounded bg-slate-50 border border-slate-200 text-slate-800">
-                  <span class="text-blue-700 font-bold">06.</span> Pro Bono & Free Legal Aid Services
+                <div class="p-2.5 rounded bg-[#09090B] border border-[#222228] text-[#EDEDF0]">
+                  <span class="text-[#C5A059] font-bold">6.</span> Free Legal Aid (Pro Bono)
                 </div>
               </div>
             </div>
@@ -267,44 +264,41 @@
       <!-- SLIDE 4: Business Rules & Legal Ethics -->
       <section class="presentation-slide hidden flex-1 flex flex-col justify-center py-6">
         <div class="max-w-5xl mx-auto w-full">
-          <div class="flex items-center justify-between border-b border-slate-200 pb-3 mb-6">
-            <div>
-              <span class="text-xs font-mono text-blue-700 font-bold uppercase">Section I • Governance</span>
-              <h2 class="text-2xl sm:text-3xl font-serif font-bold text-navy-900">Business Rules & Ethical Framework</h2>
-            </div>
-            <span class="legal-badge badge-navy font-mono">FIDUCIARY CHARACTER</span>
+          <div class="flex items-baseline justify-between border-b border-[#222228] pb-4 mb-6">
+            <h2 class="text-2xl sm:text-3xl font-serif font-bold text-[#EDEDF0]">Business Rules & Fiduciary Obligations</h2>
+            <span class="legal-badge badge-gold font-mono">ETHICAL MANDATE</span>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <div class="legal-card p-5">
-              <h3 class="font-serif font-bold text-base text-navy-900 mb-2">Priority Calibrated to Reglementary Deadlines</h3>
-              <p class="text-xs text-slate-600 leading-relaxed mb-3">
-                Rather than an arbitrary first-come-first-served queue, case urgency is calibrated to court deadlines, prescriptive periods, and reglementary appeal periods.
+              <h3 class="font-serif font-bold text-base text-[#C5A059] mb-2">Priority Calibrated to Court Deadlines</h3>
+              <p class="text-xs text-[#A0A0AB] leading-relaxed mb-3">
+                Urgency is determined by statutory court deadlines, prescriptive periods, and reglementary appeal timelines rather than an arbitrary first-come queue.
               </p>
-              <div class="p-3 bg-blue-50/60 rounded border border-blue-200 text-xs font-mono text-blue-900 font-medium">
-                Rule: "Backlog is not an option as legal ethics mandates that a lawyer's duty should be performed within the timeframe provided by law."
+              <div class="p-3 bg-[#09090B] rounded border border-[#222228] text-xs font-mono text-[#EDEDF0]">
+                "Backlog is not an option as legal ethics mandates that a lawyer's duty must be performed within the timeframe provided by law."
               </div>
             </div>
 
             <div class="legal-card p-5">
-              <h3 class="font-serif font-bold text-base text-navy-900 mb-2">Perpetual Duty of Confidentiality</h3>
-              <p class="text-xs text-slate-600 leading-relaxed mb-3">
-                The lawyer-client relationship is of the highest fiduciary character. The obligation of absolute confidentiality persists indefinitely, even after termination of legal representation.
+              <h3 class="font-serif font-bold text-base text-[#C5A059] mb-2">Perpetual Duty of Confidentiality</h3>
+              <p class="text-xs text-[#A0A0AB] leading-relaxed mb-3">
+                The lawyer-client relationship is of the highest fiduciary character. The duty of absolute confidentiality continues perpetually, surviving the termination of representation.
               </p>
-              <div class="p-3 bg-slate-50 rounded border border-slate-200 text-xs font-mono text-slate-700">
-                Data Privacy: Compliance with Data Privacy Act of 2012 (RA 10173). Sensitive personal records are stored physically on-premise.
+              <div class="p-3 bg-[#09090B] rounded border border-[#222228] text-xs font-mono text-[#EDEDF0]">
+                Data Privacy: Compliance with Data Privacy Act of 2012 (RA 10173). Sensitive personal records remain physically on-premise.
               </div>
             </div>
           </div>
 
-          <div class="p-4 bg-white rounded-lg border border-slate-200 shadow-xs grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+          <div class="p-4 bg-[#111114] rounded border border-[#222228] grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
             <div>
-              <p class="font-bold text-navy-900">Daily End-of-Day Review</p>
-              <p class="text-slate-600 mt-0.5">All staff communications, calendar intakes, and client filings are reported to Atty. Belde before close of business each day.</p>
+              <p class="font-bold text-[#EDEDF0]">Daily End-of-Day Review</p>
+              <p class="text-[#A0A0AB] mt-0.5">All staff communications, calendar intakes, and client filings are reported to Atty. Belde before close of business each day.</p>
             </div>
             <div>
-              <p class="font-bold text-navy-900">Conflict-of-Interest Clearance</p>
-              <p class="text-slate-600 mt-0.5">Mandatory cross-examination of prospective vs existing client rosters prior to creating any digital record or retaining legal fees.</p>
+              <p class="font-bold text-[#EDEDF0]">Conflict-of-Interest Clearance</p>
+              <p class="text-[#A0A0AB] mt-0.5">Mandatory cross-examination of prospective vs existing client rosters prior to creating any digital record or retaining legal fees.</p>
             </div>
           </div>
         </div>
@@ -313,42 +307,39 @@
       <!-- SLIDE 5: Current Workflow & Pain Points -->
       <section class="presentation-slide hidden flex-1 flex flex-col justify-center py-6">
         <div class="max-w-5xl mx-auto w-full">
-          <div class="flex items-center justify-between border-b border-slate-200 pb-3 mb-6">
-            <div>
-              <span class="text-xs font-mono text-blue-700 font-bold uppercase">Section I • As-Is Analysis</span>
-              <h2 class="text-2xl sm:text-3xl font-serif font-bold text-navy-900">Current System & Identified Gaps</h2>
-            </div>
-            <span class="legal-badge badge-amber font-mono">CHALLENGES ENCOUNTERED</span>
+          <div class="flex items-baseline justify-between border-b border-[#222228] pb-4 mb-6">
+            <h2 class="text-2xl sm:text-3xl font-serif font-bold text-[#EDEDF0]">As-Is Workflow Analysis & Operational Gaps</h2>
+            <span class="legal-badge badge-amber font-mono">CURRENT FRICTION</span>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-6">
-            <div class="legal-card p-5 border-amber-200">
-              <span class="text-xs font-mono px-2 py-0.5 rounded bg-amber-50 text-amber-800 font-bold">Records Storage</span>
-              <h3 class="font-serif font-bold text-base text-slate-900 mt-2 mb-2">Steel Filing Cabinets</h3>
-              <p class="text-xs text-slate-600 leading-relaxed">
-                Client documents and case dossiers are stored physically on paper in steel cabinets. Retrieval requires manual searching, risking latency and wear of fragile court instruments.
+            <div class="legal-card p-5">
+              <span class="text-xs font-mono text-[#FBBF24] font-bold">Paper Storage</span>
+              <h3 class="font-serif font-bold text-base text-[#EDEDF0] mt-1.5 mb-2">Steel Filing Cabinets</h3>
+              <p class="text-xs text-[#A0A0AB] leading-relaxed">
+                Client records are maintained physically on paper. Document location requires manual searches, introducing latency and wear to sensitive court instruments.
               </p>
             </div>
 
-            <div class="legal-card p-5 border-amber-200">
-              <span class="text-xs font-mono px-2 py-0.5 rounded bg-amber-50 text-amber-800 font-bold">Client Updates</span>
-              <h3 class="font-serif font-bold text-base text-slate-900 mt-2 mb-2">Fragmented Channels</h3>
-              <p class="text-xs text-slate-600 leading-relaxed">
-                Case updates rely on disparate email threads and personal Messenger chats. There is no unified, chronological audit trail for clients to check case milestones independently.
+            <div class="legal-card p-5">
+              <span class="text-xs font-mono text-[#FBBF24] font-bold">Client Updates</span>
+              <h3 class="font-serif font-bold text-base text-[#EDEDF0] mt-1.5 mb-2">Disparate Channels</h3>
+              <p class="text-xs text-[#A0A0AB] leading-relaxed">
+                Status notifications rely on fragmented email threads and personal Messenger chats without a unified chronological audit trail for clients.
               </p>
             </div>
 
-            <div class="legal-card p-5 border-amber-200">
-              <span class="text-xs font-mono px-2 py-0.5 rounded bg-amber-50 text-amber-800 font-bold">Technology Gap</span>
-              <h3 class="font-serif font-bold text-base text-slate-900 mt-2 mb-2">Rapid Technological Shift</h3>
-              <p class="text-xs text-slate-600 leading-relaxed">
-                As articulated by Atty. Belde during interviews, the office maintains spotless ethical standing (zero complaints in 20+ years) but seeks modern tools to strengthen operational efficiency.
+            <div class="legal-card p-5">
+              <span class="text-xs font-mono text-[#FBBF24] font-bold">Technology Gap</span>
+              <h3 class="font-serif font-bold text-base text-[#EDEDF0] mt-1.5 mb-2">Rapid Technological Shift</h3>
+              <p class="text-xs text-[#A0A0AB] leading-relaxed">
+                Despite a spotless ethical record (zero complaints in 20+ years), adapting established manual traditions to fast-moving digital expectations requires an integrated tool.
               </p>
             </div>
           </div>
 
-          <div class="p-4 bg-slate-50 rounded border border-slate-200 text-xs text-slate-600 font-mono text-center">
-            Figure 1: Current System of Belde's Notarial and Legal Services (Source: Business Case Chapter I, Saint Louis University)
+          <div class="p-3 bg-[#111114] rounded border border-[#222228] text-xs text-[#666672] font-mono text-center">
+            Figure 1: Current System of Belde's Notarial and Legal Services (Business Case Chapter I, SLU)
           </div>
         </div>
       </section>
@@ -356,60 +347,57 @@
       <!-- SLIDE 6: The Proposed Solution: Integrated System -->
       <section class="presentation-slide hidden flex-1 flex flex-col justify-center py-6">
         <div class="max-w-5xl mx-auto w-full">
-          <div class="flex items-center justify-between border-b border-slate-200 pb-3 mb-6">
-            <div>
-              <span class="text-xs font-mono text-blue-700 font-bold uppercase">Section II • To-Be Architecture</span>
-              <h2 class="text-2xl sm:text-3xl font-serif font-bold text-navy-900">The Proposed Integrated Solution</h2>
-            </div>
-            <span class="legal-badge badge-emerald font-mono">PORTAL ARCHITECTURE</span>
+          <div class="flex items-baseline justify-between border-b border-[#222228] pb-4 mb-6">
+            <h2 class="text-2xl sm:text-3xl font-serif font-bold text-[#EDEDF0]">Proposed Integrated System Architecture</h2>
+            <span class="legal-badge badge-emerald font-mono">TARGET ARCHITECTURE</span>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <div class="legal-card p-6">
               <div class="flex items-center gap-2 mb-3">
-                <span class="w-3 h-3 rounded-full bg-blue-600"></span>
-                <h3 class="font-serif font-bold text-lg text-navy-900">Client Self-Service Portal</h3>
+                <span class="w-2.5 h-2.5 rounded-full bg-[#C5A059]"></span>
+                <h3 class="font-serif font-bold text-lg text-[#EDEDF0]">Client Self-Service Portal</h3>
               </div>
-              <ul class="space-y-2.5 text-xs text-slate-600">
+              <ul class="space-y-2.5 text-xs text-[#A0A0AB]">
                 <li class="flex items-start gap-2">
-                  <svg class="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                  <span><strong class="text-slate-900">24/7 Case Tracking:</strong> Plain-language progress milestones and upcoming hearing calendars.</span>
+                  <span class="text-[#C5A059] font-bold">✓</span>
+                  <span><strong class="text-[#EDEDF0]">24/7 Case Tracking:</strong> Plain-language progress milestones and upcoming hearing calendars.</span>
                 </li>
                 <li class="flex items-start gap-2">
-                  <svg class="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                  <span><strong class="text-slate-900">Online Appointment Booking:</strong> Real-time available consultation slots with 24h automated SMS reminders.</span>
+                  <span class="text-[#C5A059] font-bold">✓</span>
+                  <span><strong class="text-[#EDEDF0]">Online Appointment Booking:</strong> Real-time available consultation slots with 24h advance SMS reminders.</span>
                 </li>
                 <li class="flex items-start gap-2">
-                  <svg class="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                  <span><strong class="text-slate-900">OTP Financial Inquiry:</strong> Secure balance inquiry protected by One-Time Password and legal secretary phone callback.</span>
+                  <span class="text-[#C5A059] font-bold">✓</span>
+                  <span><strong class="text-[#EDEDF0]">OTP Financial Inquiry:</strong> Secure balance inquiry protected by One-Time Password and legal secretary phone callback.</span>
                 </li>
               </ul>
             </div>
 
             <div class="legal-card p-6">
               <div class="flex items-center gap-2 mb-3">
-                <span class="w-3 h-3 rounded-full bg-navy-850"></span>
-                <h3 class="font-serif font-bold text-lg text-navy-900">Law Office Administrative Console</h3>
+                <span class="w-2.5 h-2.5 rounded-full bg-[#EDEDF0]"></span>
+                <h3 class="font-serif font-bold text-lg text-[#EDEDF0]">Law Office Administrative Console</h3>
               </div>
-              <ul class="space-y-2.5 text-xs text-slate-600">
+              <ul class="space-y-2.5 text-xs text-[#A0A0AB]">
                 <li class="flex items-start gap-2">
-                  <svg class="w-4 h-4 text-blue-700 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                  <span><strong class="text-slate-900">Automated Conflict-of-Interest Verification:</strong> Pre-intake roster checks before file generation.</span>
+                  <span class="text-[#C5A059] font-bold">✓</span>
+                  <span><strong class="text-[#EDEDF0]">Automated Conflict-of-Interest Verification:</strong> Pre-intake roster checks before digital file generation.</span>
                 </li>
                 <li class="flex items-start gap-2">
-                  <svg class="w-4 h-4 text-blue-700 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                  <span><strong class="text-slate-900">Centralized Digital Records Database:</strong> Instant search, rapid retrieval, and reduced paper overhead.</span>
+                  <span class="text-[#C5A059] font-bold">✓</span>
+                  <span><strong class="text-[#EDEDF0]">Centralized Records Management:</strong> Instant query indexing, retrieval, and reduced paper overhead.</span>
                 </li>
                 <li class="flex items-start gap-2">
-                  <svg class="w-4 h-4 text-blue-700 shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                  <span><strong class="text-slate-900">Daily End-of-Day Activity Log:</strong> Automated summary generator for Atty. Belde's executive review.</span>
+                  <span class="text-[#C5A059] font-bold">✓</span>
+                  <span><strong class="text-[#EDEDF0]">Daily End-of-Day Activity Log:</strong> Consolidated reporting for Atty. Belde's executive review.</span>
                 </li>
               </ul>
             </div>
           </div>
 
-          <div class="p-3 bg-slate-50 rounded border border-slate-200 text-xs font-mono text-slate-500 text-center">
-            Figure 2: Final Integrated Model of Belde's Notarial and Legal Services (Chapter II)
+          <div class="p-3 bg-[#111114] rounded border border-[#222228] text-xs font-mono text-[#666672] text-center">
+            Figure 2: Final Model with the Integration of the Belde Legal Portal (Chapter II)
           </div>
         </div>
       </section>
@@ -417,34 +405,31 @@
       <!-- SLIDE 7: Audience & Two-Tier User Personas -->
       <section class="presentation-slide hidden flex-1 flex flex-col justify-center py-6">
         <div class="max-w-5xl mx-auto w-full">
-          <div class="flex items-center justify-between border-b border-slate-200 pb-3 mb-6">
-            <div>
-              <span class="text-xs font-mono text-blue-700 font-bold uppercase">Section II • Stakeholders</span>
-              <h2 class="text-2xl sm:text-3xl font-serif font-bold text-navy-900">Audience & Role-Based Access</h2>
-            </div>
-            <span class="legal-badge badge-navy font-mono">TWO-TIER ARCHITECTURE</span>
+          <div class="flex items-baseline justify-between border-b border-[#222228] pb-4 mb-6">
+            <h2 class="text-2xl sm:text-3xl font-serif font-bold text-[#EDEDF0]">Stakeholder Matrix & Access Controls</h2>
+            <span class="legal-badge badge-slate font-mono">RBAC MODEL</span>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="p-6 bg-white rounded-lg border border-blue-200 shadow-sm">
+            <div class="legal-card p-6">
               <div class="flex items-center justify-between mb-3">
-                <h3 class="font-serif font-bold text-base text-navy-900">Primary Audience: Internal Personnel</h3>
-                <span class="text-xs font-mono px-2 py-0.5 rounded bg-blue-50 text-blue-900 font-bold border border-blue-200">ADMIN / OPERATIONAL</span>
+                <h3 class="font-serif font-bold text-base text-[#C5A059]">Primary Audience: Internal Personnel</h3>
+                <span class="text-xs font-mono px-2 py-0.5 rounded bg-[#18181D] text-[#C5A059] border border-[#C5A059]/30">ADMINISTRATIVE</span>
               </div>
-              <div class="space-y-3 text-xs text-slate-600">
-                <p><strong class="text-slate-900">Atty. Allan P. Belde (Owner & Solo Practitioner):</strong> Directs all legal strategy, reviews legal research, approves drafted pleadings, conducts court appearances, and performs daily compliance reviews.</p>
-                <p><strong class="text-slate-900">Legal Secretaries:</strong> Intake prospective clients, execute conflict-of-interest checks, encode records, manage the centralized appointment calendar, and dispatch case updates.</p>
+              <div class="space-y-3 text-xs text-[#A0A0AB]">
+                <p><strong class="text-[#EDEDF0]">Atty. Allan P. Belde (Owner & Solo Practitioner):</strong> Directs legal strategy, reviews research, approves pleadings, conducts court appearances, and performs daily compliance reviews.</p>
+                <p><strong class="text-[#EDEDF0]">Legal Secretaries:</strong> Intake prospective clients, execute conflict-of-interest checks, encode records, manage centralized calendaring, and dispatch case updates.</p>
               </div>
             </div>
 
-            <div class="p-6 bg-white rounded-lg border border-slate-200 shadow-sm">
+            <div class="legal-card p-6">
               <div class="flex items-center justify-between mb-3">
-                <h3 class="font-serif font-bold text-base text-slate-900">Secondary Audience: The Clients</h3>
-                <span class="text-xs font-mono px-2 py-0.5 rounded bg-slate-100 text-slate-700 font-bold border border-slate-200">SELF-SERVICE</span>
+                <h3 class="font-serif font-bold text-base text-[#EDEDF0]">Secondary Audience: The Clients</h3>
+                <span class="text-xs font-mono px-2 py-0.5 rounded bg-[#18181D] text-[#A0A0AB] border border-[#222228]">SELF-SERVICE</span>
               </div>
-              <div class="space-y-3 text-xs text-slate-600">
-                <p><strong class="text-slate-900">Prospective & Active Clients:</strong> Individuals seeking legal assistance in Pangasinan and surrounding regions. Need clear, real-time visibility into their case stages without requiring physical office visits for simple updates.</p>
-                <p><strong class="text-slate-900">Restricted Privileges:</strong> Clients can view only their own records, request appointments, and access financial receipts via verified credentials.</p>
+              <div class="space-y-3 text-xs text-[#A0A0AB]">
+                <p><strong class="text-[#EDEDF0]">Prospective & Active Clients:</strong> Community members seeking legal counsel. Need real-time visibility into case progress without needing in-person office visits for simple milestones.</p>
+                <p><strong class="text-[#EDEDF0]">Access Boundary:</strong> Clients are strictly restricted to their own individual records, appointment scheduling, and verified financial receipts.</p>
               </div>
             </div>
           </div>
@@ -454,42 +439,39 @@
       <!-- SLIDE 8: Security & Data Privacy Shield (RA 10173) -->
       <section class="presentation-slide hidden flex-1 flex flex-col justify-center py-6">
         <div class="max-w-5xl mx-auto w-full">
-          <div class="flex items-center justify-between border-b border-slate-200 pb-3 mb-6">
-            <div>
-              <span class="text-xs font-mono text-blue-700 font-bold uppercase">Section II • Compliance</span>
-              <h2 class="text-2xl sm:text-3xl font-serif font-bold text-navy-900">Data Privacy Shield (RA 10173)</h2>
-            </div>
-            <span class="legal-badge badge-emerald font-mono">ETHICAL SAFEGUARD</span>
+          <div class="flex items-baseline justify-between border-b border-[#222228] pb-4 mb-6">
+            <h2 class="text-2xl sm:text-3xl font-serif font-bold text-[#EDEDF0]">Data Privacy Shield & RA 10173 Compliance</h2>
+            <span class="legal-badge badge-emerald font-mono">SECURITY CONTROLS</span>
           </div>
 
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-6">
             <div class="legal-card p-5">
-              <div class="text-blue-700 font-mono text-xs font-bold mb-2">PRINCIPLE 1</div>
-              <h3 class="font-serif font-bold text-base text-slate-900 mb-2">Minimalist Cloud Footprint</h3>
-              <p class="text-xs text-slate-600 leading-relaxed">
-                The online portal stores strictly necessary contact parameters: Name, Email, Contact Number, and Contact Person.
+              <div class="text-[#C5A059] font-mono text-xs font-bold mb-2">PRINCIPLE 01</div>
+              <h3 class="font-serif font-bold text-base text-[#EDEDF0] mb-2">Minimalist Cloud Storage</h3>
+              <p class="text-xs text-[#A0A0AB] leading-relaxed">
+                The portal database stores strictly minimal contact credentials: Name, Email Address, Contact Number, and Designated Contact Person.
               </p>
             </div>
 
             <div class="legal-card p-5">
-              <div class="text-blue-700 font-mono text-xs font-bold mb-2">PRINCIPLE 2</div>
-              <h3 class="font-serif font-bold text-base text-slate-900 mb-2">On-Premise Vault</h3>
-              <p class="text-xs text-slate-600 leading-relaxed">
-                Sensitive evidence, birth certificates, and financial affidavits are collected directly at the physical law office, eliminating external breach exposure.
+              <div class="text-[#C5A059] font-mono text-xs font-bold mb-2">PRINCIPLE 02</div>
+              <h3 class="font-serif font-bold text-base text-[#EDEDF0] mb-2">Physical On-Premise Vault</h3>
+              <p class="text-xs text-[#A0A0AB] leading-relaxed">
+                Sensitive evidence, birth certificates, and financial affidavits are collected directly at the physical law office, eliminating external cyber breach risks.
               </p>
             </div>
 
             <div class="legal-card p-5">
-              <div class="text-blue-700 font-mono text-xs font-bold mb-2">PRINCIPLE 3</div>
-              <h3 class="font-serif font-bold text-base text-slate-900 mb-2">OTP Phone Callback</h3>
-              <p class="text-xs text-slate-600 leading-relaxed">
-                Inquiries regarding remaining balances trigger an automated OTP. Once validated, an authorized legal secretary executes an out-of-band telephone call to disclose figures.
+              <div class="text-[#C5A059] font-mono text-xs font-bold mb-2">PRINCIPLE 03</div>
+              <h3 class="font-serif font-bold text-base text-[#EDEDF0] mb-2">OTP Phone Callback</h3>
+              <p class="text-xs text-[#A0A0AB] leading-relaxed">
+                Financial balance inquiries trigger an automated OTP. Once validated, an authorized legal secretary executes an out-of-band telephone call to disclose figures.
               </p>
             </div>
           </div>
 
-          <div class="p-4 bg-white rounded-lg border border-slate-200 text-xs text-slate-700 shadow-xs">
-            <strong class="text-navy-900">Security Controls Implemented:</strong> Password hashing, role-based access control (RBAC), automatic inactivity session termination, and daily automated encrypted database backups.
+          <div class="p-4 bg-[#111114] rounded border border-[#222228] text-xs text-[#A0A0AB]">
+            <strong class="text-[#EDEDF0]">Security Controls Implemented:</strong> User authentication, password hashing, role-based access control (RBAC), automatic inactivity session termination, and daily automated encrypted database backups.
           </div>
         </div>
       </section>
@@ -497,46 +479,43 @@
       <!-- SLIDE 9: 8 Core Functional Modules -->
       <section class="presentation-slide hidden flex-1 flex flex-col justify-center py-6">
         <div class="max-w-5xl mx-auto w-full">
-          <div class="flex items-center justify-between border-b border-slate-200 pb-3 mb-4">
-            <div>
-              <span class="text-xs font-mono text-blue-700 font-bold uppercase">Section III • Functional Specifications</span>
-              <h2 class="text-2xl sm:text-3xl font-serif font-bold text-navy-900">Eight Core Functional Modules</h2>
-            </div>
-            <span class="legal-badge badge-navy font-mono">SPECIFICATION SUITE</span>
+          <div class="flex items-baseline justify-between border-b border-[#222228] pb-4 mb-4">
+            <h2 class="text-2xl sm:text-3xl font-serif font-bold text-[#EDEDF0]">Eight Core Functional Specifications</h2>
+            <span class="legal-badge badge-gold font-mono">SPECIFICATION SUITE</span>
           </div>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 text-xs mb-4">
-            <div class="p-3.5 bg-white rounded-lg border border-slate-200 shadow-xs">
-              <span class="font-mono text-blue-800 font-bold">01. Account Registration</span>
-              <p class="text-slate-600 mt-1">Self-registration with QR code manual or secretarial on-site assistance.</p>
+            <div class="p-3.5 bg-[#111114] rounded border border-[#222228]">
+              <span class="font-mono text-[#C5A059] font-bold">01. Account Registration</span>
+              <p class="text-[#A0A0AB] mt-1">Self-registration with QR code manual or secretarial on-site assisted onboarding.</p>
             </div>
-            <div class="p-3.5 bg-white rounded-lg border border-slate-200 shadow-xs">
-              <span class="font-mono text-blue-800 font-bold">02. Record Management</span>
-              <p class="text-slate-600 mt-1">Post-conflict check record creation in centralized digital storage.</p>
+            <div class="p-3.5 bg-[#111114] rounded border border-[#222228]">
+              <span class="font-mono text-[#C5A059] font-bold">02. Record Management</span>
+              <p class="text-[#A0A0AB] mt-1">Post-conflict check record creation stored in centralized digital database.</p>
             </div>
-            <div class="p-3.5 bg-white rounded-lg border border-slate-200 shadow-xs">
-              <span class="font-mono text-blue-800 font-bold">03. Case Monitoring</span>
-              <p class="text-slate-600 mt-1">Real-time status updates with plain-language legal term decoders.</p>
+            <div class="p-3.5 bg-[#111114] rounded border border-[#222228]">
+              <span class="font-mono text-[#C5A059] font-bold">03. Case Monitoring</span>
+              <p class="text-[#A0A0AB] mt-1">Real-time status updates accompanied by plain-language legal term decoders.</p>
             </div>
-            <div class="p-3.5 bg-white rounded-lg border border-slate-200 shadow-xs">
-              <span class="font-mono text-blue-800 font-bold">04. Scheduling System</span>
-              <p class="text-slate-600 mt-1">Centralized calendar booking with 24-hour advance SMS notifications.</p>
+            <div class="p-3.5 bg-[#111114] rounded border border-[#222228]">
+              <span class="font-mono text-[#C5A059] font-bold">04. Scheduling System</span>
+              <p class="text-[#A0A0AB] mt-1">Centralized calendar booking with 24-hour advance SMS notifications.</p>
             </div>
-            <div class="p-3.5 bg-white rounded-lg border border-slate-200 shadow-xs">
-              <span class="font-mono text-blue-800 font-bold">05. Billing & E-Receipts</span>
-              <p class="text-slate-600 mt-1">Breakdown requests, 5-second PDF receipt generation, and OTP callback.</p>
+            <div class="p-3.5 bg-[#111114] rounded border border-[#222228]">
+              <span class="font-mono text-[#C5A059] font-bold">05. Billing & E-Receipts</span>
+              <p class="text-[#A0A0AB] mt-1">Breakdown requests, 5-second PDF receipt generation, and OTP callback.</p>
             </div>
-            <div class="p-3.5 bg-white rounded-lg border border-slate-200 shadow-xs">
-              <span class="font-mono text-blue-800 font-bold">06. Legal Directory</span>
-              <p class="text-slate-600 mt-1">Comprehensive service guides and About Us page loading in &lt;2 seconds.</p>
+            <div class="p-3.5 bg-[#111114] rounded border border-[#222228]">
+              <span class="font-mono text-[#C5A059] font-bold">06. Legal Directory</span>
+              <p class="text-[#A0A0AB] mt-1">Comprehensive service guides and About Us page loading in &lt;2 seconds.</p>
             </div>
-            <div class="p-3.5 bg-white rounded-lg border border-slate-200 shadow-xs">
-              <span class="font-mono text-blue-800 font-bold">07. Client Communication</span>
-              <p class="text-slate-600 mt-1">Encrypted messaging channel maintaining confidential lawyer-client records.</p>
+            <div class="p-3.5 bg-[#111114] rounded border border-[#222228]">
+              <span class="font-mono text-[#C5A059] font-bold">07. Client Communication</span>
+              <p class="text-[#A0A0AB] mt-1">Direct communication channel maintaining confidential lawyer-client records.</p>
             </div>
-            <div class="p-3.5 bg-white rounded-lg border border-slate-200 shadow-xs">
-              <span class="font-mono text-blue-800 font-bold">08. Drafting Support</span>
-              <p class="text-slate-600 mt-1">Administrative organization for facts, court deadlines, and case briefs.</p>
+            <div class="p-3.5 bg-[#111114] rounded border border-[#222228]">
+              <span class="font-mono text-[#C5A059] font-bold">08. Drafting Support</span>
+              <p class="text-[#A0A0AB] mt-1">Administrative organization for facts, court deadlines, and case briefs.</p>
             </div>
           </div>
         </div>
@@ -545,11 +524,8 @@
       <!-- SLIDE 10: Interactive 3-Lane BPMN Architecture -->
       <section class="presentation-slide hidden flex-1 flex flex-col justify-center py-6">
         <div class="max-w-5xl mx-auto w-full">
-          <div class="flex items-center justify-between border-b border-slate-200 pb-3 mb-4">
-            <div>
-              <span class="text-xs font-mono text-blue-700 font-bold uppercase">Section III • BPMN Modeling</span>
-              <h2 class="text-2xl sm:text-3xl font-serif font-bold text-navy-900">BPMN 3-Lane Workflow Model</h2>
-            </div>
+          <div class="flex items-center justify-between border-b border-[#222228] pb-4 mb-4">
+            <h2 class="text-2xl sm:text-3xl font-serif font-bold text-[#EDEDF0]">BPMN 3-Lane Process Flow</h2>
             <div class="flex items-center gap-2">
               <button onclick="startBpmnAnimation()" class="btn-primary text-xs py-1 px-2.5">Simulate Flow ▶</button>
               <button onclick="pauseBpmnAnimation()" class="btn-secondary text-xs py-1 px-2.5">Pause ⏸</button>
@@ -558,9 +534,9 @@
 
           <div class="space-y-3 text-xs">
             <!-- Lane 1: Client -->
-            <div class="p-3.5 bg-white rounded-lg border border-slate-200 shadow-xs">
-              <div class="flex items-center gap-2 font-mono text-blue-900 font-bold uppercase mb-2">
-                <span class="w-2.5 h-2.5 rounded-full bg-blue-600"></span> Lane 1: Client
+            <div class="p-3.5 bg-[#111114] rounded border border-[#222228]">
+              <div class="flex items-center gap-2 font-mono text-[#EDEDF0] font-bold uppercase mb-2">
+                <span class="w-2 h-2 rounded-full bg-[#EDEDF0]"></span> Lane 1: Client
               </div>
               <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center">
                 <div class="bpmn-node bpmn-step-node">1. Request Legal Assistance / Book Slot</div>
@@ -571,9 +547,9 @@
             </div>
 
             <!-- Lane 2: Legal Secretary -->
-            <div class="p-3.5 bg-white rounded-lg border border-slate-200 shadow-xs">
-              <div class="flex items-center gap-2 font-mono text-amber-900 font-bold uppercase mb-2">
-                <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span> Lane 2: Legal Secretary
+            <div class="p-3.5 bg-[#111114] rounded border border-[#222228]">
+              <div class="flex items-center gap-2 font-mono text-[#D6BC83] font-bold uppercase mb-2">
+                <span class="w-2 h-2 rounded-full bg-[#D6BC83]"></span> Lane 2: Legal Secretary
               </div>
               <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center">
                 <div class="bpmn-node bpmn-step-node">3. Conflict-of-Interest Verification</div>
@@ -584,9 +560,9 @@
             </div>
 
             <!-- Lane 3: Atty. Allan Belde -->
-            <div class="p-3.5 bg-white rounded-lg border border-slate-200 shadow-xs">
-              <div class="flex items-center gap-2 font-mono text-emerald-900 font-bold uppercase mb-2">
-                <span class="w-2.5 h-2.5 rounded-full bg-emerald-600"></span> Lane 3: Atty. Allan P. Belde (Owner/Lawyer)
+            <div class="p-3.5 bg-[#111114] rounded border border-[#222228]">
+              <div class="flex items-center gap-2 font-mono text-[#C5A059] font-bold uppercase mb-2">
+                <span class="w-2 h-2 rounded-full bg-[#C5A059]"></span> Lane 3: Atty. Allan P. Belde (Owner / Lawyer)
               </div>
               <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center">
                 <div class="bpmn-node bpmn-step-node">— Ethical Approval Gate —</div>
@@ -602,39 +578,36 @@
       <!-- SLIDE 11: Feasibility Matrix Analysis -->
       <section class="presentation-slide hidden flex-1 flex flex-col justify-center py-6">
         <div class="max-w-5xl mx-auto w-full">
-          <div class="flex items-center justify-between border-b border-slate-200 pb-3 mb-6">
-            <div>
-              <span class="text-xs font-mono text-blue-700 font-bold uppercase">Section III • Project Feasibility</span>
-              <h2 class="text-2xl sm:text-3xl font-serif font-bold text-navy-900">Multi-Dimensional Feasibility</h2>
-            </div>
+          <div class="flex items-baseline justify-between border-b border-[#222228] pb-4 mb-6">
+            <h2 class="text-2xl sm:text-3xl font-serif font-bold text-[#EDEDF0]">Multi-Dimensional Feasibility Assessment</h2>
             <span class="legal-badge badge-emerald font-mono">VIABLE & SUSTAINABLE</span>
           </div>
 
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 text-xs">
             <div class="legal-card p-5">
-              <h3 class="font-serif font-bold text-sm text-navy-900 mb-2">Economic Feasibility</h3>
-              <p class="text-slate-600 leading-relaxed">
+              <h3 class="font-serif font-bold text-sm text-[#C5A059] mb-2">Economic Feasibility</h3>
+              <p class="text-[#A0A0AB] leading-relaxed">
                 Initial web setup and database hosting are heavily offset by long-term savings in physical paper, printer consumables, storage hardware, and eliminated administrative misplacement costs.
               </p>
             </div>
 
             <div class="legal-card p-5">
-              <h3 class="font-serif font-bold text-sm text-navy-900 mb-2">Technical Feasibility</h3>
-              <p class="text-slate-600 leading-relaxed">
-                Runs on standard web browsers with responsive mobile support down to 320px. Cloud database with 99% SLA uptime, instant search indexing, and automated OTP integration.
+              <h3 class="font-serif font-bold text-sm text-[#C5A059] mb-2">Technical Feasibility</h3>
+              <p class="text-[#A0A0AB] leading-relaxed">
+                Runs on standard web browsers with responsive mobile support down to 320px. Cloud database with 99.0% SLA uptime, instant query indexing, and automated OTP integration.
               </p>
             </div>
 
             <div class="legal-card p-5">
-              <h3 class="font-serif font-bold text-sm text-navy-900 mb-2">Operational Feasibility</h3>
-              <p class="text-slate-600 leading-relaxed">
+              <h3 class="font-serif font-bold text-sm text-[#C5A059] mb-2">Operational Feasibility</h3>
+              <p class="text-[#A0A0AB] leading-relaxed">
                 Directly relieves the solo practitioner bottleneck. Straightforward UI designed for easy adoption by legal secretaries, reducing repetitive client phone queries for case milestones.
               </p>
             </div>
 
             <div class="legal-card p-5">
-              <h3 class="font-serif font-bold text-sm text-navy-900 mb-2">Scheduling Feasibility</h3>
-              <p class="text-slate-600 leading-relaxed">
+              <h3 class="font-serif font-bold text-sm text-[#C5A059] mb-2">Scheduling Feasibility</h3>
+              <p class="text-[#A0A0AB] leading-relaxed">
                 Structured phased timeline: Requirements gathering (completed), Prototype modeling (completed), user verification, and staged rollout within the academic semester.
               </p>
             </div>
@@ -645,36 +618,33 @@
       <!-- SLIDE 12: Performance & Security SLA Verification -->
       <section class="presentation-slide hidden flex-1 flex flex-col justify-center py-6">
         <div class="max-w-5xl mx-auto w-full">
-          <div class="flex items-center justify-between border-b border-slate-200 pb-3 mb-6">
-            <div>
-              <span class="text-xs font-mono text-blue-700 font-bold uppercase">Section III • Non-Functional SLAs</span>
-              <h2 class="text-2xl sm:text-3xl font-serif font-bold text-navy-900">Performance & Security Benchmarks</h2>
-            </div>
-            <span class="legal-badge badge-navy font-mono">STANDARDS COMPLIANCE</span>
+          <div class="flex items-baseline justify-between border-b border-[#222228] pb-4 mb-6">
+            <h2 class="text-2xl sm:text-3xl font-serif font-bold text-[#EDEDF0]">Non-Functional Benchmarks & SLAs</h2>
+            <span class="legal-badge badge-gold font-mono">PERFORMANCE VERIFIED</span>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-            <div class="p-5 bg-white rounded-lg border border-slate-200 shadow-xs text-center">
-              <div class="text-3xl font-mono font-bold text-emerald-700 mb-1">99.0%</div>
-              <p class="text-xs font-serif font-bold text-navy-900">System Availability</p>
-              <p class="text-[11px] text-slate-500 mt-1">24/7 client access for case tracking and consultation scheduling.</p>
+            <div class="legal-card p-5 text-center">
+              <div class="text-3xl font-mono font-bold text-[#10B981] mb-1">99.0%</div>
+              <p class="text-xs font-serif font-bold text-[#EDEDF0]">System Availability</p>
+              <p class="text-[11px] text-[#A0A0AB] mt-1">24/7 client access for case tracking and consultation scheduling.</p>
             </div>
 
-            <div class="p-5 bg-white rounded-lg border border-slate-200 shadow-xs text-center">
-              <div class="text-3xl font-mono font-bold text-blue-700 mb-1">&lt; 2.0s</div>
-              <p class="text-xs font-serif font-bold text-navy-900">Page Latency Floor</p>
-              <p class="text-[11px] text-slate-500 mt-1">High-speed rendering even on low-bandwidth rural mobile connections.</p>
+            <div class="legal-card p-5 text-center">
+              <div class="text-3xl font-mono font-bold text-[#C5A059] mb-1">&lt; 2.0s</div>
+              <p class="text-xs font-serif font-bold text-[#EDEDF0]">Page Latency Floor</p>
+              <p class="text-[11px] text-[#A0A0AB] mt-1">High-speed rendering even on low-bandwidth rural mobile connections.</p>
             </div>
 
-            <div class="p-5 bg-white rounded-lg border border-slate-200 shadow-xs text-center">
-              <div class="text-3xl font-mono font-bold text-navy-850 mb-1">&lt; 5.0s</div>
-              <p class="text-xs font-serif font-bold text-navy-900">E-Receipt PDF Dispatch</p>
-              <p class="text-[11px] text-slate-500 mt-1">Instant certified receipt generation following payment validation.</p>
+            <div class="legal-card p-5 text-center">
+              <div class="text-3xl font-mono font-bold text-[#EDEDF0] mb-1">&lt; 5.0s</div>
+              <p class="text-xs font-serif font-bold text-[#EDEDF0]">E-Receipt PDF Dispatch</p>
+              <p class="text-[11px] text-[#A0A0AB] mt-1">Instant certified receipt generation following payment validation.</p>
             </div>
           </div>
 
-          <div class="p-4 bg-white rounded-lg border border-slate-200 text-xs text-slate-700 shadow-xs">
-            <strong class="text-navy-900">Security Controls:</strong> Role-Based Access Control (RBAC), SHA-256 session encryption, 15-minute idle session timeout, and mandatory out-of-band telephone call verification for sensitive financial ledger queries.
+          <div class="p-4 bg-[#111114] rounded border border-[#222228] text-xs text-[#A0A0AB]">
+            <strong class="text-[#EDEDF0]">Security Controls:</strong> Role-Based Access Control (RBAC), SHA-256 session encryption, 15-minute idle session timeout, and mandatory out-of-band telephone call verification for sensitive financial ledger queries.
           </div>
         </div>
       </section>
@@ -682,21 +652,21 @@
       <!-- SLIDE 13: Interactive Prototype Walkthrough -->
       <section class="presentation-slide hidden flex-1 flex flex-col justify-center py-6">
         <div class="max-w-5xl mx-auto w-full text-center">
-          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-blue-900 text-xs font-mono uppercase tracking-wider mb-4 font-bold shadow-xs">
-            <span class="w-2 h-2 rounded-full bg-emerald-600"></span>
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded bg-[#111114] border border-[#C5A059]/40 text-[#C5A059] text-xs font-mono uppercase tracking-wider mb-4">
+            <span class="w-1.5 h-1.5 rounded-full bg-[#10B981]"></span>
             Interactive Deliverable
           </div>
 
-          <h2 class="text-3xl sm:text-4xl font-serif font-bold text-navy-900 mb-4">
+          <h2 class="text-3xl sm:text-4xl font-serif font-bold text-[#EDEDF0] mb-4">
             Experience the Live System Simulation
           </h2>
-          <p class="text-sm text-slate-600 max-w-2xl mx-auto mb-8 leading-relaxed">
+          <p class="text-sm text-[#A0A0AB] max-w-2xl mx-auto mb-8 leading-relaxed">
             We have engineered a fully working interactive simulation of the portal within this web platform. Test the live case tracking engine, appointment scheduler, OTP-secured financial breakdown, and the legal secretary conflict checker.
           </p>
 
           <div class="flex flex-wrap items-center justify-center gap-4">
-            <button onclick="setMode('simulation')" class="btn-primary text-sm py-2.5 px-6 shadow-sm">
-              Launch Live Portal Simulator 🚀
+            <button onclick="setMode('simulation')" class="btn-primary text-sm py-2.5 px-6">
+              Launch Live Portal Simulator
             </button>
             <a href="https://app.weblium.com/editor/website/6ae05f7a2a8679433559ece9/6ae05f7c2a8679433559ed27" target="_blank" rel="noopener noreferrer" class="btn-secondary text-sm py-2.5 px-6">
               View Group Weblium Prototype ↗
@@ -709,62 +679,62 @@
       <section class="presentation-slide hidden flex-1 flex flex-col justify-center py-6">
         <div class="max-w-5xl mx-auto w-full">
           <div class="text-center mb-6">
-            <span class="text-xs font-mono text-blue-700 font-bold uppercase">Saint Louis University • Living in the IT Era</span>
-            <h2 class="text-2xl sm:text-3xl font-serif font-bold text-navy-900 mt-1">Group 2 Project Authors & Defense Panel</h2>
-            <p class="text-xs text-slate-500 font-mono mt-1">Facilitator: Ma. Clarissa B. Mabitazan</p>
+            <span class="text-xs font-mono text-[#C5A059] font-bold uppercase">Saint Louis University • Living in the IT Era</span>
+            <h2 class="text-2xl sm:text-3xl font-serif font-bold text-[#EDEDF0] mt-1">Group 2 Project Authors & Defense Panel</h2>
+            <p class="text-xs text-[#A0A0AB] font-mono mt-1">Facilitator: Ma. Clarissa B. Mabitazan</p>
           </div>
 
           <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6 text-center text-xs">
-            <div class="p-3.5 bg-white rounded-lg border border-slate-200 shadow-xs">
-              <p class="font-bold text-slate-900">Aaron Kyle D. Belde</p>
-              <p class="text-blue-700 text-[10px] font-mono mt-0.5 font-semibold">Researcher / Lead</p>
+            <div class="p-3.5 bg-[#111114] rounded border border-[#222228]">
+              <p class="font-bold text-[#EDEDF0]">Aaron Kyle D. Belde</p>
+              <p class="text-[#C5A059] text-[10px] font-mono mt-0.5 font-semibold">Researcher / Lead</p>
             </div>
-            <div class="p-3.5 bg-white rounded-lg border border-slate-200 shadow-xs">
-              <p class="font-bold text-slate-900">Laarnie Francine S. Bitaga</p>
-              <p class="text-blue-700 text-[10px] font-mono mt-0.5 font-semibold">Systems Analyst</p>
+            <div class="p-3.5 bg-[#111114] rounded border border-[#222228]">
+              <p class="font-bold text-[#EDEDF0]">Laarnie Francine S. Bitaga</p>
+              <p class="text-[#C5A059] text-[10px] font-mono mt-0.5 font-semibold">Systems Analyst</p>
             </div>
-            <div class="p-3.5 bg-white rounded-lg border border-slate-200 shadow-xs">
-              <p class="font-bold text-slate-900">Rhianne Czeska P. Paglingayen</p>
-              <p class="text-blue-700 text-[10px] font-mono mt-0.5 font-semibold">Business Process Lead</p>
+            <div class="p-3.5 bg-[#111114] rounded border border-[#222228]">
+              <p class="font-bold text-[#EDEDF0]">Rhianne Czeska P. Paglingayen</p>
+              <p class="text-[#C5A059] text-[10px] font-mono mt-0.5 font-semibold">Business Process Lead</p>
             </div>
-            <div class="p-3.5 bg-white rounded-lg border border-slate-200 shadow-xs">
-              <p class="font-bold text-slate-900">Jermy Anne B. Paras</p>
-              <p class="text-blue-700 text-[10px] font-mono mt-0.5 font-semibold">Requirements Analyst</p>
+            <div class="p-3.5 bg-[#111114] rounded border border-[#222228]">
+              <p class="font-bold text-[#EDEDF0]">Jermy Anne B. Paras</p>
+              <p class="text-[#C5A059] text-[10px] font-mono mt-0.5 font-semibold">Requirements Analyst</p>
             </div>
-            <div class="p-3.5 bg-white rounded-lg border border-slate-200 shadow-xs">
-              <p class="font-bold text-slate-900">Reyanne Niña E. Romero</p>
-              <p class="text-blue-700 text-[10px] font-mono mt-0.5 font-semibold">Security & Compliance</p>
+            <div class="p-3.5 bg-[#111114] rounded border border-[#222228]">
+              <p class="font-bold text-[#EDEDF0]">Reyanne Niña E. Romero</p>
+              <p class="text-[#C5A059] text-[10px] font-mono mt-0.5 font-semibold">Security & Compliance</p>
             </div>
-            <div class="p-3.5 bg-white rounded-lg border border-slate-200 shadow-xs">
-              <p class="font-bold text-slate-900">Cassandra R. Santiago</p>
-              <p class="text-blue-700 text-[10px] font-mono mt-0.5 font-semibold">UI/UX Designer</p>
+            <div class="p-3.5 bg-[#111114] rounded border border-[#222228]">
+              <p class="font-bold text-[#EDEDF0]">Cassandra R. Santiago</p>
+              <p class="text-[#C5A059] text-[10px] font-mono mt-0.5 font-semibold">UI/UX Designer</p>
             </div>
-            <div class="p-3.5 bg-white rounded-lg border border-slate-200 shadow-xs sm:col-span-2">
-              <p class="font-bold text-slate-900">Julianna Luz C. To</p>
-              <p class="text-blue-700 text-[10px] font-mono mt-0.5 font-semibold">Documentation & QA Lead</p>
+            <div class="p-3.5 bg-[#111114] rounded border border-[#222228] sm:col-span-2">
+              <p class="font-bold text-[#EDEDF0]">Julianna Luz C. To</p>
+              <p class="text-[#C5A059] text-[10px] font-mono mt-0.5 font-semibold">Documentation & QA Lead</p>
             </div>
           </div>
 
-          <div class="p-5 bg-blue-50/60 rounded-lg border border-blue-200 text-center">
-            <h3 class="font-serif font-bold text-base text-navy-900 mb-1">Open for Questions & Academic Defense</h3>
-            <p class="text-xs text-slate-600">Thank you for your guidance, Facilitator Mabitazan.</p>
+          <div class="p-5 bg-[#111114] rounded border border-[#C5A059]/40 text-center">
+            <h3 class="font-serif font-bold text-base text-[#C5A059] mb-1">Open for Questions & Academic Defense</h3>
+            <p class="text-xs text-[#A0A0AB]">Thank you for your guidance, Facilitator Mabitazan.</p>
           </div>
         </div>
       </section>
 
       <!-- PRESENTATION BOTTOM BAR -->
-      <footer class="pt-4 border-t border-slate-200 flex flex-wrap items-center justify-between gap-3 text-xs bg-white/50">
+      <footer class="pt-4 border-t border-[#222228] flex flex-wrap items-center justify-between gap-3 text-xs">
         <!-- Slide jump dropdown -->
         <div class="flex items-center gap-2">
-          <span class="text-slate-500 font-mono">Jump to:</span>
-          <select id="slideJumpSelect" class="bg-white border border-slate-300 rounded px-2.5 py-1 text-slate-700 font-sans focus:border-blue-600 text-xs shadow-xs">
+          <span class="text-[#666672] font-mono">Jump to:</span>
+          <select id="slideJumpSelect" class="bg-[#111114] border border-[#222228] rounded px-2.5 py-1 text-[#EDEDF0] font-sans focus:border-[#C5A059] text-xs">
             <!-- Populated via JS -->
           </select>
         </div>
 
         <!-- Slide Counter & Arrows -->
         <div class="flex items-center gap-3">
-          <span id="slideCounter" class="font-mono text-slate-600 text-xs font-bold">1 / 14</span>
+          <span id="slideCounter" class="font-mono text-[#A0A0AB] text-xs font-semibold">1 / 14</span>
           <div class="flex items-center gap-1.5">
             <button onclick="prevSlide()" class="btn-secondary py-1 px-3 text-xs font-mono" title="Previous Slide (←)">
               ◀ Prev
@@ -784,20 +754,20 @@
     <div id="simulationView" class="hidden flex-1 flex flex-col">
       
       <!-- Sub-Navigation for System Simulator Tabs -->
-      <div class="flex flex-wrap items-center gap-2 border-b border-slate-200 pb-3 mb-6 text-xs font-mono">
-        <button id="tabBtn-client-portal" onclick="setSimulatorTab('client-portal')" class="sim-nav-btn px-3 py-1.5 rounded border border-blue-900 bg-blue-900 text-white font-semibold">
+      <div class="flex flex-wrap items-center gap-2 border-b border-[#222228] pb-3 mb-6 text-xs font-mono">
+        <button id="tabBtn-client-portal" onclick="setSimulatorTab('client-portal')" class="sim-nav-btn px-3 py-1.5 rounded border border-[#C5A059] bg-[#C5A059] text-[#09090B] font-bold">
           1. Client Portal Simulation
         </button>
-        <button id="tabBtn-admin-console" onclick="setSimulatorTab('admin-console')" class="sim-nav-btn px-3 py-1.5 rounded border border-slate-200 bg-white text-slate-600 hover:text-navy-900">
+        <button id="tabBtn-admin-console" onclick="setSimulatorTab('admin-console')" class="sim-nav-btn px-3 py-1.5 rounded border border-[#222228] bg-[#111114] text-[#A0A0AB] hover:text-[#EDEDF0]">
           2. Legal Secretary Console
         </button>
-        <button id="tabBtn-bpmn-visualizer" onclick="setSimulatorTab('bpmn-visualizer')" class="sim-nav-btn px-3 py-1.5 rounded border border-slate-200 bg-white text-slate-600 hover:text-navy-900">
+        <button id="tabBtn-bpmn-visualizer" onclick="setSimulatorTab('bpmn-visualizer')" class="sim-nav-btn px-3 py-1.5 rounded border border-[#222228] bg-[#111114] text-[#A0A0AB] hover:text-[#EDEDF0]">
           3. BPMN Workflow Visualizer
         </button>
-        <button id="tabBtn-requirements-dossier" onclick="setSimulatorTab('requirements-dossier')" class="sim-nav-btn px-3 py-1.5 rounded border border-slate-200 bg-white text-slate-600 hover:text-navy-900">
+        <button id="tabBtn-requirements-dossier" onclick="setSimulatorTab('requirements-dossier')" class="sim-nav-btn px-3 py-1.5 rounded border border-[#222228] bg-[#111114] text-[#A0A0AB] hover:text-[#EDEDF0]">
           4. Requirements & Feasibility Dossier
         </button>
-        <button id="tabBtn-interview-transcript" onclick="setSimulatorTab('interview-transcript')" class="sim-nav-btn px-3 py-1.5 rounded border border-slate-200 bg-white text-slate-600 hover:text-navy-900">
+        <button id="tabBtn-interview-transcript" onclick="setSimulatorTab('interview-transcript')" class="sim-nav-btn px-3 py-1.5 rounded border border-[#222228] bg-[#111114] text-[#A0A0AB] hover:text-[#EDEDF0]">
           5. Atty. Belde Interview Transcript
         </button>
       </div>
@@ -809,11 +779,11 @@
         <div>
           <div class="flex flex-wrap items-center justify-between gap-4 mb-4">
             <div>
-              <h2 class="text-lg font-serif font-bold text-navy-900">Live Client Case Tracker</h2>
-              <p class="text-xs text-slate-500">Enter a demo case number to inspect real-time progress, scheduled hearings, and legal terms.</p>
+              <h2 class="text-lg font-serif font-bold text-[#EDEDF0]">Live Client Case Tracker</h2>
+              <p class="text-xs text-[#A0A0AB]">Enter a demo case number to inspect real-time progress, scheduled hearings, and legal terms.</p>
             </div>
             <div class="flex items-center gap-2">
-              <span class="text-xs font-mono text-slate-500">Try Demo Case:</span>
+              <span class="text-xs font-mono text-[#666672]">Try Demo Case:</span>
               <button onclick="renderCaseDetails('CIV-2026-084')" class="btn-secondary text-[11px] py-1 px-2.5">Estate of Santos</button>
               <button onclick="renderCaseDetails('FAM-2026-019')" class="btn-secondary text-[11px] py-1 px-2.5">Guardianship</button>
               <button onclick="renderCaseDetails('NOT-2026-142')" class="btn-secondary text-[11px] py-1 px-2.5">Deed of Sale</button>
@@ -826,25 +796,25 @@
         </div>
 
         <!-- Online Appointment Booking Simulator -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 pt-4 border-t border-slate-200">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 pt-4 border-t border-[#222228]">
           <div class="legal-card p-6">
-            <h3 class="font-serif font-bold text-base text-navy-900 mb-1">Book a Legal Consultation</h3>
-            <p class="text-xs text-slate-500 mb-4">Centralized scheduling directly synchronized with Atty. Belde's calendar.</p>
+            <h3 class="font-serif font-bold text-base text-[#EDEDF0] mb-1">Book a Legal Consultation</h3>
+            <p class="text-xs text-[#A0A0AB] mb-4">Centralized scheduling directly synchronized with Atty. Belde's calendar.</p>
 
             <form onsubmit="submitAppointmentBooking(event)" class="space-y-3 text-xs">
               <div>
-                <label class="block text-slate-600 font-mono mb-1 font-semibold">Full Legal Name</label>
-                <input id="bookName" type="text" required placeholder="e.g. Maria Teresa Ramos" class="w-full bg-white border border-slate-300 rounded px-3 py-2 text-slate-800 focus:border-blue-600 shadow-xs">
+                <label class="block text-[#A0A0AB] font-mono mb-1 font-semibold">Full Legal Name</label>
+                <input id="bookName" type="text" required placeholder="e.g. Maria Teresa Ramos" class="w-full bg-[#09090B] border border-[#222228] rounded px-3 py-2 text-[#EDEDF0] focus:border-[#C5A059]">
               </div>
 
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label class="block text-slate-600 font-mono mb-1 font-semibold">Contact Number (Phone)</label>
-                  <input id="bookPhone" type="tel" required placeholder="+63 9XX XXX XXXX" class="w-full bg-white border border-slate-300 rounded px-3 py-2 text-slate-800 focus:border-blue-600 shadow-xs">
+                  <label class="block text-[#A0A0AB] font-mono mb-1 font-semibold">Contact Number (Phone)</label>
+                  <input id="bookPhone" type="tel" required placeholder="+63 9XX XXX XXXX" class="w-full bg-[#09090B] border border-[#222228] rounded px-3 py-2 text-[#EDEDF0] focus:border-[#C5A059]">
                 </div>
                 <div>
-                  <label class="block text-slate-600 font-mono mb-1 font-semibold">Legal Practice Area</label>
-                  <select id="bookService" class="w-full bg-white border border-slate-300 rounded px-3 py-2 text-slate-800 focus:border-blue-600 shadow-xs">
+                  <label class="block text-[#A0A0AB] font-mono mb-1 font-semibold">Legal Practice Area</label>
+                  <select id="bookService" class="w-full bg-[#09090B] border border-[#222228] rounded px-3 py-2 text-[#EDEDF0] focus:border-[#C5A059]">
                     <option>Notarial Services & Documentation</option>
                     <option>Land & Property / Real Estate</option>
                     <option>Family Law & Support</option>
@@ -856,12 +826,12 @@
 
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label class="block text-slate-600 font-mono mb-1 font-semibold">Preferred Consultation Date</label>
-                  <input id="bookDate" type="date" required value="2026-11-12" class="w-full bg-white border border-slate-300 rounded px-3 py-2 text-slate-800 focus:border-blue-600 shadow-xs">
+                  <label class="block text-[#A0A0AB] font-mono mb-1 font-semibold">Preferred Consultation Date</label>
+                  <input id="bookDate" type="date" required value="2026-11-12" class="w-full bg-[#09090B] border border-[#222228] rounded px-3 py-2 text-[#EDEDF0] focus:border-[#C5A059]">
                 </div>
                 <div>
-                  <label class="block text-slate-600 font-mono mb-1 font-semibold">Time Slot</label>
-                  <select id="bookTime" class="w-full bg-white border border-slate-300 rounded px-3 py-2 text-slate-800 focus:border-blue-600 shadow-xs">
+                  <label class="block text-[#A0A0AB] font-mono mb-1 font-semibold">Time Slot</label>
+                  <select id="bookTime" class="w-full bg-[#09090B] border border-[#222228] rounded px-3 py-2 text-[#EDEDF0] focus:border-[#C5A059]">
                     <option>09:30 AM - 10:30 AM</option>
                     <option>11:00 AM - 12:00 PM</option>
                     <option>02:00 PM - 03:00 PM</option>
@@ -880,19 +850,19 @@
             <div id="bookingConfirmationModal" class="hidden"></div>
 
             <div class="legal-card p-6">
-              <h3 class="font-serif font-bold text-base text-navy-900 mb-2">Office Practice Guidelines</h3>
-              <ul class="space-y-2 text-xs text-slate-600">
+              <h3 class="font-serif font-bold text-base text-[#EDEDF0] mb-2">Office Practice Guidelines</h3>
+              <ul class="space-y-2 text-xs text-[#A0A0AB]">
                 <li class="flex items-start gap-2">
-                  <span class="text-blue-700 font-bold">•</span>
-                  <span><strong class="text-slate-900">Physical Office:</strong> Cariño St., Poblacion West, Umingan, Pangasinan.</span>
+                  <span class="text-[#C5A059] font-bold">•</span>
+                  <span><strong class="text-[#EDEDF0]">Physical Office:</strong> Cariño St., Poblacion West, Umingan, Pangasinan.</span>
                 </li>
                 <li class="flex items-start gap-2">
-                  <span class="text-blue-700 font-bold">•</span>
-                  <span><strong class="text-slate-900">Conflict Check:</strong> All new client consultations require clearance against existing firm records.</span>
+                  <span class="text-[#C5A059] font-bold">•</span>
+                  <span><strong class="text-[#EDEDF0]">Conflict Check:</strong> All new client consultations require clearance against existing firm records.</span>
                 </li>
                 <li class="flex items-start gap-2">
-                  <span class="text-blue-700 font-bold">•</span>
-                  <span><strong class="text-slate-900">Reminders:</strong> Automated SMS notifications are transmitted 24 hours prior to confirm attendance.</span>
+                  <span class="text-[#C5A059] font-bold">•</span>
+                  <span><strong class="text-[#EDEDF0]">Reminders:</strong> Automated SMS notifications are transmitted 24 hours prior to confirm attendance.</span>
                 </li>
               </ul>
             </div>
@@ -903,30 +873,30 @@
 
       <!-- TAB 2: LEGAL SECRETARY / ADMIN CONSOLE -->
       <div id="simTab-admin-console" class="sim-tab-content hidden space-y-6">
-        <div class="border-b border-slate-200 pb-3">
-          <h2 class="text-lg font-serif font-bold text-navy-900">Legal Secretary Operations Console</h2>
-          <p class="text-xs text-slate-500">Simulate front-desk verification, conflict of interest evaluation, and intake logging.</p>
+        <div class="border-b border-[#222228] pb-3">
+          <h2 class="text-lg font-serif font-bold text-[#EDEDF0]">Legal Secretary Operations Console</h2>
+          <p class="text-xs text-[#A0A0AB]">Simulate front-desk verification, conflict of interest evaluation, and intake logging.</p>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <!-- Conflict of Interest Checker -->
           <div class="legal-card p-6">
             <div class="flex items-center gap-2 mb-2">
-              <span class="w-3 h-3 rounded-full bg-amber-500"></span>
-              <h3 class="font-serif font-bold text-base text-navy-900">Conflict-of-Interest Verification Engine</h3>
+              <span class="w-2.5 h-2.5 rounded-full bg-[#C5A059]"></span>
+              <h3 class="font-serif font-bold text-base text-[#EDEDF0]">Conflict-of-Interest Verification Engine</h3>
             </div>
-            <p class="text-xs text-slate-500 mb-4">
+            <p class="text-xs text-[#A0A0AB] mb-4">
               Mandatory ethical step before client intake. Cross-references adverse parties against active retainers.
             </p>
 
             <div class="space-y-3 text-xs">
               <div>
-                <label class="block text-slate-600 font-mono mb-1 font-semibold">Prospective Client Name</label>
-                <input id="conflictClientName" type="text" placeholder="e.g. Manuel Villanueva" value="Manuel Villanueva" class="w-full bg-white border border-slate-300 rounded px-3 py-2 text-slate-800 shadow-xs">
+                <label class="block text-[#A0A0AB] font-mono mb-1 font-semibold">Prospective Client Name</label>
+                <input id="conflictClientName" type="text" placeholder="e.g. Manuel Villanueva" value="Manuel Villanueva" class="w-full bg-[#09090B] border border-[#222228] rounded px-3 py-2 text-[#EDEDF0]">
               </div>
               <div>
-                <label class="block text-slate-600 font-mono mb-1 font-semibold">Adverse Party / Opposing Party</label>
-                <input id="conflictAdverseParty" type="text" placeholder="e.g. Eduardo Santos (Try 'Santos' to test conflict)" value="Eduardo Santos" class="w-full bg-white border border-slate-300 rounded px-3 py-2 text-slate-800 shadow-xs">
+                <label class="block text-[#A0A0AB] font-mono mb-1 font-semibold">Adverse Party / Opposing Party</label>
+                <input id="conflictAdverseParty" type="text" placeholder="e.g. Eduardo Santos (Try 'Santos' to test conflict)" value="Eduardo Santos" class="w-full bg-[#09090B] border border-[#222228] rounded px-3 py-2 text-[#EDEDF0]">
               </div>
               <button onclick="runConflictCheck()" class="btn-primary w-full py-2">
                 Evaluate Conflict of Interest
@@ -938,26 +908,26 @@
 
           <!-- Daily End-of-Day Executive Reporting -->
           <div class="legal-card p-6">
-            <h3 class="font-serif font-bold text-base text-navy-900 mb-2">Daily End-of-Day Roster Dispatch</h3>
-            <p class="text-xs text-slate-500 mb-4">
+            <h3 class="font-serif font-bold text-base text-[#EDEDF0] mb-2">Daily End-of-Day Roster Dispatch</h3>
+            <p class="text-xs text-[#A0A0AB] mb-4">
               As required by Atty. Belde's business rules, daily communications are consolidated for executive review.
             </p>
 
-            <div class="p-4 bg-slate-50 rounded border border-slate-200 font-mono text-xs space-y-2 mb-4">
-              <div class="flex justify-between text-slate-500 border-b border-slate-200 pb-1 font-bold">
+            <div class="p-4 bg-[#09090B] rounded border border-[#222228] font-mono text-xs space-y-2 mb-4">
+              <div class="flex justify-between text-[#666672] border-b border-[#222228] pb-1 font-bold">
                 <span>METRIC</span><span>STATUS TODAY</span>
               </div>
-              <div class="flex justify-between text-slate-700">
-                <span>New Intakes Evaluated:</span><span class="text-emerald-700 font-bold">4 Clients</span>
+              <div class="flex justify-between text-[#A0A0AB]">
+                <span>New Intakes Evaluated:</span><span class="text-[#10B981] font-bold">4 Clients</span>
               </div>
-              <div class="flex justify-between text-slate-700">
-                <span>Conflict Checks Cleared:</span><span class="text-emerald-700 font-bold">3 Approved, 1 Disclosed</span>
+              <div class="flex justify-between text-[#A0A0AB]">
+                <span>Conflict Checks Cleared:</span><span class="text-[#10B981] font-bold">3 Approved, 1 Disclosed</span>
               </div>
-              <div class="flex justify-between text-slate-700">
-                <span>Court Pleadings Filed:</span><span class="text-blue-800 font-bold">2 RTC Tayug</span>
+              <div class="flex justify-between text-[#A0A0AB]">
+                <span>Court Pleadings Filed:</span><span class="text-[#C5A059] font-bold">2 RTC Tayug</span>
               </div>
-              <div class="flex justify-between text-slate-700">
-                <span>Notarial Registers Logged:</span><span class="text-slate-900 font-bold">18 Documents</span>
+              <div class="flex justify-between text-[#A0A0AB]">
+                <span>Notarial Registers Logged:</span><span class="text-[#EDEDF0] font-bold">18 Documents</span>
               </div>
             </div>
 
@@ -970,10 +940,10 @@
 
       <!-- TAB 3: BPMN WORKFLOW VISUALIZER -->
       <div id="simTab-bpmn-visualizer" class="sim-tab-content hidden space-y-6">
-        <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200 pb-3">
+        <div class="flex flex-wrap items-center justify-between gap-4 border-b border-[#222228] pb-3">
           <div>
-            <h2 class="text-lg font-serif font-bold text-navy-900">Business Process Model & Notation (BPMN)</h2>
-            <p class="text-xs text-slate-500">Visualizing the 3 swimlanes across Client, Legal Secretary, and Attorney Allan Belde.</p>
+            <h2 class="text-lg font-serif font-bold text-[#EDEDF0]">Business Process Model & Notation (BPMN)</h2>
+            <p class="text-xs text-[#A0A0AB]">Visualizing the 3 swimlanes across Client, Legal Secretary, and Attorney Allan Belde.</p>
           </div>
           <div class="flex items-center gap-2">
             <button onclick="startBpmnAnimation()" class="btn-primary text-xs py-1.5 px-3">Run Step Animation ▶</button>
@@ -985,25 +955,25 @@
           <!-- Lane 1: Client -->
           <div class="legal-card p-4">
             <div class="flex items-center gap-2 mb-3">
-              <span class="w-3 h-3 rounded-full bg-blue-600"></span>
-              <h3 class="font-serif font-bold text-sm text-blue-900">Swimlane 1: The Client</h3>
+              <span class="w-2.5 h-2.5 rounded-full bg-[#EDEDF0]"></span>
+              <h3 class="font-serif font-bold text-sm text-[#EDEDF0]">Swimlane 1: The Client</h3>
             </div>
-            <div class="grid grid-cols-1 sm:grid-cols-4 gap-3 text-xs">
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
               <div class="bpmn-node bpmn-step-node">
-                <span class="font-mono text-blue-800 font-bold">Step 1</span>
-                <p class="text-slate-800 mt-1">Initiates request for legal assistance / consultation</p>
+                <span class="font-mono text-[#C5A059] font-bold">Step 1</span>
+                <p class="text-[#A0A0AB] mt-1">Initiates request for legal assistance / consultation</p>
               </div>
               <div class="bpmn-node bpmn-step-node">
-                <span class="font-mono text-blue-800 font-bold">Step 2</span>
-                <p class="text-slate-800 mt-1">Provides basic contact info (name, email, phone)</p>
+                <span class="font-mono text-[#C5A059] font-bold">Step 2</span>
+                <p class="text-[#A0A0AB] mt-1">Provides basic contact info (name, email, phone)</p>
               </div>
               <div class="bpmn-node bpmn-step-node">
-                <span class="font-mono text-blue-800 font-bold">Step 5</span>
-                <p class="text-slate-800 mt-1">Attends scheduled consultation at Umingan office</p>
+                <span class="font-mono text-[#C5A059] font-bold">Step 5</span>
+                <p class="text-[#A0A0AB] mt-1">Attends scheduled consultation at Umingan office</p>
               </div>
               <div class="bpmn-node bpmn-step-node">
-                <span class="font-mono text-blue-800 font-bold">Step 8</span>
-                <p class="text-slate-800 mt-1">Monitors case status 24/7 on portal & settles fees</p>
+                <span class="font-mono text-[#C5A059] font-bold">Step 8</span>
+                <p class="text-[#A0A0AB] mt-1">Monitors case status 24/7 on portal & settles fees</p>
               </div>
             </div>
           </div>
@@ -1011,25 +981,25 @@
           <!-- Lane 2: Legal Secretary -->
           <div class="legal-card p-4">
             <div class="flex items-center gap-2 mb-3">
-              <span class="w-3 h-3 rounded-full bg-amber-500"></span>
-              <h3 class="font-serif font-bold text-sm text-amber-900">Swimlane 2: Legal Secretary</h3>
+              <span class="w-2.5 h-2.5 rounded-full bg-[#D6BC83]"></span>
+              <h3 class="font-serif font-bold text-sm text-[#D6BC83]">Swimlane 2: Legal Secretary</h3>
             </div>
-            <div class="grid grid-cols-1 sm:grid-cols-4 gap-3 text-xs">
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
               <div class="bpmn-node bpmn-step-node">
-                <span class="font-mono text-blue-800 font-bold">Step 3</span>
-                <p class="text-slate-800 mt-1">Performs mandatory conflict-of-interest check</p>
+                <span class="font-mono text-[#C5A059] font-bold">Step 3</span>
+                <p class="text-[#A0A0AB] mt-1">Performs mandatory conflict-of-interest check</p>
               </div>
               <div class="bpmn-node bpmn-step-node">
-                <span class="font-mono text-blue-800 font-bold">Step 4</span>
-                <p class="text-slate-800 mt-1">Creates digital client record & portal credentials</p>
+                <span class="font-mono text-[#C5A059] font-bold">Step 4</span>
+                <p class="text-[#A0A0AB] mt-1">Creates digital client record & portal credentials</p>
               </div>
               <div class="bpmn-node bpmn-step-node">
-                <span class="font-mono text-blue-800 font-bold">Step 6</span>
-                <p class="text-slate-800 mt-1">Allocates slot in centralized calendar</p>
+                <span class="font-mono text-[#C5A059] font-bold">Step 6</span>
+                <p class="text-[#A0A0AB] mt-1">Allocates slot in centralized calendar</p>
               </div>
               <div class="bpmn-node bpmn-step-node">
-                <span class="font-mono text-blue-800 font-bold">Step 9</span>
-                <p class="text-slate-800 mt-1">Updates case milestones & issues 5s e-receipt</p>
+                <span class="font-mono text-[#C5A059] font-bold">Step 9</span>
+                <p class="text-[#A0A0AB] mt-1">Updates case milestones & issues 5s e-receipt</p>
               </div>
             </div>
           </div>
@@ -1037,25 +1007,25 @@
           <!-- Lane 3: Atty. Allan Belde -->
           <div class="legal-card p-4">
             <div class="flex items-center gap-2 mb-3">
-              <span class="w-3 h-3 rounded-full bg-emerald-600"></span>
-              <h3 class="font-serif font-bold text-sm text-emerald-900">Swimlane 3: Atty. Allan P. Belde (Owner / Lawyer)</h3>
+              <span class="w-2.5 h-2.5 rounded-full bg-[#C5A059]"></span>
+              <h3 class="font-serif font-bold text-sm text-[#C5A059]">Swimlane 3: Atty. Allan P. Belde (Owner / Lawyer)</h3>
             </div>
-            <div class="grid grid-cols-1 sm:grid-cols-4 gap-3 text-xs">
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
               <div class="bpmn-node bpmn-step-node">
-                <span class="font-mono text-blue-800 font-bold">Gate</span>
-                <p class="text-slate-800 mt-1">Ethical clearance validation</p>
+                <span class="font-mono text-[#C5A059] font-bold">Gate</span>
+                <p class="text-[#A0A0AB] mt-1">Ethical clearance validation</p>
               </div>
               <div class="bpmn-node bpmn-step-node">
-                <span class="font-mono text-blue-800 font-bold">Step 7</span>
-                <p class="text-slate-800 mt-1">Conducts legal assessment & advises on options</p>
+                <span class="font-mono text-[#C5A059] font-bold">Step 7</span>
+                <p class="text-[#A0A0AB] mt-1">Conducts legal assessment & advises on options</p>
               </div>
               <div class="bpmn-node bpmn-step-node">
-                <span class="font-mono text-blue-800 font-bold">Step 10</span>
-                <p class="text-slate-800 mt-1">Drafts pleadings, verifies facts & attends hearings</p>
+                <span class="font-mono text-[#C5A059] font-bold">Step 10</span>
+                <p class="text-[#A0A0AB] mt-1">Drafts pleadings, verifies facts & attends hearings</p>
               </div>
               <div class="bpmn-node bpmn-step-node">
-                <span class="font-mono text-blue-800 font-bold">Step 11</span>
-                <p class="text-slate-800 mt-1">Delivers final court ruling or notarial deed</p>
+                <span class="font-mono text-[#C5A059] font-bold">Step 11</span>
+                <p class="text-[#A0A0AB] mt-1">Delivers final court ruling or notarial deed</p>
               </div>
             </div>
           </div>
@@ -1064,14 +1034,14 @@
 
       <!-- TAB 4: REQUIREMENTS & FEASIBILITY DOSSIER -->
       <div id="simTab-requirements-dossier" class="sim-tab-content hidden space-y-6">
-        <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-200 pb-3">
+        <div class="flex flex-wrap items-center justify-between gap-4 border-b border-[#222228] pb-3">
           <div>
-            <h2 class="text-lg font-serif font-bold text-navy-900">System Specifications & Feasibility Dossier</h2>
-            <p class="text-xs text-slate-500">Search and filter functional, non-functional, and feasibility criteria.</p>
+            <h2 class="text-lg font-serif font-bold text-[#EDEDF0]">System Specifications & Feasibility Dossier</h2>
+            <p class="text-xs text-[#A0A0AB]">Search and filter functional, non-functional, and feasibility criteria.</p>
           </div>
           <div class="flex items-center gap-2">
-            <input id="reqSearchInput" oninput="filterRequirements()" type="text" placeholder="Search criteria..." class="bg-white border border-slate-300 rounded px-2.5 py-1 text-xs text-slate-800 shadow-xs">
-            <select id="reqCategoryFilter" onchange="filterRequirements()" class="bg-white border border-slate-300 rounded px-2.5 py-1 text-xs text-slate-800 shadow-xs">
+            <input id="reqSearchInput" oninput="filterRequirements()" type="text" placeholder="Search criteria..." class="bg-[#09090B] border border-[#222228] rounded px-2.5 py-1 text-xs text-[#EDEDF0]">
+            <select id="reqCategoryFilter" onchange="filterRequirements()" class="bg-[#09090B] border border-[#222228] rounded px-2.5 py-1 text-xs text-[#EDEDF0]">
               <option value="all">All Categories</option>
               <option value="functional">Functional Requirements</option>
               <option value="security">Security & Privacy</option>
@@ -1082,63 +1052,63 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-xs">
           <div class="req-card legal-card p-4" data-category="functional">
-            <span class="text-blue-900 font-mono font-bold">FR-01: Client Registration</span>
-            <p class="text-slate-600 mt-1">Enables self-service sign up with QR code link to manual, or on-site secretarial assisted enrollment.</p>
+            <span class="text-[#C5A059] font-mono font-bold">FR-01: Client Registration</span>
+            <p class="text-[#A0A0AB] mt-1">Enables self-service sign up with QR code link to manual, or on-site secretarial assisted enrollment.</p>
           </div>
           <div class="req-card legal-card p-4" data-category="functional">
-            <span class="text-blue-900 font-mono font-bold">FR-02: Conflict-of-Interest Filter</span>
-            <p class="text-slate-600 mt-1">Cross-examines prospective clients against current retainers prior to generating digital file.</p>
+            <span class="text-[#C5A059] font-mono font-bold">FR-02: Conflict-of-Interest Filter</span>
+            <p class="text-[#A0A0AB] mt-1">Cross-examines prospective clients against current retainers prior to generating digital file.</p>
           </div>
           <div class="req-card legal-card p-4" data-category="functional">
-            <span class="text-blue-900 font-mono font-bold">FR-03: Real-Time Case Tracker</span>
-            <p class="text-slate-600 mt-1">Displays plain-language case stage timelines and scheduled hearing notifications 24/7.</p>
+            <span class="text-[#C5A059] font-mono font-bold">FR-03: Real-Time Case Tracker</span>
+            <p class="text-[#A0A0AB] mt-1">Displays plain-language case stage timelines and scheduled hearing notifications 24/7.</p>
           </div>
           <div class="req-card legal-card p-4" data-category="security">
-            <span class="text-emerald-700 font-mono font-bold">SEC-01: Data Privacy Act (RA 10173)</span>
-            <p class="text-slate-600 mt-1">Portal only stores minimal contact data. Sensitive court files remain physically in office safe.</p>
+            <span class="text-[#10B981] font-mono font-bold">SEC-01: Data Privacy Act (RA 10173)</span>
+            <p class="text-[#A0A0AB] mt-1">Portal only stores minimal contact data. Sensitive court files remain physically in office safe.</p>
           </div>
           <div class="req-card legal-card p-4" data-category="security">
-            <span class="text-emerald-700 font-mono font-bold">SEC-02: OTP Phone Callback</span>
-            <p class="text-slate-600 mt-1">Financial balance inquiries require 2FA SMS code + authorized phone call before disclosure.</p>
+            <span class="text-[#10B981] font-mono font-bold">SEC-02: OTP Phone Callback</span>
+            <p class="text-[#A0A0AB] mt-1">Financial balance inquiries require 2FA SMS code + authorized phone call before disclosure.</p>
           </div>
           <div class="req-card legal-card p-4" data-category="feasibility">
-            <span class="text-navy-900 font-mono font-bold">FEAS-01: Economic Viability</span>
-            <p class="text-slate-600 mt-1">Eliminates paper storage and physical document wear, lowering long-term operating costs.</p>
+            <span class="text-[#D6BC83] font-mono font-bold">FEAS-01: Economic Viability</span>
+            <p class="text-[#A0A0AB] mt-1">Eliminates paper storage and physical document wear, lowering long-term operating costs.</p>
           </div>
           <div class="req-card legal-card p-4" data-category="feasibility">
-            <span class="text-navy-900 font-mono font-bold">FEAS-02: Operational Fit</span>
-            <p class="text-slate-600 mt-1">Seamless fit for solo practitioner law office without disrupting ethical court appearance workflows.</p>
+            <span class="text-[#D6BC83] font-mono font-bold">FEAS-02: Operational Fit</span>
+            <p class="text-[#A0A0AB] mt-1">Seamless fit for solo practitioner law office without disrupting ethical court appearance workflows.</p>
           </div>
         </div>
       </div>
 
       <!-- TAB 5: ATTY. ALLAN BELDE INTERVIEW TRANSCRIPT -->
       <div id="simTab-interview-transcript" class="sim-tab-content hidden space-y-4">
-        <div class="border-b border-slate-200 pb-3">
-          <h2 class="text-lg font-serif font-bold text-navy-900">Primary Field Research: Interview Transcript</h2>
-          <p class="text-xs text-slate-500">Verbatim responses from Atty. Allan P. Belde, Founder & Solo Practitioner (July 2004 – Present).</p>
+        <div class="border-b border-[#222228] pb-3">
+          <h2 class="text-lg font-serif font-bold text-[#EDEDF0]">Primary Field Research: Interview Transcript</h2>
+          <p class="text-xs text-[#A0A0AB]">Verbatim responses from Atty. Allan P. Belde, Founder & Solo Practitioner (July 2004 – Present).</p>
         </div>
 
         <div class="space-y-3 text-xs font-mono max-h-[600px] overflow-y-auto pr-2">
-          <div class="p-3.5 bg-white rounded-lg border border-slate-200 shadow-xs">
-            <p class="text-blue-900 font-bold">Q: What is the law office's current mission and vision?</p>
-            <p class="text-slate-700 mt-1 font-sans">"The mission and vision is to uphold the rule of law and represent the client with fidelity and zeal."</p>
+          <div class="p-3.5 bg-[#111114] rounded border border-[#222228]">
+            <p class="text-[#C5A059] font-bold">Q: What is the law office's current mission and vision?</p>
+            <p class="text-[#EDEDF0] mt-1 font-sans">"The mission and vision is to uphold the rule of law and represent the client with fidelity and zeal."</p>
           </div>
-          <div class="p-3.5 bg-white rounded-lg border border-slate-200 shadow-xs">
-            <p class="text-blue-900 font-bold">Q: What rules do you follow in prioritizing cases?</p>
-            <p class="text-slate-700 mt-1 font-sans">"The office observes diligence and punctuality in all appearances, submissions, meetings, and other commitments. There is no rigid hierarchy of prioritization as it is calibrated to court deadlines, prescriptive, reglementary, and appeal periods."</p>
+          <div class="p-3.5 bg-[#111114] rounded border border-[#222228]">
+            <p class="text-[#C5A059] font-bold">Q: What rules do you follow in prioritizing cases?</p>
+            <p class="text-[#EDEDF0] mt-1 font-sans">"The office observes diligence and punctuality in all appearances, submissions, meetings, and other commitments. There is no rigid hierarchy of prioritization as it is calibrated to court deadlines, prescriptive, reglementary, and appeal periods."</p>
           </div>
-          <div class="p-3.5 bg-white rounded-lg border border-slate-200 shadow-xs">
-            <p class="text-blue-900 font-bold">Q: Why is confidentiality of clients important?</p>
-            <p class="text-slate-700 mt-1 font-sans">"The lawyer-client relationship is of the highest fiduciary character; as a trust relation, it is essential that the engagement is founded on the confidence reposed by the client on the lawyer. Without confidence the client might withhold information or facts necessary in handling a case."</p>
+          <div class="p-3.5 bg-[#111114] rounded border border-[#222228]">
+            <p class="text-[#C5A059] font-bold">Q: Why is confidentiality of clients important?</p>
+            <p class="text-[#EDEDF0] mt-1 font-sans">"The lawyer-client relationship is of the highest fiduciary character; as a trust relation, it is essential that the engagement is founded on the confidence reposed by the client on the lawyer. Without confidence the client might withhold information or facts necessary in handling a case."</p>
           </div>
-          <div class="p-3.5 bg-white rounded-lg border border-slate-200 shadow-xs">
-            <p class="text-blue-900 font-bold">Q: Does the office experience backlogs? How do you handle them?</p>
-            <p class="text-slate-700 mt-1 font-sans">"Backlog is not an option as legal ethics mandates that a lawyer’s duty should be performed within the timeframe provided by law, otherwise your case or your client's rights will be compromised."</p>
+          <div class="p-3.5 bg-[#111114] rounded border border-[#222228]">
+            <p class="text-[#C5A059] font-bold">Q: Does the office experience backlogs? How do you handle them?</p>
+            <p class="text-[#EDEDF0] mt-1 font-sans">"Backlog is not an option as legal ethics mandates that a lawyer’s duty should be performed within the timeframe provided by law, otherwise your case or your client's rights will be compromised."</p>
           </div>
-          <div class="p-3.5 bg-white rounded-lg border border-slate-200 shadow-xs">
-            <p class="text-blue-900 font-bold">Q: What is the current process for managing client records?</p>
-            <p class="text-slate-700 mt-1 font-sans">"It is still manually being placed on steel cabinets but we are trying to adopt or shift to a computer-based system of managing and organizing clients' records."</p>
+          <div class="p-3.5 bg-[#111114] rounded border border-[#222228]">
+            <p class="text-[#C5A059] font-bold">Q: What is the current process for managing client records?</p>
+            <p class="text-[#EDEDF0] mt-1 font-sans">"It is still manually being placed on steel cabinets but we are trying to adopt or shift to a computer-based system of managing and organizing clients' records."</p>
           </div>
         </div>
       </div>
@@ -1148,34 +1118,34 @@
   </main>
 
   <!-- MODAL: OTP Balance Verification (Simulation) -->
-  <div id="otpVerificationModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
-    <div class="bg-white border border-blue-200 rounded-lg max-w-md w-full p-6 shadow-2xl">
-      <div class="flex items-center justify-between border-b border-slate-100 pb-3 mb-4">
+  <div id="otpVerificationModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-xs flex items-center justify-center p-4">
+    <div class="bg-[#111114] border border-[#C5A059] rounded-lg max-w-md w-full p-6 shadow-2xl">
+      <div class="flex items-center justify-between border-b border-[#222228] pb-3 mb-4">
         <div class="flex items-center gap-2">
-          <span class="w-3 h-3 rounded-full bg-blue-700"></span>
-          <h3 class="font-serif font-bold text-sm text-navy-900">Financial Data Privacy Verification</h3>
+          <span class="w-2.5 h-2.5 rounded-full bg-[#C5A059]"></span>
+          <h3 class="font-serif font-bold text-sm text-[#EDEDF0]">Financial Data Privacy Verification</h3>
         </div>
-        <button onclick="document.getElementById('otpVerificationModal').classList.add('hidden')" class="text-slate-400 hover:text-slate-700 text-xs">✕</button>
+        <button onclick="document.getElementById('otpVerificationModal').classList.add('hidden')" class="text-[#666672] hover:text-[#EDEDF0] text-xs">✕</button>
       </div>
 
-      <p class="text-xs text-slate-600 leading-relaxed mb-3">
+      <p class="text-xs text-[#A0A0AB] leading-relaxed mb-3">
         To protect sensitive case finances under the <strong>Data Privacy Act (RA 10173)</strong>, an authentication code has been sent via phone callback to the client's registered phone:
       </p>
 
-      <div class="p-3.5 bg-slate-50 rounded border border-slate-200 text-xs font-mono mb-4">
-        <p class="text-slate-500">Target Case: <span id="otpCaseTitle" class="text-navy-900 font-bold"></span></p>
-        <p class="text-slate-500 mt-1">Masked Contact: <span id="otpMaskedPhone" class="text-blue-700 font-bold"></span></p>
+      <div class="p-3.5 bg-[#09090B] rounded border border-[#222228] text-xs font-mono mb-4">
+        <p class="text-[#666672]">Target Case: <span id="otpCaseTitle" class="text-[#EDEDF0] font-bold"></span></p>
+        <p class="text-[#666672] mt-1">Masked Contact: <span id="otpMaskedPhone" class="text-[#C5A059] font-bold"></span></p>
       </div>
 
       <div class="space-y-3 mb-4">
-        <label class="block text-xs font-mono text-slate-600 font-semibold">Enter 6-Digit One-Time Password</label>
+        <label class="block text-xs font-mono text-[#A0A0AB] font-semibold">Enter 6-Digit One-Time Password</label>
         <div class="flex gap-2">
-          <input id="otpInput" type="text" maxlength="6" placeholder="849201" class="w-full bg-white border border-slate-300 rounded px-3 py-2 text-center text-lg font-mono tracking-widest text-navy-900 focus:border-blue-600 font-bold">
+          <input id="otpInput" type="text" maxlength="6" placeholder="849201" class="w-full bg-[#09090B] border border-[#222228] rounded px-3 py-2 text-center text-lg font-mono tracking-widest text-[#C5A059] focus:border-[#C5A059] font-bold">
           <button onclick="fillDemoOtp()" class="btn-secondary text-xs px-3 whitespace-nowrap">Auto-Fill Demo</button>
         </div>
-        <div class="flex justify-between items-center text-[11px] font-mono text-slate-500">
-          <span>Expires in: <strong id="otpCountdown" class="text-amber-700">60s</strong></span>
-          <span class="text-slate-500">Demo Code: 849201</span>
+        <div class="flex justify-between items-center text-[11px] font-mono text-[#666672]">
+          <span>Expires in: <strong id="otpCountdown" class="text-[#FBBF24]">60s</strong></span>
+          <span class="text-[#666672]">Demo Code: 849201</span>
         </div>
       </div>
 
