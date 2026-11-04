@@ -297,7 +297,7 @@ function updateTimerDisplay() {
 function toggleFullScreen() {
   playTactileFeedback('click');
   if (!document.fullscreenElement) {
-    document.documentElement.requestFullscreen().catch(() => {});
+    document.documentElement.requestFullscreen().catch(() => { });
   } else {
     if (document.exitFullscreen) {
       document.exitFullscreen();
@@ -696,10 +696,127 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
+// Ambient Obsidian & Gold Geometric Particle Canvas
+function initAmbientBackground() {
+  const canvas = document.getElementById('ambientCanvas');
+  if (!canvas) return;
+
+  const ctx = canvas.getContext('2d');
+  let width = (canvas.width = window.innerWidth);
+  let height = (canvas.height = window.innerHeight);
+
+  const isMobile = width < 768;
+  const particleCount = isMobile ? 26 : 56;
+  const connectionDistance = isMobile ? 90 : 130;
+  const particles = [];
+
+  const mouse = { x: -1000, y: -1000 };
+
+  window.addEventListener('mousemove', (e) => {
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
+  });
+
+  window.addEventListener('mouseleave', () => {
+    mouse.x = -1000;
+    mouse.y = -1000;
+  });
+
+  window.addEventListener('resize', () => {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+  });
+
+  class GoldParticle {
+    constructor() {
+      this.reset(true);
+    }
+
+    reset(initial = false) {
+      this.x = Math.random() * width;
+      this.y = initial ? Math.random() * height : height + 10;
+      this.vx = (Math.random() - 0.5) * 0.35;
+      this.vy = -Math.random() * 0.45 - 0.12;
+      this.radius = Math.random() * 1.5 + 0.8;
+      this.baseAlpha = Math.random() * 0.35 + 0.18;
+      this.alpha = this.baseAlpha;
+      this.pulsePhase = Math.random() * Math.PI * 2;
+      this.pulseSpeed = Math.random() * 0.02 + 0.01;
+    }
+
+    update() {
+      this.x += this.vx;
+      this.y += this.vy;
+
+      this.pulsePhase += this.pulseSpeed;
+      this.alpha = this.baseAlpha + Math.sin(this.pulsePhase) * 0.12;
+
+      const dx = mouse.x - this.x;
+      const dy = mouse.y - this.y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < 120) {
+        const force = (120 - dist) / 120;
+        this.x -= (dx / dist) * force * 1.8;
+        this.y -= (dy / dist) * force * 1.8;
+      }
+
+      if (this.y < -15) this.reset();
+      if (this.x < -15) this.x = width + 10;
+      if (this.x > width + 15) this.x = -10;
+    }
+
+    draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(197, 160, 89, ${Math.max(0.06, this.alpha)})`;
+      ctx.fill();
+    }
+  }
+
+  for (let i = 0; i < particleCount; i++) {
+    particles.push(new GoldParticle());
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, width, height);
+
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+
+        if (dist < connectionDistance) {
+          const lineAlpha = (1 - dist / connectionDistance) * 0.12;
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.strokeStyle = `rgba(197, 160, 89, ${lineAlpha})`;
+          ctx.lineWidth = 0.75;
+          ctx.stroke();
+        }
+      }
+    }
+
+    for (let i = 0; i < particles.length; i++) {
+      particles[i].update();
+      particles[i].draw();
+    }
+
+    requestAnimationFrame(animate);
+  }
+
+  const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+  if (!mediaQuery.matches) {
+    animate();
+  }
+}
+
 // Initialization
 document.addEventListener('DOMContentLoaded', () => {
   updateSlideView();
   updateTimerDisplay();
+  initAmbientBackground();
 
   const selectEl = document.getElementById('slideJumpSelect');
   if (selectEl) {
