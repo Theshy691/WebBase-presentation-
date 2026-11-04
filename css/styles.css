@@ -1,43 +1,59 @@
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
 
 :root {
-  --bg-deep: #080D1A;
-  --bg-surface: #0E1626;
-  --bg-elevated: #152036;
-  --bg-card: #121B2F;
-  --bg-card-hover: #18243E;
+  /* Pristine Legal White & Blue Palette */
+  --bg-base: #F8FAFC;
+  --bg-surface: #FFFFFF;
+  --bg-elevated: #F1F5F9;
+  --bg-subtle: #F8FAFC;
+  --bg-card: #FFFFFF;
+  --bg-card-hover: #F8FAFC;
   
-  --border-subtle: #1F2E4A;
-  --border-strong: #2D4166;
-  --border-gold: #C5A059;
+  /* Borders */
+  --border-subtle: #E2E8F0;
+  --border-medium: #CBD5E1;
+  --border-strong: #94A3B8;
+  --border-navy: #0F294A;
+  --border-blue: #2563EB;
   
-  --text-primary: #F8FAFC;
-  --text-secondary: #94A3B8;
+  /* Text */
+  --text-primary: #0A192F;
+  --text-secondary: #334155;
   --text-muted: #64748B;
+  --text-light: #94A3B8;
   
-  --gold-50: #FCF9F2;
-  --gold-100: #F6F0E0;
-  --gold-300: #E5C98F;
-  --gold-400: #D8B76E;
-  --gold-500: #C5A059;
-  --gold-600: #A8833E;
-  --gold-700: #7E622C;
-  
-  --emerald-400: #34D399;
-  --emerald-500: #10B981;
-  --emerald-900: #064E3B;
-  
-  --amber-400: #FBBF24;
-  --amber-500: #F59E0B;
-  --amber-900: #78350F;
-  
-  --rose-400: #F87171;
-  --rose-500: #EF4444;
-  --rose-900: #7F1D1D;
-  
-  --blue-400: #60A5FA;
+  /* Prestigious Navy & Blue */
+  --navy-950: #06101E;
+  --navy-900: #0A192F;
+  --navy-850: #0F294A;
+  --navy-800: #15325B;
+  --navy-700: #1E3A8A;
+  --navy-600: #1D4ED8;
+  --blue-600: #2563EB;
   --blue-500: #3B82F6;
-  --blue-900: #1E3A8A;
+  --blue-100: #DBEAFE;
+  --blue-50: #EFF6FF;
+
+  /* Accent Gold / Bronze */
+  --gold-700: #85581A;
+  --gold-600: #A16E24;
+  --gold-500: #B8860B;
+  --gold-100: #FEF3C7;
+  --gold-50: #FFFBEB;
+  
+  /* Semantic Badges */
+  --emerald-700: #047857;
+  --emerald-600: #059669;
+  --emerald-100: #D1FAE5;
+  --emerald-50: #ECFDF5;
+  
+  --amber-700: #B45309;
+  --amber-600: #D97706;
+  --amber-100: #FEF3C7;
+  
+  --rose-700: #BE123C;
+  --rose-600: #E11D48;
+  --rose-100: #FFE4E6;
   
   --font-serif: 'Cinzel', serif;
   --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -53,7 +69,7 @@
 
 html {
   font-family: var(--font-sans);
-  background-color: var(--bg-deep);
+  background-color: var(--bg-base);
   color: var(--text-primary);
   scroll-behavior: smooth;
   text-rendering: optimizeLegibility;
@@ -64,28 +80,28 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background-color: var(--bg-deep);
+  background-color: var(--bg-base);
   color: var(--text-primary);
   overflow-x: hidden;
 }
 
 /* Custom Scrollbars */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--bg-deep);
+  background: #F1F5F9;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--border-strong);
+  background: #CBD5E1;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--gold-500);
+  background: var(--navy-850);
 }
 
 /* Focus States for Accessibility */
@@ -94,7 +110,7 @@ button:focus-visible,
 input:focus-visible,
 select:focus-visible,
 textarea:focus-visible {
-  outline: 2px solid var(--gold-500);
+  outline: 2px solid var(--blue-600);
   outline-offset: 2px;
 }
 
@@ -111,65 +127,68 @@ textarea:focus-visible {
   font-family: var(--font-mono);
 }
 
-/* Background Atmosphere */
+/* Professional White & Blue Legal Atmosphere */
 .legal-atmosphere {
+  background-color: #F8FAFC;
   background-image: 
-    radial-gradient(circle at 15% 10%, rgba(197, 160, 89, 0.08) 0%, transparent 40%),
-    radial-gradient(circle at 85% 90%, rgba(59, 130, 246, 0.06) 0%, transparent 40%),
-    linear-gradient(to bottom, rgba(8, 13, 26, 0.95), rgba(8, 13, 26, 1));
+    radial-gradient(circle at 12% 8%, rgba(37, 99, 235, 0.04) 0%, transparent 45%),
+    radial-gradient(circle at 88% 92%, rgba(15, 41, 74, 0.03) 0%, transparent 45%),
+    linear-gradient(to bottom, #FFFFFF 0%, #F8FAFC 100%);
 }
 
 .legal-grid-pattern {
-  background-size: 40px 40px;
+  background-size: 32px 32px;
   background-image: 
-    linear-gradient(to right, rgba(31, 46, 74, 0.25) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(31, 46, 74, 0.25) 1px, transparent 1px);
+    linear-gradient(to right, rgba(203, 213, 225, 0.3) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(203, 213, 225, 0.3) 1px, transparent 1px);
 }
 
-/* Custom Slide Transitions */
+/* Slide Transitions */
 .slide-container {
   perspective: 1000px;
 }
 
 .slide-content {
-  animation: slideIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: slideFadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-@keyframes slideIn {
+@keyframes slideFadeIn {
   from {
     opacity: 0;
-    transform: translateY(12px) scale(0.99);
+    transform: translateY(8px);
   }
   to {
     opacity: 1;
-    transform: translateY(0) scale(1);
+    transform: translateY(0);
   }
 }
 
-/* Subtle elevation card */
+/* Professional Legal Card Styles */
 .legal-card {
-  background-color: var(--bg-card);
+  background-color: #FFFFFF;
   border: 1px solid var(--border-subtle);
   border-radius: 8px;
-  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04), 0 1px 2px rgba(15, 23, 42, 0.02);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
 }
 
 .legal-card:hover {
-  border-color: var(--border-strong);
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+  border-color: var(--border-medium);
+  box-shadow: 0 8px 20px -4px rgba(15, 41, 74, 0.08), 0 4px 6px -2px rgba(15, 41, 74, 0.03);
 }
 
-.legal-card-gold {
-  background-color: var(--bg-card);
-  border: 1px solid rgba(197, 160, 89, 0.35);
+.legal-card-blue {
+  background-color: #FFFFFF;
+  border: 1px solid #BFDBFE;
   border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(37, 99, 235, 0.05);
 }
 
-.legal-card-gold:hover {
-  border-color: var(--gold-500);
+.legal-card-blue:hover {
+  border-color: var(--blue-600);
 }
 
-/* Badge styles */
+/* Legal Badges */
 .legal-badge {
   display: inline-flex;
   align-items: center;
@@ -177,32 +196,38 @@ textarea:focus-visible {
   padding: 0.25rem 0.625rem;
   font-family: var(--font-mono);
   font-size: 0.75rem;
-  font-weight: 500;
+  font-weight: 600;
   border-radius: 4px;
 }
 
-.badge-gold {
-  background-color: rgba(197, 160, 89, 0.12);
-  color: var(--gold-400);
-  border: 1px solid rgba(197, 160, 89, 0.3);
-}
-
-.badge-emerald {
-  background-color: rgba(16, 185, 129, 0.12);
-  color: var(--emerald-400);
-  border: 1px solid rgba(16, 185, 129, 0.3);
-}
-
-.badge-amber {
-  background-color: rgba(245, 158, 11, 0.12);
-  color: var(--amber-400);
-  border: 1px solid rgba(245, 158, 11, 0.3);
+.badge-navy {
+  background-color: #EFF6FF;
+  color: var(--navy-850);
+  border: 1px solid #BFDBFE;
 }
 
 .badge-blue {
-  background-color: rgba(59, 130, 246, 0.12);
-  color: var(--blue-400);
-  border: 1px solid rgba(59, 130, 246, 0.3);
+  background-color: #EFF6FF;
+  color: var(--blue-600);
+  border: 1px solid #DBEAFE;
+}
+
+.badge-emerald {
+  background-color: #ECFDF5;
+  color: var(--emerald-700);
+  border: 1px solid #A7F3D0;
+}
+
+.badge-amber {
+  background-color: #FFFBEB;
+  color: var(--amber-700);
+  border: 1px solid #FDE68A;
+}
+
+.badge-rose {
+  background-color: #FFF1F2;
+  color: var(--rose-700);
+  border: 1px solid #FECDD3;
 }
 
 /* Precision Button Styles */
@@ -212,21 +237,21 @@ textarea:focus-visible {
   justify-content: center;
   gap: 0.5rem;
   padding: 0.625rem 1.25rem;
-  background-color: var(--gold-500);
-  color: #080D1A;
+  background-color: var(--navy-850);
+  color: #FFFFFF;
   font-weight: 600;
   font-size: 0.875rem;
   border-radius: 6px;
-  border: 1px solid var(--gold-400);
+  border: 1px solid var(--navy-900);
   cursor: pointer;
   transition: all 0.15s ease-in-out;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 1px 2px rgba(15, 41, 74, 0.15);
 }
 
 .btn-primary:hover {
-  background-color: var(--gold-400);
+  background-color: var(--navy-700);
   transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(197, 160, 89, 0.25);
+  box-shadow: 0 4px 8px rgba(15, 41, 74, 0.2);
 }
 
 .btn-primary:active {
@@ -239,20 +264,20 @@ textarea:focus-visible {
   justify-content: center;
   gap: 0.5rem;
   padding: 0.625rem 1.25rem;
-  background-color: var(--bg-elevated);
-  color: var(--text-primary);
-  font-weight: 500;
+  background-color: #FFFFFF;
+  color: var(--text-secondary);
+  font-weight: 600;
   font-size: 0.875rem;
   border-radius: 6px;
-  border: 1px solid var(--border-subtle);
+  border: 1px solid var(--border-medium);
   cursor: pointer;
   transition: all 0.15s ease-in-out;
 }
 
 .btn-secondary:hover {
-  background-color: var(--bg-card-hover);
-  border-color: var(--border-strong);
-  color: #FFFFFF;
+  background-color: #F8FAFC;
+  border-color: var(--navy-850);
+  color: var(--navy-850);
 }
 
 /* Timeline & Swimlane Elements */
@@ -270,41 +295,43 @@ textarea:focus-visible {
   background: var(--border-subtle);
 }
 
-/* BPMN Flow node */
+/* BPMN Flow Node */
 .bpmn-node {
   position: relative;
   border: 1px solid var(--border-subtle);
-  background: var(--bg-surface);
+  background: #FFFFFF;
   border-radius: 6px;
   padding: 0.875rem 1rem;
   transition: all 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
 }
 
 .bpmn-node.active-node {
-  border-color: var(--gold-500);
-  box-shadow: 0 0 16px rgba(197, 160, 89, 0.25);
+  border-color: var(--blue-600);
+  background-color: #EFF6FF;
+  box-shadow: 0 0 12px rgba(37, 99, 235, 0.25);
 }
 
-/* Pulsing beacon */
+/* Pulsing Beacon */
 .pulse-beacon {
   display: inline-block;
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background-color: var(--emerald-400);
-  box-shadow: 0 0 0 rgba(16, 185, 129, 0.4);
+  background-color: var(--emerald-600);
+  box-shadow: 0 0 0 rgba(5, 150, 105, 0.4);
   animation: beaconPulse 2s infinite;
 }
 
 @keyframes beaconPulse {
   0% {
-    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.5);
+    box-shadow: 0 0 0 0 rgba(5, 150, 105, 0.5);
   }
   70% {
-    box-shadow: 0 0 0 8px rgba(16, 185, 129, 0);
+    box-shadow: 0 0 0 6px rgba(5, 150, 105, 0);
   }
   100% {
-    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+    box-shadow: 0 0 0 0 rgba(5, 150, 105, 0);
   }
 }
 
@@ -312,17 +339,17 @@ textarea:focus-visible {
 @media print {
   body {
     background-color: #FFFFFF !important;
-    color: #111827 !important;
+    color: #0A192F !important;
   }
   
   .no-print {
     display: none !important;
   }
   
-  .legal-card, .legal-card-gold {
+  .legal-card, .legal-card-blue {
     background: #FFFFFF !important;
-    border: 1px solid #E5E7EB !important;
-    color: #111827 !important;
+    border: 1px solid #CBD5E1 !important;
+    color: #0A192F !important;
     box-shadow: none !important;
     page-break-inside: avoid;
   }
