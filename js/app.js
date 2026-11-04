@@ -1,6 +1,6 @@
 /**
  * Belde's Notarial & Legal Services Presentation & System Simulation
- * Black & Antique Gold Architectural Legal Theme (Zero AI-Slop)
+ * Obsidian & Antique Champagne Gold Legal System
  * Authors: Group 2 (Living in the IT Era - Saint Louis University)
  * Facilitator: Ma. Clarissa B. Mabitazan
  */
@@ -29,9 +29,9 @@ const state = {
 // Speaker Notes Data
 const speakerNotes = [
   "Slide 1: Welcome Facilitator Ma. Clarissa Mabitazan, Saint Louis University faculty, and classmates. Group 2 presents our Business Case: An Integrated Case, Records, and Scheduling System for Belde's Notarial and Legal Services.",
-  "Slide 2: Executive Summary. Established in July 2004 in Umingan, Pangasinan, Atty. Allan P. Belde operates a solo legal practice delivering high-caliber community counsel. We address manual recordkeeping friction and scattered client communication.",
-  "Slide 3: Law Office Profile. Founder Atty. Allan P. Belde has maintained strict adherence to the rule of law for over two decades across six distinct legal practice areas.",
-  "Slide 4: Business Rules & Legal Ethics. Prioritization is strictly calibrated to court prescriptive periods and reglementary deadlines; client confidentiality continues perpetually under fiduciary duty; and Atty. Belde conducts daily end-of-day reviews.",
+  "Slide 2: Executive Summary. Established in July 2004 in Umingan, Pangasinan, Atty. Allan P. Belde operates a solo legal practice delivering community counsel. We address manual recordkeeping friction and scattered client communication.",
+  "Slide 3: Law Office Profile. Founder Atty. Allan P. Belde has maintained strict fidelity to the rule of law for over two decades across six distinct legal practice areas.",
+  "Slide 4: Business Rules & Legal Ethics. Prioritization is calibrated to court prescriptive periods and reglementary deadlines; client confidentiality continues perpetually under fiduciary duty; and Atty. Belde conducts daily end-of-day reviews.",
   "Slide 5: As-Is Operational Analysis. Physical paper folders in steel filing cabinets and ad-hoc Messenger threads create administrative latency despite maintaining zero ethical complaints in 20+ years.",
   "Slide 6: Proposed Architecture. A dual-tier integrated platform combining an accessible Client Self-Service Portal with a centralized Law Office Administrative Records Console.",
   "Slide 7: Stakeholder Matrix. Primary users (Atty. Belde and Legal Secretaries for intake, calendar, and records) and Secondary users (Clients for tracking, appointments, and billing breakdown requests).",
@@ -44,7 +44,7 @@ const speakerNotes = [
   "Slide 14: Group 2 Presentation Roster. Acknowledging all student researchers and opening the floor for Facilitator Mabitazan's academic defense evaluation."
 ];
 
-// Demo Case Database for Live Simulation
+// Demo Case Database
 const demoCases = {
   'CIV-2026-084': {
     id: 'CIV-2026-084',
@@ -132,7 +132,7 @@ const demoCases = {
   }
 };
 
-// Subtle Web Audio Feedback (Zero Synthetic Noise)
+// Subtle Web Audio Feedback
 function playTactileFeedback(type = 'click') {
   if (!state.soundEnabled) return;
   try {
@@ -150,24 +150,24 @@ function playTactileFeedback(type = 'click') {
     const now = state.audioCtx.currentTime;
     if (type === 'slide') {
       osc.type = 'sine';
-      osc.frequency.setValueAtTime(320, now);
-      osc.frequency.exponentialRampToValueAtTime(540, now + 0.035);
-      gain.gain.setValueAtTime(0.03, now);
+      osc.frequency.setValueAtTime(280, now);
+      osc.frequency.exponentialRampToValueAtTime(460, now + 0.035);
+      gain.gain.setValueAtTime(0.025, now);
       gain.gain.exponentialRampToValueAtTime(0.001, now + 0.035);
       osc.start(now);
       osc.stop(now + 0.035);
     } else if (type === 'success') {
       osc.type = 'sine';
       osc.frequency.setValueAtTime(440, now);
-      osc.frequency.exponentialRampToValueAtTime(659.25, now + 0.06);
-      gain.gain.setValueAtTime(0.04, now);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.06);
+      osc.frequency.exponentialRampToValueAtTime(659.25, now + 0.05);
+      gain.gain.setValueAtTime(0.035, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
       osc.start(now);
-      osc.stop(now + 0.06);
+      osc.stop(now + 0.05);
     } else {
       osc.type = 'sine';
-      osc.frequency.setValueAtTime(700, now);
-      gain.gain.setValueAtTime(0.02, now);
+      osc.frequency.setValueAtTime(600, now);
+      gain.gain.setValueAtTime(0.015, now);
       gain.gain.exponentialRampToValueAtTime(0.001, now + 0.02);
       osc.start(now);
       osc.stop(now + 0.02);
@@ -231,7 +231,7 @@ function updateSlideView() {
   }
 }
 
-// Mode Switcher
+// View Mode Switching
 function setMode(mode) {
   state.currentMode = mode;
   playTactileFeedback('click');
@@ -297,7 +297,7 @@ function updateTimerDisplay() {
 function toggleFullScreen() {
   playTactileFeedback('click');
   if (!document.fullscreenElement) {
-    document.documentElement.requestFullscreen().catch(() => { });
+    document.documentElement.requestFullscreen().catch(() => {});
   } else {
     if (document.exitFullscreen) {
       document.exitFullscreen();
@@ -326,8 +326,8 @@ function setSimulatorTab(tabId) {
 
   document.querySelectorAll('.sim-tab-content').forEach(el => el.classList.add('hidden'));
   document.querySelectorAll('.sim-nav-btn').forEach(btn => {
-    btn.classList.remove('bg-[#C5A059]', 'text-[#09090B]', 'border-[#C5A059]', 'font-bold');
-    btn.classList.add('bg-[#111114]', 'text-[#A0A0AB]', 'border-[#222228]');
+    btn.classList.remove('bg-[#C5A059]', 'text-[#08080A]', 'border-[#C5A059]', 'font-bold');
+    btn.classList.add('bg-[#101014]', 'text-[#9E9EA8]', 'border-[#1F1F26]');
   });
 
   const activeContent = document.getElementById(`simTab-${tabId}`);
@@ -335,8 +335,8 @@ function setSimulatorTab(tabId) {
 
   if (activeContent) activeContent.classList.remove('hidden');
   if (activeBtn) {
-    activeBtn.classList.remove('bg-[#111114]', 'text-[#A0A0AB]', 'border-[#222228]');
-    activeBtn.classList.add('bg-[#C5A059]', 'text-[#09090B]', 'border-[#C5A059]', 'font-bold');
+    activeBtn.classList.remove('bg-[#101014]', 'text-[#9E9EA8]', 'border-[#1F1F26]');
+    activeBtn.classList.add('bg-[#C5A059]', 'text-[#08080A]', 'border-[#C5A059]', 'font-bold');
   }
 }
 
@@ -349,60 +349,60 @@ function renderCaseDetails(caseId) {
   if (!container) return;
 
   let stepsHtml = caseData.steps.map(step => {
-    let circleClass = 'bg-[#18181D] text-[#666672] border-[#222228]';
-    let labelClass = 'text-[#666672]';
-    let checkIcon = '<span class="w-1.5 h-1.5 rounded-full bg-[#303038]"></span>';
+    let circleClass = 'bg-[#16161B] text-[#5E5E6B] border-[#1F1F26]';
+    let labelClass = 'text-[#5E5E6B]';
+    let checkIcon = '<span class="w-1.5 h-1.5 rounded-full bg-[#2A2A34]"></span>';
 
     if (step.completed) {
-      circleClass = 'bg-[#09090B] text-[#C5A059] border-[#C5A059]';
-      labelClass = 'text-[#EDEDF0] font-medium';
+      circleClass = 'bg-[#08080A] text-[#C5A059] border-[#C5A059]';
+      labelClass = 'text-[#F1F1F4] font-medium';
       checkIcon = `<svg class="w-3.5 h-3.5 text-[#C5A059]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>`;
     } else if (step.current) {
-      circleClass = 'bg-[#18181D] text-[#D6BC83] border-[#D6BC83]';
+      circleClass = 'bg-[#16161B] text-[#D6BC83] border-[#D6BC83]';
       labelClass = 'text-[#D6BC83] font-semibold';
       checkIcon = `<span class="w-2 h-2 rounded-full bg-[#C5A059]"></span>`;
     }
 
     return `
       <div class="flex items-start gap-3 relative pb-4 last:pb-0">
-        <div class="w-6 h-6 rounded-full flex items-center justify-center border ${circleClass} shrink-0 mt-0.5 z-10 bg-[#09090B]">
+        <div class="w-6 h-6 rounded-full flex items-center justify-center border ${circleClass} shrink-0 mt-0.5 z-10 bg-[#08080A]">
           ${checkIcon}
         </div>
         <div class="flex-1">
           <p class="text-xs sm:text-sm ${labelClass}">${step.name}</p>
-          <span class="text-[11px] font-mono text-[#666672]">${step.date}</span>
+          <span class="text-[11px] font-mono text-[#5E5E6B]">${step.date}</span>
         </div>
       </div>
     `;
   }).join('');
 
   let jargonHtml = caseData.jargonTerms.map(j => `
-    <div class="p-3 bg-[#09090B] rounded border border-[#222228] text-xs">
+    <div class="p-3 bg-[#08080A] rounded border border-[#1F1F26] text-xs">
       <span class="font-bold text-[#C5A059] font-mono">${j.term}:</span>
-      <span class="text-[#A0A0AB] ml-1 leading-relaxed">${j.def}</span>
+      <span class="text-[#9E9EA8] ml-1 leading-relaxed">${j.def}</span>
     </div>
   `).join('');
 
   container.innerHTML = `
-    <div class="legal-card p-6">
-      <div class="flex flex-wrap items-center justify-between gap-4 border-b border-[#222228] pb-4 mb-5">
+    <div class="editorial-card p-6">
+      <div class="flex flex-wrap items-center justify-between gap-4 border-b border-[#1F1F26] pb-4 mb-5">
         <div>
           <div class="flex items-center gap-2 mb-1.5">
-            <span class="text-xs font-mono px-2.5 py-0.5 rounded bg-[#18181D] text-[#C5A059] border border-[#303038] font-bold">${caseData.id}</span>
+            <span class="text-xs font-mono px-2.5 py-0.5 rounded bg-[#16161B] text-[#C5A059] border border-[#2A2A34] font-bold">${caseData.id}</span>
             <span class="legal-badge ${caseData.statusClass}">${caseData.status}</span>
           </div>
-          <h3 class="text-lg font-serif font-bold text-[#EDEDF0]">${caseData.title}</h3>
-          <p class="text-xs text-[#666672] mt-0.5">Practice Area: <strong class="text-[#A0A0AB]">${caseData.type}</strong></p>
+          <h3 class="text-lg font-serif-display font-bold text-[#F1F1F4]">${caseData.title}</h3>
+          <p class="text-xs text-[#5E5E6B] mt-0.5">Practice Area: <strong class="text-[#9E9EA8]">${caseData.type}</strong></p>
         </div>
         <div class="text-right">
-          <p class="text-xs text-[#666672] font-mono">Date Filed</p>
-          <p class="text-sm font-bold text-[#EDEDF0]">${caseData.dateFiled}</p>
+          <p class="text-xs text-[#5E5E6B] font-mono">Date Filed</p>
+          <p class="text-sm font-bold text-[#F1F1F4]">${caseData.dateFiled}</p>
         </div>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
         <div>
-          <h4 class="text-xs font-mono uppercase tracking-wider text-[#A0A0AB] font-semibold mb-3 flex items-center gap-1.5">
+          <h4 class="text-xs font-mono uppercase tracking-wider text-[#9E9EA8] font-semibold mb-3 flex items-center gap-1.5">
             <svg class="w-4 h-4 text-[#C5A059]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
             Case Workflow Progress
           </h4>
@@ -412,17 +412,17 @@ function renderCaseDetails(caseId) {
         </div>
 
         <div>
-          <h4 class="text-xs font-mono uppercase tracking-wider text-[#A0A0AB] font-semibold mb-3 flex items-center gap-1.5">
+          <h4 class="text-xs font-mono uppercase tracking-wider text-[#9E9EA8] font-semibold mb-3 flex items-center gap-1.5">
             <svg class="w-4 h-4 text-[#C5A059]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
             Next Reglementary & Court Calendar
           </h4>
-          <div class="p-4 bg-[#09090B] rounded border border-[#222228] mb-4">
+          <div class="p-4 bg-[#08080A] rounded border border-[#1F1F26] mb-4">
             <p class="text-xs text-[#C5A059] font-mono font-bold">Scheduled Court Appearance:</p>
-            <p class="text-sm font-bold text-[#EDEDF0] mt-1">${caseData.nextHearing}</p>
-            <p class="text-xs text-[#666672] mt-1.5">Supervising Counsel: Atty. Allan P. Belde</p>
+            <p class="text-sm font-bold text-[#F1F1F4] mt-1">${caseData.nextHearing}</p>
+            <p class="text-xs text-[#5E5E6B] mt-1.5">Supervising Counsel: Atty. Allan P. Belde</p>
           </div>
 
-          <h4 class="text-xs font-mono uppercase tracking-wider text-[#A0A0AB] font-semibold mb-2 flex items-center gap-1.5">
+          <h4 class="text-xs font-mono uppercase tracking-wider text-[#9E9EA8] font-semibold mb-2 flex items-center gap-1.5">
             <svg class="w-4 h-4 text-[#C5A059]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
             Plain-Language Legal Jargon Decoder
           </h4>
@@ -432,10 +432,10 @@ function renderCaseDetails(caseId) {
         </div>
       </div>
 
-      <div class="bg-[#09090B] p-4 rounded border border-[#222228] flex flex-wrap items-center justify-between gap-3 text-xs">
+      <div class="bg-[#08080A] p-4 rounded border border-[#1F1F26] flex flex-wrap items-center justify-between gap-3 text-xs">
         <div class="flex items-center gap-2">
           <span class="pulse-beacon"></span>
-          <span class="text-[#A0A0AB]">Portal Sync: Real-Time Synchronized (99.0% SLA Uptime)</span>
+          <span class="text-[#9E9EA8]">Portal Sync: Real-Time Synchronized (99.0% SLA Uptime)</span>
         </div>
         <button onclick="requestBillingBreakdown('${caseData.id}')" class="btn-primary text-xs py-1.5 px-3">
           Request Billing & OTP Verification
@@ -462,20 +462,20 @@ function submitAppointmentBooking(e) {
   const refCode = `APP-${Math.floor(100000 + Math.random() * 900000)}`;
 
   resultContainer.innerHTML = `
-    <div class="p-6 bg-[#111114] border border-[#C5A059] rounded-lg">
+    <div class="p-6 bg-[#101014] border border-[#C5A059] rounded-lg">
       <img src="assets/logo.jpg" alt="Belde's Law Office Seal" class="w-12 h-12 rounded-full border border-[#C5A059] object-cover mx-auto mb-3 shadow-md">
-      <h3 class="text-center font-serif text-lg font-bold text-[#EDEDF0]">Appointment Scheduled Successfully</h3>
-      <p class="text-center text-xs text-[#A0A0AB] mt-1">Belde's Notarial & Legal Services Centralized Calendar</p>
+      <h3 class="text-center font-serif-display text-lg font-bold text-[#F1F1F4]">Appointment Scheduled Successfully</h3>
+      <p class="text-center text-xs text-[#9E9EA8] mt-1">Belde's Notarial & Legal Services Centralized Calendar</p>
 
-      <div class="mt-4 p-4 bg-[#09090B] rounded border border-[#222228] font-mono text-xs space-y-1.5">
-        <div class="flex justify-between"><span class="text-[#666672]">Reference:</span><span class="text-[#C5A059] font-bold">${refCode}</span></div>
-        <div class="flex justify-between"><span class="text-[#666672]">Client:</span><span class="text-[#EDEDF0] font-semibold">${name}</span></div>
-        <div class="flex justify-between"><span class="text-[#666672]">Service:</span><span class="text-[#A0A0AB]">${service}</span></div>
-        <div class="flex justify-between"><span class="text-[#666672]">Date & Slot:</span><span class="text-[#C5A059] font-bold">${date} at ${time}</span></div>
-        <div class="flex justify-between"><span class="text-[#666672]">Venue:</span><span class="text-[#A0A0AB]">Cariño St., Poblacion West, Umingan</span></div>
+      <div class="mt-4 p-4 bg-[#08080A] rounded border border-[#1F1F26] font-mono text-xs space-y-1.5">
+        <div class="flex justify-between"><span class="text-[#5E5E6B]">Reference:</span><span class="text-[#C5A059] font-bold">${refCode}</span></div>
+        <div class="flex justify-between"><span class="text-[#5E5E6B]">Client:</span><span class="text-[#F1F1F4] font-semibold">${name}</span></div>
+        <div class="flex justify-between"><span class="text-[#5E5E6B]">Service:</span><span class="text-[#9E9EA8]">${service}</span></div>
+        <div class="flex justify-between"><span class="text-[#5E5E6B]">Date & Slot:</span><span class="text-[#C5A059] font-bold">${date} at ${time}</span></div>
+        <div class="flex justify-between"><span class="text-[#5E5E6B]">Venue:</span><span class="text-[#9E9EA8]">Cariño St., Poblacion West, Umingan</span></div>
       </div>
 
-      <p class="text-xs text-[#666672] mt-3 text-center">An automated SMS reminder will be dispatched 24 hours prior to your consultation.</p>
+      <p class="text-xs text-[#5E5E6B] mt-3 text-center">An automated SMS reminder will be dispatched 24 hours prior to your consultation.</p>
       
       <div class="mt-5 flex justify-center">
         <button onclick="document.getElementById('bookingConfirmationModal').classList.add('hidden')" class="btn-secondary text-xs">
@@ -540,32 +540,32 @@ function verifyOtp() {
 
   if (resultDisplay) {
     resultDisplay.innerHTML = `
-      <div class="p-6 bg-[#111114] border border-[#C5A059] rounded-lg">
-        <div class="flex items-center justify-between border-b border-[#222228] pb-3 mb-4">
+      <div class="p-6 bg-[#101014] border border-[#C5A059] rounded-lg">
+        <div class="flex items-center justify-between border-b border-[#1F1F26] pb-3 mb-4">
           <div class="flex items-center gap-2">
             <span class="w-2.5 h-2.5 rounded-full bg-[#10B981]"></span>
             <span class="text-xs font-mono uppercase text-[#10B981] font-bold">Identity Verified via Out-of-Band OTP Callback</span>
           </div>
-          <span class="text-xs font-mono text-[#666672]">Data Privacy Act (RA 10173) Compliant</span>
+          <span class="text-xs font-mono text-[#5E5E6B]">Data Privacy Act (RA 10173) Compliant</span>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-          <div class="p-3 bg-[#09090B] rounded border border-[#222228]">
-            <p class="text-xs text-[#666672] font-mono">Agreed Professional Fees</p>
-            <p class="text-lg font-bold text-[#EDEDF0] font-mono">₱ 45,000.00</p>
+          <div class="p-3 bg-[#08080A] rounded border border-[#1F1F26]">
+            <p class="text-xs text-[#5E5E6B] font-mono">Agreed Professional Fees</p>
+            <p class="text-lg font-bold text-[#F1F1F4] font-mono">₱ 45,000.00</p>
           </div>
-          <div class="p-3 bg-[#09090B] rounded border border-[#222228]">
-            <p class="text-xs text-[#666672] font-mono">Settled to Date</p>
+          <div class="p-3 bg-[#08080A] rounded border border-[#1F1F26]">
+            <p class="text-xs text-[#5E5E6B] font-mono">Settled to Date</p>
             <p class="text-lg font-bold text-[#10B981] font-mono">₱ 30,000.00</p>
           </div>
-          <div class="p-3 bg-[#09090B] rounded border border-[#222228]">
-            <p class="text-xs text-[#666672] font-mono">Remaining Balance Due</p>
+          <div class="p-3 bg-[#08080A] rounded border border-[#1F1F26]">
+            <p class="text-xs text-[#5E5E6B] font-mono">Remaining Balance Due</p>
             <p class="text-lg font-bold text-[#C5A059] font-mono">₱ 15,000.00</p>
           </div>
         </div>
 
-        <div class="p-4 bg-[#09090B] rounded border border-[#222228] text-xs text-[#A0A0AB] mb-4 space-y-1">
-          <p><strong class="text-[#EDEDF0]">Legal Ethics & Data Safeguard Notice:</strong> As mandated by Atty. Belde's business rules, an authorized legal secretary representative has logged this financial inquiry. Official E-Receipts (PDF) are generated within 5 seconds.</p>
+        <div class="p-4 bg-[#08080A] rounded border border-[#1F1F26] text-xs text-[#9E9EA8] mb-4 space-y-1">
+          <p><strong class="text-[#F1F1F4]">Legal Ethics & Data Safeguard Notice:</strong> As mandated by Atty. Belde's business rules, an authorized legal secretary representative has logged this financial inquiry. Official E-Receipts (PDF) are generated within 5 seconds.</p>
         </div>
 
         <div class="flex justify-end gap-3">
@@ -583,7 +583,12 @@ function verifyOtp() {
 
 function downloadMockReceipt() {
   playTactileFeedback('success');
-  alert("Official E-Receipt OR-2026-0981 generated and verified under Atty. Allan P. Belde's notarial seal. (Simulated instant PDF download)");
+  const modal = document.getElementById('receiptModal');
+  if (modal) {
+    modal.classList.remove('hidden');
+  } else {
+    alert("Official E-Receipt OR-2026-0981 generated and verified under Atty. Allan P. Belde's notarial seal. (Simulated instant PDF download)");
+  }
 }
 
 // Conflict-of-Interest Checker Simulation
@@ -602,7 +607,7 @@ function runConflictCheck() {
 
   if (isConflict) {
     resultBox.innerHTML = `
-      <div class="p-4 bg-[rgba(239,68,68,0.1)] border border-[rgba(239,68,68,0.3)] rounded text-xs text-[#F87171]">
+      <div class="p-4 bg-[rgba(239,68,68,0.08)] border border-[rgba(239,68,68,0.25)] rounded text-xs text-[#F87171]">
         <div class="flex items-center gap-2 font-bold mb-1 text-sm text-[#F87171]">
           <svg class="w-4 h-4 text-[#F87171]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
           POTENTIAL CONFLICT OF INTEREST DETECTED
@@ -612,7 +617,7 @@ function runConflictCheck() {
     `;
   } else {
     resultBox.innerHTML = `
-      <div class="p-4 bg-[rgba(16,185,129,0.1)] border border-[rgba(16,185,129,0.3)] rounded text-xs text-[#34D399]">
+      <div class="p-4 bg-[rgba(16,185,129,0.08)] border border-[rgba(16,185,129,0.25)] rounded text-xs text-[#34D399]">
         <div class="flex items-center gap-2 font-bold mb-1 text-sm text-[#34D399]">
           <svg class="w-4 h-4 text-[#34D399]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
           ETHICAL CONFLICT CLEARANCE: APPROVED
@@ -696,7 +701,7 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
-// Ambient Obsidian & Gold Geometric Particle Canvas
+// Ambient Bokeh Gold Dust Canvas (Pure Senior Designer Elegance)
 function initAmbientBackground() {
   const canvas = document.getElementById('ambientCanvas');
   if (!canvas) return;
@@ -706,28 +711,15 @@ function initAmbientBackground() {
   let height = (canvas.height = window.innerHeight);
 
   const isMobile = width < 768;
-  const particleCount = isMobile ? 26 : 56;
-  const connectionDistance = isMobile ? 90 : 130;
+  const particleCount = isMobile ? 32 : 65;
   const particles = [];
-
-  const mouse = { x: -1000, y: -1000 };
-
-  window.addEventListener('mousemove', (e) => {
-    mouse.x = e.clientX;
-    mouse.y = e.clientY;
-  });
-
-  window.addEventListener('mouseleave', () => {
-    mouse.x = -1000;
-    mouse.y = -1000;
-  });
 
   window.addEventListener('resize', () => {
     width = canvas.width = window.innerWidth;
     height = canvas.height = window.innerHeight;
   });
 
-  class GoldParticle {
+  class GoldDust {
     constructor() {
       this.reset(true);
     }
@@ -735,74 +727,44 @@ function initAmbientBackground() {
     reset(initial = false) {
       this.x = Math.random() * width;
       this.y = initial ? Math.random() * height : height + 10;
-      this.vx = (Math.random() - 0.5) * 0.35;
-      this.vy = -Math.random() * 0.45 - 0.12;
-      this.radius = Math.random() * 1.5 + 0.8;
-      this.baseAlpha = Math.random() * 0.35 + 0.18;
+      this.vx = (Math.random() - 0.5) * 0.2;
+      this.vy = -Math.random() * 0.35 - 0.08;
+      this.radius = Math.random() * 1.6 + 0.6;
+      this.baseAlpha = Math.random() * 0.35 + 0.12;
       this.alpha = this.baseAlpha;
       this.pulsePhase = Math.random() * Math.PI * 2;
-      this.pulseSpeed = Math.random() * 0.02 + 0.01;
+      this.pulseSpeed = Math.random() * 0.015 + 0.008;
     }
 
     update() {
       this.x += this.vx;
       this.y += this.vy;
-
       this.pulsePhase += this.pulseSpeed;
-      this.alpha = this.baseAlpha + Math.sin(this.pulsePhase) * 0.12;
+      this.alpha = this.baseAlpha + Math.sin(this.pulsePhase) * 0.1;
 
-      const dx = mouse.x - this.x;
-      const dy = mouse.y - this.y;
-      const dist = Math.sqrt(dx * dx + dy * dy);
-      if (dist < 120) {
-        const force = (120 - dist) / 120;
-        this.x -= (dx / dist) * force * 1.8;
-        this.y -= (dy / dist) * force * 1.8;
-      }
-
-      if (this.y < -15) this.reset();
-      if (this.x < -15) this.x = width + 10;
-      if (this.x > width + 15) this.x = -10;
+      if (this.y < -10) this.reset();
+      if (this.x < -10) this.x = width + 10;
+      if (this.x > width + 10) this.x = -10;
     }
 
     draw() {
       ctx.beginPath();
       ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(197, 160, 89, ${Math.max(0.06, this.alpha)})`;
+      ctx.fillStyle = `rgba(197, 160, 89, ${Math.max(0.04, this.alpha)})`;
       ctx.fill();
     }
   }
 
   for (let i = 0; i < particleCount; i++) {
-    particles.push(new GoldParticle());
+    particles.push(new GoldDust());
   }
 
   function animate() {
     ctx.clearRect(0, 0, width, height);
-
-    for (let i = 0; i < particles.length; i++) {
-      for (let j = i + 1; j < particles.length; j++) {
-        const dx = particles[i].x - particles[j].x;
-        const dy = particles[i].y - particles[j].y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-
-        if (dist < connectionDistance) {
-          const lineAlpha = (1 - dist / connectionDistance) * 0.12;
-          ctx.beginPath();
-          ctx.moveTo(particles[i].x, particles[i].y);
-          ctx.lineTo(particles[j].x, particles[j].y);
-          ctx.strokeStyle = `rgba(197, 160, 89, ${lineAlpha})`;
-          ctx.lineWidth = 0.75;
-          ctx.stroke();
-        }
-      }
-    }
-
     for (let i = 0; i < particles.length; i++) {
       particles[i].update();
       particles[i].draw();
     }
-
     requestAnimationFrame(animate);
   }
 
