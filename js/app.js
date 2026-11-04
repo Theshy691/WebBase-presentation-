@@ -23,7 +23,12 @@ const state = {
   otpTimer: 60,
   otpCountdownInterval: null,
   otpVerified: false,
-  notesVisible: false
+  notesVisible: false,
+  
+  // Portal & User Authentication State
+  isClientLoggedIn: false, // false = Public Front Page; true = Logged-in User Area
+  activeClientCase: 'CIV-2026-084',
+  clientActiveSubTab: 'case-tracking' // 'case-tracking' | 'billing-breakdown' | 'client-database'
 };
 
 // Speaker Notes Data
@@ -44,7 +49,7 @@ const speakerNotes = [
   "Slide 14: Group 2 Presentation Roster. Acknowledging all student researchers and opening the floor for Facilitator Mabitazan's academic defense evaluation."
 ];
 
-// Demo Case Database
+// Demo Case & Client Database
 const demoCases = {
   'CIV-2026-084': {
     id: 'CIV-2026-084',
@@ -52,10 +57,15 @@ const demoCases = {
     type: 'Land & Property / Estate Law',
     client: 'Eduardo M. Santos',
     phone: '+63 917 555 0192',
+    email: 'eduardo.santos@gmail.com',
+    residence: 'Braganza St., Poblacion West, Umingan, Pangasinan',
+    emergencyContact: 'Lourdes Santos (Daughter) - +63 917 555 4421',
+    court: 'RTC Branch 42, Tayug, Pangasinan',
     dateFiled: 'August 14, 2026',
     status: 'In Court Proceedings',
     statusClass: 'badge-amber',
     nextHearing: 'November 18, 2026 - 9:00 AM (RTC Branch 42, Tayug)',
+    attyNotes: 'Pre-trial brief submitted. Newspaper publication proof confirmed. Awaiting formal presentation of co-heirs.',
     steps: [
       { name: 'Client Intake & Conflict Clearance', date: 'Aug 14, 2026', completed: true },
       { name: 'Verification of Title & Tax Declarations', date: 'Aug 22, 2026', completed: true },
@@ -70,6 +80,17 @@ const demoCases = {
       balanceDue: '₱ 15,000.00',
       receiptNo: 'OR-2026-0981'
     },
+    billingItems: [
+      { item: 'Initial Retainer & Acceptance Fee', amount: '₱ 20,000.00', status: 'Settled (OR-2026-0810)' },
+      { item: 'Pleading Drafting & Title Verification', amount: '₱ 10,000.00', status: 'Settled (OR-2026-0981)' },
+      { item: 'RTC Appearance & Witness Presentation', amount: '₱ 15,000.00', status: 'Due on Nov 18, 2026' }
+    ],
+    documents: [
+      { title: 'Deed of Extrajudicial Settlement of Estate', type: 'Notarial Instrument', date: 'Aug 14, 2026', ref: 'Doc. No. 142, Page 29, Book IV', vault: 'Physical Steel Safe 01 (Cariño St.)' },
+      { title: 'Original Owner Duplicate Certificate (TCT No. T-48192)', type: 'Land Registration Title', date: 'Aug 22, 2026', ref: 'Registry of Deeds Tayug', vault: 'Secure Fireproof Vault Box B' },
+      { title: 'Formal Verified Petition for Judicial Partition', type: 'Court Pleading', date: 'Sep 29, 2026', ref: 'Civil Case No. T-3810', vault: 'Active Litigation Archive A-1' },
+      { title: 'Affidavit of Publication (Pangasinan Star)', type: 'Evidentiary Proof', date: 'Oct 12, 2026', ref: '3-Week Publication Proof', vault: 'Active Litigation Archive A-1' }
+    ],
     jargonTerms: [
       { term: 'Partition', def: 'The legal division of real property among co-owners or heirs so each receives their determined individual share.' },
       { term: 'Reglementary Period', def: 'The strict statutory time limit set by procedural rules within which an action or response must be submitted.' }
@@ -81,10 +102,15 @@ const demoCases = {
     type: 'Family Law',
     client: 'Marilou C. Garcia',
     phone: '+63 928 555 4810',
+    email: 'marilou.garcia@gmail.com',
+    residence: 'San Manuel, Pangasinan',
+    emergencyContact: 'Roberto Garcia (Uncle) - +63 928 555 9931',
+    court: 'Family Court (RTC Branch 42, Tayug)',
     dateFiled: 'September 02, 2026',
     status: 'Awaiting Court Assessment',
     statusClass: 'badge-gold',
     nextHearing: 'December 04, 2026 - 1:30 PM (Family Court)',
+    attyNotes: 'Social worker home investigation completed. Preparing formal motion for Letters of Guardianship.',
     steps: [
       { name: 'Inquiry & Conflict Check', date: 'Sep 02, 2026', completed: true },
       { name: 'Documentary Substantiation Gathering', date: 'Sep 12, 2026', completed: true },
@@ -99,6 +125,15 @@ const demoCases = {
       balanceDue: '₱ 0.00',
       receiptNo: 'OR-2026-1044'
     },
+    billingItems: [
+      { item: 'Guardianship Petition Drafting & Acceptance', amount: '₱ 20,000.00', status: 'Settled (OR-2026-1002)' },
+      { item: 'Court Social Worker Assessment Filing', amount: '₱ 15,000.00', status: 'Settled (OR-2026-1044)' }
+    ],
+    documents: [
+      { title: 'Petition for Appointment of Legal Guardian', type: 'Special Proceeding Pleading', date: 'Sep 02, 2026', ref: 'Spec. Proc. No. F-102', vault: 'Family Archive Cabinet C' },
+      { title: 'Certified True Copy of Minor Birth Certificate (PSA)', type: 'Vital Record', date: 'Sep 12, 2026', ref: 'PSA Registry No. 2012-00481', vault: 'Family Archive Cabinet C' },
+      { title: 'Court Social Worker Home Study Report', type: 'Court Social Investigation', date: 'Oct 24, 2026', ref: 'CSW Investigation No. 84', vault: 'Family Archive Cabinet C' }
+    ],
     jargonTerms: [
       { term: 'Letters of Guardianship', def: 'An official court certificate authorizing a designated individual to act as the legal guardian of a minor or ward.' }
     ]
@@ -109,10 +144,15 @@ const demoCases = {
     type: 'Notarial Services & Documentation',
     client: 'Ricardo V. Mendoza',
     phone: '+63 945 555 3321',
+    email: 'ricardo.mendoza@gmail.com',
+    residence: 'Poblacion West, Umingan, Pangasinan',
+    emergencyContact: 'Teresa Mendoza (Spouse) - +63 945 555 1109',
+    court: 'Belde Law Office Notarial Chamber',
     dateFiled: 'October 28, 2026',
     status: 'Ready for Release & Notarization',
     statusClass: 'badge-emerald',
     nextHearing: 'Office Appearance - Nov 06, 2026 (2:00 PM)',
+    attyNotes: 'Parties scheduled for in-person appearance, oath, and thumbmark entry into 2026 Notarial Register.',
     steps: [
       { name: 'Document Presentation & Identity Verification', date: 'Oct 28, 2026', completed: true },
       { name: 'Competent Evidence of Identity Examination', date: 'Oct 28, 2026', completed: true },
@@ -126,6 +166,13 @@ const demoCases = {
       balanceDue: '₱ 0.00',
       receiptNo: 'OR-2026-1219'
     },
+    billingItems: [
+      { item: 'Document Drafting, Acknowledgment & Notarial Seal', amount: '₱ 3,500.00', status: 'Settled (OR-2026-1219)' }
+    ],
+    documents: [
+      { title: 'Deed of Absolute Sale of Real Property', type: 'Notarial Instrument', date: 'Oct 28, 2026', ref: 'Doc. No. 89, Page 18, Book V', vault: '2026 Notarial Register Series' },
+      { title: 'Government Competent Evidence of Identity (PhilID Copies)', type: 'Identity Verification', date: 'Oct 28, 2026', ref: 'PSA PhilID Records', vault: 'Notarial Register Archive' }
+    ],
     jargonTerms: [
       { term: 'Acknowledgment', def: 'A formal legal act whereby the individual executing an instrument appears before a notary public and declares that the instrument is their free and voluntary act.' }
     ]
@@ -148,29 +195,27 @@ function playTactileFeedback(type = 'click') {
     gain.connect(state.audioCtx.destination);
 
     const now = state.audioCtx.currentTime;
-    if (type === 'slide') {
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(280, now);
-      osc.frequency.exponentialRampToValueAtTime(460, now + 0.035);
-      gain.gain.setValueAtTime(0.025, now);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.035);
+    if (type === 'click') {
+      osc.frequency.setValueAtTime(620, now);
+      osc.frequency.exponentialRampToValueAtTime(320, now + 0.04);
+      gain.gain.setValueAtTime(0.04, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
       osc.start(now);
-      osc.stop(now + 0.035);
-    } else if (type === 'success') {
-      osc.type = 'sine';
+      osc.stop(now + 0.04);
+    } else if (type === 'slide') {
       osc.frequency.setValueAtTime(440, now);
-      osc.frequency.exponentialRampToValueAtTime(659.25, now + 0.05);
-      gain.gain.setValueAtTime(0.035, now);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+      osc.frequency.exponentialRampToValueAtTime(580, now + 0.06);
+      gain.gain.setValueAtTime(0.03, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.06);
       osc.start(now);
-      osc.stop(now + 0.05);
-    } else {
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(600, now);
-      gain.gain.setValueAtTime(0.015, now);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.02);
+      osc.stop(now + 0.06);
+    } else if (type === 'success') {
+      osc.frequency.setValueAtTime(523.25, now);
+      osc.frequency.setValueAtTime(659.25, now + 0.07);
+      gain.gain.setValueAtTime(0.05, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.16);
       osc.start(now);
-      osc.stop(now + 0.02);
+      osc.stop(now + 0.16);
     }
   } catch (e) {
     // Audio unsupported
@@ -244,15 +289,18 @@ function setMode(mode) {
   if (mode === 'presentation') {
     presView.classList.remove('hidden');
     simView.classList.add('hidden');
-    modePresBtn.className = "btn-primary text-xs py-1.5 px-3";
-    modeSimBtn.className = "btn-secondary text-xs py-1.5 px-3";
-    updateSlideView();
+    modePresBtn.classList.remove('btn-secondary');
+    modePresBtn.classList.add('btn-primary');
+    modeSimBtn.classList.remove('btn-primary');
+    modeSimBtn.classList.add('btn-secondary');
   } else {
     presView.classList.add('hidden');
     simView.classList.remove('hidden');
-    modeSimBtn.className = "btn-primary text-xs py-1.5 px-3";
-    modePresBtn.className = "btn-secondary text-xs py-1.5 px-3";
-    renderCaseDetails('CIV-2026-084');
+    modeSimBtn.classList.remove('btn-secondary');
+    modeSimBtn.classList.add('btn-primary');
+    modePresBtn.classList.remove('btn-primary');
+    modePresBtn.classList.add('btn-secondary');
+    updatePortalView();
   }
 }
 
@@ -285,15 +333,14 @@ function resetTimer() {
 }
 
 function updateTimerDisplay() {
+  const timerEl = document.getElementById('presentationTimer');
+  if (!timerEl) return;
   const mins = Math.floor(state.timerSeconds / 60).toString().padStart(2, '0');
   const secs = (state.timerSeconds % 60).toString().padStart(2, '0');
-  const timerEl = document.getElementById('presentationTimer');
-  if (timerEl) {
-    timerEl.textContent = `${mins}:${secs}`;
-  }
+  timerEl.textContent = `${mins}:${secs}`;
 }
 
-// Fullscreen
+// Fullscreen Toggle
 function toggleFullScreen() {
   playTactileFeedback('click');
   if (!document.fullscreenElement) {
@@ -319,15 +366,141 @@ function toggleSpeakerNotes() {
   }
 }
 
-// Simulator Tab Selector
+// ============================================================
+// PORTAL & AUTHENTICATED USER STATE MANAGEMENT
+// ============================================================
+
+function updatePortalView() {
+  const frontPage = document.getElementById('portalFrontPage');
+  const userDashboard = document.getElementById('portalUserDashboard');
+  const portalAuthBadge = document.getElementById('portalAuthBadge');
+  const portalLoginBtn = document.getElementById('portalLoginBtn');
+
+  if (!state.isClientLoggedIn) {
+    // PUBLIC / FRONT PAGE VIEW
+    if (frontPage) frontPage.classList.remove('hidden');
+    if (userDashboard) userDashboard.classList.add('hidden');
+    if (portalAuthBadge) {
+      portalAuthBadge.textContent = 'Public Portal View';
+      portalAuthBadge.className = 'text-[10px] font-mono px-2 py-0.5 rounded bg-[#15151C] text-[#9B9BA6] border border-[#1A1A22]';
+    }
+    if (portalLoginBtn) {
+      portalLoginBtn.textContent = '🔑 Client Login';
+      portalLoginBtn.onclick = openClientLoginModal;
+    }
+  } else {
+    // AUTHENTICATED CLIENT DASHBOARD VIEW
+    if (frontPage) frontPage.classList.add('hidden');
+    if (userDashboard) userDashboard.classList.remove('hidden');
+    const caseData = demoCases[state.activeClientCase] || demoCases['CIV-2026-084'];
+    if (portalAuthBadge) {
+      portalAuthBadge.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-[#34D399] inline-block mr-1"></span>Client: ${caseData.client} (${caseData.id})`;
+      portalAuthBadge.className = 'text-[10px] font-mono px-2 py-0.5 rounded bg-[#34D399]/10 text-[#34D399] border border-[#34D399]/30';
+    }
+    if (portalLoginBtn) {
+      portalLoginBtn.textContent = '↪ Sign Out';
+      portalLoginBtn.onclick = logoutClient;
+    }
+
+    // Render active sub-tab content
+    setClientSubTab(state.clientActiveSubTab);
+  }
+}
+
+function loginAsClient(caseId) {
+  state.isClientLoggedIn = true;
+  state.activeClientCase = caseId || 'CIV-2026-084';
+  playTactileFeedback('success');
+  closeClientLoginModal();
+  closePortalAccessGuideModal();
+  updatePortalView();
+}
+
+function logoutClient() {
+  state.isClientLoggedIn = false;
+  playTactileFeedback('click');
+  updatePortalView();
+}
+
+function setClientSubTab(subTab) {
+  state.clientActiveSubTab = subTab;
+  playTactileFeedback('click');
+
+  // Subtab buttons
+  document.querySelectorAll('.client-subtab-btn').forEach(btn => {
+    btn.classList.remove('bg-[#C5A059]', 'text-[#070709]', 'font-bold', 'border-[#C5A059]');
+    btn.classList.add('bg-[#0E0E12]', 'text-[#9B9BA6]', 'border-[#1A1A22]');
+  });
+  const activeBtn = document.getElementById(`subTabBtn-${subTab}`);
+  if (activeBtn) {
+    activeBtn.classList.remove('bg-[#0E0E12]', 'text-[#9B9BA6]', 'border-[#1A1A22]');
+    activeBtn.classList.add('bg-[#C5A059]', 'text-[#070709]', 'font-bold', 'border-[#C5A059]');
+  }
+
+  // Subtab contents
+  document.querySelectorAll('.client-subtab-content').forEach(c => c.classList.add('hidden'));
+  const activeContent = document.getElementById(`subTabContent-${subTab}`);
+  if (activeContent) activeContent.classList.remove('hidden');
+
+  // Render appropriate dynamic content
+  if (subTab === 'case-tracking') {
+    renderCaseDetails(state.activeClientCase);
+  } else if (subTab === 'billing-breakdown') {
+    renderBillingBreakdown(state.activeClientCase);
+  } else if (subTab === 'client-database') {
+    renderClientDatabase(state.activeClientCase);
+  }
+}
+
+function selectActiveCase(caseId) {
+  state.activeClientCase = caseId;
+  playTactileFeedback('click');
+  updatePortalView();
+}
+
+// Modals: Schedule, Login, and Step-by-Step Access Guide
+function openAttyScheduleModal() {
+  playTactileFeedback('click');
+  const modal = document.getElementById('attyScheduleModal');
+  if (modal) modal.classList.remove('hidden');
+}
+
+function closeAttyScheduleModal() {
+  const modal = document.getElementById('attyScheduleModal');
+  if (modal) modal.classList.add('hidden');
+}
+
+function openPortalAccessGuideModal() {
+  playTactileFeedback('click');
+  const modal = document.getElementById('portalAccessGuideModal');
+  if (modal) modal.classList.remove('hidden');
+}
+
+function closePortalAccessGuideModal() {
+  const modal = document.getElementById('portalAccessGuideModal');
+  if (modal) modal.classList.add('hidden');
+}
+
+function openClientLoginModal() {
+  playTactileFeedback('click');
+  const modal = document.getElementById('clientLoginModal');
+  if (modal) modal.classList.remove('hidden');
+}
+
+function closeClientLoginModal() {
+  const modal = document.getElementById('clientLoginModal');
+  if (modal) modal.classList.add('hidden');
+}
+
+// Simulator Main Tab Selector (Client Portal vs Secretary Console vs BPMN vs Dossier vs Transcript)
 function setSimulatorTab(tabId) {
   state.activeSimulatorTab = tabId;
   playTactileFeedback('click');
 
   document.querySelectorAll('.sim-tab-content').forEach(el => el.classList.add('hidden'));
   document.querySelectorAll('.sim-nav-btn').forEach(btn => {
-    btn.classList.remove('bg-[#C5A059]', 'text-[#08080A]', 'border-[#C5A059]', 'font-bold');
-    btn.classList.add('bg-[#101014]', 'text-[#9E9EA8]', 'border-[#1F1F26]');
+    btn.classList.remove('bg-[#C5A059]', 'text-[#070709]', 'border-[#C5A059]', 'font-bold');
+    btn.classList.add('bg-[#0E0E12]', 'text-[#9B9BA6]', 'border-[#1A1A22]');
   });
 
   const activeContent = document.getElementById(`simTab-${tabId}`);
@@ -335,76 +508,82 @@ function setSimulatorTab(tabId) {
 
   if (activeContent) activeContent.classList.remove('hidden');
   if (activeBtn) {
-    activeBtn.classList.remove('bg-[#101014]', 'text-[#9E9EA8]', 'border-[#1F1F26]');
-    activeBtn.classList.add('bg-[#C5A059]', 'text-[#08080A]', 'border-[#C5A059]', 'font-bold');
+    activeBtn.classList.remove('bg-[#0E0E12]', 'text-[#9B9BA6]', 'border-[#1A1A22]');
+    activeBtn.classList.add('bg-[#C5A059]', 'text-[#070709]', 'border-[#C5A059]', 'font-bold');
+  }
+
+  if (tabId === 'client-portal') {
+    updatePortalView();
   }
 }
 
-// Case Tracking Simulation
-function renderCaseDetails(caseId) {
-  const caseData = demoCases[caseId];
-  if (!caseData) return;
+// ============================================================
+// DYNAMIC CLIENT RENDERERS (TRACKING, BILLING, DATABASE)
+// ============================================================
 
+// 1. Case Tracking Renderer
+function renderCaseDetails(caseId) {
+  const caseData = demoCases[caseId] || demoCases['CIV-2026-084'];
   const container = document.getElementById('caseDetailsDisplay');
   if (!container) return;
 
   let stepsHtml = caseData.steps.map(step => {
-    let circleClass = 'bg-[#16161B] text-[#5E5E6B] border-[#1F1F26]';
-    let labelClass = 'text-[#5E5E6B]';
-    let checkIcon = '<span class="w-1.5 h-1.5 rounded-full bg-[#2A2A34]"></span>';
+    let circleClass = 'bg-[#15151C] text-[#5C5C68] border-[#1A1A22]';
+    let labelClass = 'text-[#5C5C68]';
+    let checkIcon = '<span class="w-1.5 h-1.5 rounded-full bg-[#262633]"></span>';
 
     if (step.completed) {
-      circleClass = 'bg-[#08080A] text-[#C5A059] border-[#C5A059]';
-      labelClass = 'text-[#F1F1F4] font-medium';
+      circleClass = 'bg-[#070709] text-[#C5A059] border-[#C5A059]';
+      labelClass = 'text-[#F2F2F5] font-medium';
       checkIcon = `<svg class="w-3.5 h-3.5 text-[#C5A059]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>`;
     } else if (step.current) {
-      circleClass = 'bg-[#16161B] text-[#D6BC83] border-[#D6BC83]';
+      circleClass = 'bg-[#15151C] text-[#D6BC83] border-[#D6BC83]';
       labelClass = 'text-[#D6BC83] font-semibold';
-      checkIcon = `<span class="w-2 h-2 rounded-full bg-[#C5A059]"></span>`;
+      checkIcon = `<span class="w-2 h-2 rounded-full bg-[#C5A059] animate-pulse"></span>`;
     }
 
     return `
       <div class="flex items-start gap-3 relative pb-4 last:pb-0">
-        <div class="w-6 h-6 rounded-full flex items-center justify-center border ${circleClass} shrink-0 mt-0.5 z-10 bg-[#08080A]">
+        <div class="w-6 h-6 rounded-full flex items-center justify-center border ${circleClass} shrink-0 mt-0.5 z-10 bg-[#070709]">
           ${checkIcon}
         </div>
         <div class="flex-1">
           <p class="text-xs sm:text-sm ${labelClass}">${step.name}</p>
-          <span class="text-[11px] font-mono text-[#5E5E6B]">${step.date}</span>
+          <span class="text-[11px] font-mono text-[#5C5C68]">${step.date}</span>
         </div>
       </div>
     `;
   }).join('');
 
   let jargonHtml = caseData.jargonTerms.map(j => `
-    <div class="p-3 bg-[#08080A] rounded border border-[#1F1F26] text-xs">
+    <div class="p-3 bg-[#070709] rounded border border-[#1A1A22] text-xs">
       <span class="font-bold text-[#C5A059] font-mono">${j.term}:</span>
-      <span class="text-[#9E9EA8] ml-1 leading-relaxed">${j.def}</span>
+      <span class="text-[#9B9BA6] ml-1 leading-relaxed">${j.def}</span>
     </div>
   `).join('');
 
   container.innerHTML = `
     <div class="editorial-card p-6">
-      <div class="flex flex-wrap items-center justify-between gap-4 border-b border-[#1F1F26] pb-4 mb-5">
+      <div class="flex flex-wrap items-center justify-between gap-4 border-b border-[#1A1A22] pb-4 mb-5">
         <div>
           <div class="flex items-center gap-2 mb-1.5">
-            <span class="text-xs font-mono px-2.5 py-0.5 rounded bg-[#16161B] text-[#C5A059] border border-[#2A2A34] font-bold">${caseData.id}</span>
+            <span class="text-xs font-mono px-2.5 py-0.5 rounded bg-[#15151C] text-[#C5A059] border border-[#262633] font-bold">${caseData.id}</span>
             <span class="legal-badge ${caseData.statusClass}">${caseData.status}</span>
           </div>
-          <h3 class="text-lg font-serif-display font-bold text-[#F1F1F4]">${caseData.title}</h3>
-          <p class="text-xs text-[#5E5E6B] mt-0.5">Practice Area: <strong class="text-[#9E9EA8]">${caseData.type}</strong></p>
+          <h3 class="text-lg font-serif font-bold text-[#FAF5EB]">${caseData.title}</h3>
+          <p class="text-xs text-[#5C5C68] mt-0.5">Practice Area: <strong class="text-[#9B9BA6]">${caseData.type}</strong></p>
         </div>
         <div class="text-right">
-          <p class="text-xs text-[#5E5E6B] font-mono">Date Filed</p>
-          <p class="text-sm font-bold text-[#F1F1F4]">${caseData.dateFiled}</p>
+          <p class="text-xs text-[#5C5C68] font-mono">Date Filed</p>
+          <p class="text-sm font-bold text-[#F2F2F5]">${caseData.dateFiled}</p>
         </div>
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
         <div>
-          <h4 class="text-xs font-mono uppercase tracking-wider text-[#9E9EA8] font-semibold mb-3 flex items-center gap-1.5">
+          <h4 class="text-xs font-mono uppercase tracking-wider text-[#9B9BA6] font-semibold mb-3 flex items-center gap-1.5">
             <svg class="w-4 h-4 text-[#C5A059]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
-            Case Workflow Progress
+            Case Milestone Progress
           </h4>
           <div class="timeline-stem ml-2">
             ${stepsHtml}
@@ -412,17 +591,17 @@ function renderCaseDetails(caseId) {
         </div>
 
         <div>
-          <h4 class="text-xs font-mono uppercase tracking-wider text-[#9E9EA8] font-semibold mb-3 flex items-center gap-1.5">
+          <h4 class="text-xs font-mono uppercase tracking-wider text-[#9B9BA6] font-semibold mb-3 flex items-center gap-1.5">
             <svg class="w-4 h-4 text-[#C5A059]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-            Next Reglementary & Court Calendar
+            Next Court Appearance & Hearing
           </h4>
-          <div class="p-4 bg-[#08080A] rounded border border-[#1F1F26] mb-4">
-            <p class="text-xs text-[#C5A059] font-mono font-bold">Scheduled Court Appearance:</p>
-            <p class="text-sm font-bold text-[#F1F1F4] mt-1">${caseData.nextHearing}</p>
-            <p class="text-xs text-[#5E5E6B] mt-1.5">Supervising Counsel: Atty. Allan P. Belde</p>
+          <div class="p-4 bg-[#070709] rounded border border-[#1A1A22] mb-4">
+            <p class="text-xs text-[#C5A059] font-mono font-bold">Scheduled Hearing / Appearance:</p>
+            <p class="text-sm font-bold text-[#FAF5EB] mt-1">${caseData.nextHearing}</p>
+            <p class="text-xs text-[#9B9BA6] mt-2 italic font-sans">Counsel Note: "${caseData.attyNotes}"</p>
           </div>
 
-          <h4 class="text-xs font-mono uppercase tracking-wider text-[#9E9EA8] font-semibold mb-2 flex items-center gap-1.5">
+          <h4 class="text-xs font-mono uppercase tracking-wider text-[#9B9BA6] font-semibold mb-2 flex items-center gap-1.5">
             <svg class="w-4 h-4 text-[#C5A059]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
             Plain-Language Legal Jargon Decoder
           </h4>
@@ -432,20 +611,175 @@ function renderCaseDetails(caseId) {
         </div>
       </div>
 
-      <div class="bg-[#08080A] p-4 rounded border border-[#1F1F26] flex flex-wrap items-center justify-between gap-3 text-xs">
+      <div class="bg-[#070709] p-4 rounded border border-[#1A1A22] flex flex-wrap items-center justify-between gap-3 text-xs">
         <div class="flex items-center gap-2">
           <span class="pulse-beacon"></span>
-          <span class="text-[#9E9EA8]">Portal Sync: Real-Time Synchronized (99.0% SLA Uptime)</span>
+          <span class="text-[#9B9BA6]">Portal Sync: Real-Time Synchronized (99.0% SLA Uptime)</span>
         </div>
-        <button onclick="requestBillingBreakdown('${caseData.id}')" class="btn-primary text-xs py-1.5 px-3">
-          Request Billing & OTP Verification
+        <button onclick="setClientSubTab('billing-breakdown')" class="btn-primary text-xs py-1.5 px-3">
+          Inspect Billing Breakdown →
         </button>
       </div>
     </div>
   `;
 }
 
-// Appointment Booking Simulation
+// 2. Billing Breakdown Only Renderer (kapag user na)
+function renderBillingBreakdown(caseId) {
+  const caseData = demoCases[caseId] || demoCases['CIV-2026-084'];
+  const container = document.getElementById('billingBreakdownDisplay');
+  if (!container) return;
+
+  const itemsHtml = (caseData.billingItems || []).map(item => `
+    <div class="p-3 bg-[#070709] rounded border border-[#1A1A22] flex items-center justify-between text-xs font-mono">
+      <div>
+        <p class="text-[#FAF5EB] font-bold font-sans">${item.item}</p>
+        <span class="text-[11px] text-[#5C5C68]">${item.status}</span>
+      </div>
+      <div class="text-right">
+        <span class="text-sm font-bold text-[#C5A059]">${item.amount}</span>
+      </div>
+    </div>
+  `).join('');
+
+  container.innerHTML = `
+    <div class="editorial-card p-6">
+      <div class="flex flex-wrap items-center justify-between border-b border-[#1A1A22] pb-4 mb-5">
+        <div>
+          <span class="text-xs font-mono px-2 py-0.5 rounded bg-[#15151C] text-[#C5A059] border border-[#262633] font-bold">${caseData.id}</span>
+          <h3 class="text-lg font-serif font-bold text-[#FAF5EB] mt-1.5">Official Billing & Retainer Breakdown</h3>
+          <p class="text-xs text-[#5C5C68]">Client: <strong class="text-[#9B9BA6]">${caseData.client}</strong> • Reference: ${caseData.financials.receiptNo}</p>
+        </div>
+        <div class="text-right">
+          <button onclick="downloadMockReceipt()" class="btn-primary text-xs py-1.5 px-3.5">
+            <svg class="w-3.5 h-3.5 inline mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+            View Official E-Receipt (PDF)
+          </button>
+        </div>
+      </div>
+
+      <!-- Financial Totals Summary Cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+        <div class="p-4 bg-[#070709] rounded border border-[#1A1A22]">
+          <p class="text-xs font-mono text-[#5C5C68]">Agreed Professional Fees</p>
+          <p class="text-2xl font-mono font-bold text-[#FAF5EB] mt-1">${caseData.financials.totalFees}</p>
+          <p class="text-[10px] font-mono text-[#9B9BA6] mt-0.5">Retainer Agreement</p>
+        </div>
+        <div class="p-4 bg-[#070709] rounded border border-[#1A1A22]">
+          <p class="text-xs font-mono text-[#5C5C68]">Settled to Date</p>
+          <p class="text-2xl font-mono font-bold text-[#34D399] mt-1">${caseData.financials.paidAmount}</p>
+          <p class="text-[10px] font-mono text-[#34D399] mt-0.5">✓ Certified Received</p>
+        </div>
+        <div class="p-4 bg-[#070709] rounded border border-[#1A1A22]">
+          <p class="text-xs font-mono text-[#5C5C68]">Remaining Balance Due</p>
+          <p class="text-2xl font-mono font-bold text-[#C5A059] mt-1">${caseData.financials.balanceDue}</p>
+          <p class="text-[10px] font-mono text-[#C5A059] mt-0.5">${caseData.financials.balanceDue === '₱ 0.00' ? 'Account Clear' : 'Due upon Stage Completion'}</p>
+        </div>
+      </div>
+
+      <!-- Itemized Ledger Breakdown -->
+      <h4 class="text-xs font-mono uppercase tracking-wider text-[#9B9BA6] font-semibold mb-3">Itemized Retainer & Appearance Ledger</h4>
+      <div class="space-y-2 mb-6">
+        ${itemsHtml}
+      </div>
+
+      <!-- Fiduciary Disclosure Notice -->
+      <div class="p-4 bg-[#070709] rounded border border-[#1A1A22] text-xs text-[#9B9BA6] flex items-start gap-3">
+        <span class="w-2 h-2 rounded-full bg-[#C5A059] shrink-0 mt-1"></span>
+        <div>
+          <strong class="text-[#FAF5EB]">Fiduciary Ethical Guarantee:</strong> In strict compliance with Atty. Allan P. Belde's business rules and the Data Privacy Act (RA 10173), financial ledgers are restricted solely to the authenticated client. Official E-Receipts are certified under notarial commission serials and BIR guidelines.
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// 3. Client Database Renderer (kapag user na)
+function renderClientDatabase(caseId) {
+  const caseData = demoCases[caseId] || demoCases['CIV-2026-084'];
+  const container = document.getElementById('clientDatabaseDisplay');
+  if (!container) return;
+
+  const docsHtml = (caseData.documents || []).map(doc => `
+    <div class="editorial-card p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs">
+      <div>
+        <div class="flex items-center gap-2 mb-1">
+          <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-[#15151C] text-[#C5A059] border border-[#262633]">${doc.type}</span>
+          <span class="text-[11px] font-mono text-[#5C5C68]">${doc.date}</span>
+        </div>
+        <h5 class="font-serif font-bold text-sm text-[#FAF5EB]">${doc.title}</h5>
+        <p class="text-[11px] text-[#9B9BA6] font-mono mt-0.5">Reference: ${doc.ref}</p>
+      </div>
+      <div class="text-right shrink-0">
+        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-[#070709] border border-[#1A1A22] text-[10px] font-mono text-[#34D399]">
+          <span class="w-1.5 h-1.5 rounded-full bg-[#34D399]"></span>
+          ${doc.vault}
+        </span>
+      </div>
+    </div>
+  `).join('');
+
+  container.innerHTML = `
+    <div class="editorial-card p-6">
+      <div class="flex flex-wrap items-center justify-between border-b border-[#1A1A22] pb-4 mb-5">
+        <div>
+          <div class="flex items-center gap-2 mb-1">
+            <span class="text-xs font-mono px-2.5 py-0.5 rounded bg-[#15151C] text-[#C5A059] border border-[#262633] font-bold">CLIENT DOSSIER</span>
+            <span class="legal-badge badge-emerald">RA 10173 PROTECTED</span>
+          </div>
+          <h3 class="text-lg font-serif font-bold text-[#FAF5EB]">${caseData.client}</h3>
+          <p class="text-xs text-[#5C5C68]">Dockets Registered: <strong class="text-[#9B9BA6]">${caseData.id} (${caseData.type})</strong></p>
+        </div>
+        <div class="text-right text-xs font-mono text-[#5C5C68]">
+          <p>Supervising Counsel</p>
+          <p class="text-sm font-bold text-[#FAF5EB]">Atty. Allan P. Belde</p>
+        </div>
+      </div>
+
+      <!-- Verified Contact Credentials Table -->
+      <div class="p-4 bg-[#070709] rounded border border-[#1A1A22] mb-6 text-xs font-mono grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div>
+          <span class="text-[#5C5C68] uppercase text-[10px] font-bold block">Mobile Contact</span>
+          <span class="text-[#FAF5EB] font-bold mt-1 block">${caseData.phone}</span>
+        </div>
+        <div>
+          <span class="text-[#5C5C68] uppercase text-[10px] font-bold block">Email Address</span>
+          <span class="text-[#FAF5EB] font-bold mt-1 block">${caseData.email}</span>
+        </div>
+        <div>
+          <span class="text-[#5C5C68] uppercase text-[10px] font-bold block">Chambers Jurisdiction</span>
+          <span class="text-[#FAF5EB] font-bold mt-1 block">${caseData.court}</span>
+        </div>
+        <div>
+          <span class="text-[#5C5C68] uppercase text-[10px] font-bold block">Emergency Contact</span>
+          <span class="text-[#C5A059] font-bold mt-1 block">${caseData.emergencyContact}</span>
+        </div>
+      </div>
+
+      <!-- On-Premise Case Records Vault Index -->
+      <div class="mb-4 flex items-center justify-between">
+        <div>
+          <h4 class="text-xs font-mono uppercase tracking-wider text-[#9B9BA6] font-semibold">On-Premise Physical Vault Records Registry</h4>
+          <p class="text-[11px] text-[#5C5C68]">In compliance with RA 10173, sensitive original titles and affidavits remain in fireproof office safes in Umingan.</p>
+        </div>
+        <span class="text-[11px] font-mono text-[#C5A059]">${(caseData.documents || []).length} DEPOSITED INSTRUMENTS</span>
+      </div>
+
+      <div class="space-y-3 mb-6">
+        ${docsHtml}
+      </div>
+
+      <div class="p-4 bg-[#070709] rounded border border-[#1A1A22] text-xs text-[#9B9BA6] flex items-center justify-between gap-4">
+        <span>Need a certified true copy for court presentation? Consult with legal secretary or schedule an office visit.</span>
+        <button onclick="openAttyScheduleModal()" class="btn-secondary text-xs py-1.5 px-3 shrink-0">
+          Book Office Appearance
+        </button>
+      </div>
+    </div>
+  `;
+}
+
+// Appointment Booking Submission
 function submitAppointmentBooking(e) {
   e.preventDefault();
   playTactileFeedback('success');
@@ -459,35 +793,32 @@ function submitAppointmentBooking(e) {
   const resultContainer = document.getElementById('bookingConfirmationModal');
   if (!resultContainer) return;
 
-  const refCode = `APP-${Math.floor(100000 + Math.random() * 900000)}`;
-
   resultContainer.innerHTML = `
-    <div class="p-6 bg-[#101014] border border-[#C5A059] rounded-lg">
-      <img src="assets/logo.jpg" alt="Belde's Law Office Seal" class="w-12 h-12 rounded-full border border-[#C5A059] object-cover mx-auto mb-3 shadow-md">
-      <h3 class="text-center font-serif-display text-lg font-bold text-[#F1F1F4]">Appointment Scheduled Successfully</h3>
-      <p class="text-center text-xs text-[#9E9EA8] mt-1">Belde's Notarial & Legal Services Centralized Calendar</p>
-
-      <div class="mt-4 p-4 bg-[#08080A] rounded border border-[#1F1F26] font-mono text-xs space-y-1.5">
-        <div class="flex justify-between"><span class="text-[#5E5E6B]">Reference:</span><span class="text-[#C5A059] font-bold">${refCode}</span></div>
-        <div class="flex justify-between"><span class="text-[#5E5E6B]">Client:</span><span class="text-[#F1F1F4] font-semibold">${name}</span></div>
-        <div class="flex justify-between"><span class="text-[#5E5E6B]">Service:</span><span class="text-[#9E9EA8]">${service}</span></div>
-        <div class="flex justify-between"><span class="text-[#5E5E6B]">Date & Slot:</span><span class="text-[#C5A059] font-bold">${date} at ${time}</span></div>
-        <div class="flex justify-between"><span class="text-[#5E5E6B]">Venue:</span><span class="text-[#9E9EA8]">Cariño St., Poblacion West, Umingan</span></div>
+    <div class="editorial-card-gold p-6 text-xs text-[#9B9BA6]">
+      <div class="flex items-center gap-2 mb-3">
+        <span class="w-3 h-3 rounded-full bg-[#34D399]"></span>
+        <h4 class="font-serif font-bold text-base text-[#FAF5EB]">Consultation Slot Confirmed</h4>
       </div>
-
-      <p class="text-xs text-[#5E5E6B] mt-3 text-center">An automated SMS reminder will be dispatched 24 hours prior to your consultation.</p>
-      
-      <div class="mt-5 flex justify-center">
-        <button onclick="document.getElementById('bookingConfirmationModal').classList.add('hidden')" class="btn-secondary text-xs">
-          Close Confirmation
+      <p class="mb-3">Atty. Allan P. Belde's calendar has recorded your consultation request:</p>
+      <div class="p-3.5 bg-[#070709] rounded border border-[#1A1A22] font-mono space-y-1 mb-4 text-[#F2F2F5]">
+        <p>Client: <strong class="text-[#FAF5EB]">${name}</strong> (${phone})</p>
+        <p>Practice Area: <strong class="text-[#C5A059]">${service}</strong></p>
+        <p>Schedule: <strong class="text-[#34D399]">${date} at ${time}</strong></p>
+        <p>Chambers: Cariño St., Poblacion West, Umingan, Pangasinan</p>
+      </div>
+      <p class="text-[11px] text-[#5C5C68]">Automated SMS notification dispatched. Legal secretary will perform conflict-of-interest verification prior to consultation.</p>
+      <div class="mt-4 flex justify-end">
+        <button onclick="document.getElementById('bookingConfirmationModal').classList.add('hidden')" class="btn-secondary text-xs py-1 px-3">
+          Dismiss
         </button>
       </div>
     </div>
   `;
   resultContainer.classList.remove('hidden');
+  resultContainer.scrollIntoView({ behavior: 'smooth' });
 }
 
-// OTP Financial Inquiry Simulation
+// OTP Financial Verification
 function requestBillingBreakdown(caseId) {
   playTactileFeedback('click');
   const modal = document.getElementById('otpVerificationModal');
@@ -527,7 +858,6 @@ function fillDemoOtp() {
 function verifyOtp() {
   const input = document.getElementById('otpInput');
   const modal = document.getElementById('otpVerificationModal');
-  const resultDisplay = document.getElementById('billingResultDisplay');
 
   if (!input || input.value.trim() !== state.otpCode) {
     alert("Invalid One-Time Password. Please use demo code: " + state.otpCode);
@@ -538,47 +868,8 @@ function verifyOtp() {
   clearInterval(state.otpCountdownInterval);
   modal.classList.add('hidden');
 
-  if (resultDisplay) {
-    resultDisplay.innerHTML = `
-      <div class="p-6 bg-[#101014] border border-[#C5A059] rounded-lg">
-        <div class="flex items-center justify-between border-b border-[#1F1F26] pb-3 mb-4">
-          <div class="flex items-center gap-2">
-            <span class="w-2.5 h-2.5 rounded-full bg-[#10B981]"></span>
-            <span class="text-xs font-mono uppercase text-[#10B981] font-bold">Identity Verified via Out-of-Band OTP Callback</span>
-          </div>
-          <span class="text-xs font-mono text-[#5E5E6B]">Data Privacy Act (RA 10173) Compliant</span>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-          <div class="p-3 bg-[#08080A] rounded border border-[#1F1F26]">
-            <p class="text-xs text-[#5E5E6B] font-mono">Agreed Professional Fees</p>
-            <p class="text-lg font-bold text-[#F1F1F4] font-mono">₱ 45,000.00</p>
-          </div>
-          <div class="p-3 bg-[#08080A] rounded border border-[#1F1F26]">
-            <p class="text-xs text-[#5E5E6B] font-mono">Settled to Date</p>
-            <p class="text-lg font-bold text-[#10B981] font-mono">₱ 30,000.00</p>
-          </div>
-          <div class="p-3 bg-[#08080A] rounded border border-[#1F1F26]">
-            <p class="text-xs text-[#5E5E6B] font-mono">Remaining Balance Due</p>
-            <p class="text-lg font-bold text-[#C5A059] font-mono">₱ 15,000.00</p>
-          </div>
-        </div>
-
-        <div class="p-4 bg-[#08080A] rounded border border-[#1F1F26] text-xs text-[#9E9EA8] mb-4 space-y-1">
-          <p><strong class="text-[#F1F1F4]">Legal Ethics & Data Safeguard Notice:</strong> As mandated by Atty. Belde's business rules, an authorized legal secretary representative has logged this financial inquiry. Official E-Receipts (PDF) are generated within 5 seconds.</p>
-        </div>
-
-        <div class="flex justify-end gap-3">
-          <button onclick="downloadMockReceipt()" class="btn-primary text-xs">
-            <svg class="w-4 h-4 mr-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-            Download Official E-Receipt (PDF)
-          </button>
-        </div>
-      </div>
-    `;
-    resultDisplay.classList.remove('hidden');
-    resultDisplay.scrollIntoView({ behavior: 'smooth' });
-  }
+  // Immediately display the billing breakdown
+  setClientSubTab('billing-breakdown');
 }
 
 function downloadMockReceipt() {
@@ -587,7 +878,7 @@ function downloadMockReceipt() {
   if (modal) {
     modal.classList.remove('hidden');
   } else {
-    alert("Official E-Receipt OR-2026-0981 generated and verified under Atty. Allan P. Belde's notarial seal. (Simulated instant PDF download)");
+    alert("Official E-Receipt OR-2026-0981 generated and verified under Atty. Allan P. Belde's notarial seal.");
   }
 }
 
@@ -629,46 +920,40 @@ function runConflictCheck() {
   resultBox.classList.remove('hidden');
 }
 
-// BPMN Interactive Animation
+// BPMN Step Simulator
 function startBpmnAnimation() {
   playTactileFeedback('click');
+  pauseBpmnAnimation();
   const nodes = document.querySelectorAll('.bpmn-step-node');
-  let current = 0;
+  if (!nodes.length) return;
 
-  clearInterval(state.bpmnInterval);
-  nodes.forEach(n => n.classList.remove('active-node'));
-
+  state.bpmnStep = 0;
   state.bpmnInterval = setInterval(() => {
-    nodes.forEach(n => n.classList.remove('active-node'));
-    if (nodes[current]) {
-      nodes[current].classList.add('active-node');
-      nodes[current].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    nodes.forEach(n => n.classList.remove('bpmn-active'));
+    if (nodes[state.bpmnStep]) {
+      nodes[state.bpmnStep].classList.add('bpmn-active');
       playTactileFeedback('click');
     }
-    current++;
-    if (current >= nodes.length) {
-      current = 0;
-    }
+    state.bpmnStep = (state.bpmnStep + 1) % nodes.length;
   }, 1400);
 }
 
 function pauseBpmnAnimation() {
   clearInterval(state.bpmnInterval);
-  playTactileFeedback('click');
+  document.querySelectorAll('.bpmn-step-node').forEach(n => n.classList.remove('bpmn-active'));
 }
 
-// Requirements Search Filter
+// Requirements Dossier Filter
 function filterRequirements() {
   const query = document.getElementById('reqSearchInput').value.toLowerCase();
   const category = document.getElementById('reqCategoryFilter').value;
   const cards = document.querySelectorAll('.req-card');
 
   cards.forEach(card => {
-    const text = card.textContent.toLowerCase();
+    const cardText = card.textContent.toLowerCase();
     const cardCat = card.getAttribute('data-category');
-
-    const matchesQuery = !query || text.includes(query);
-    const matchesCat = category === 'all' || cardCat === category;
+    const matchesQuery = cardText.includes(query);
+    const matchesCat = (category === 'all' || cardCat === category);
 
     if (matchesQuery && matchesCat) {
       card.classList.remove('hidden');
@@ -678,30 +963,28 @@ function filterRequirements() {
   });
 }
 
-// Keyboard Event Handlers
+// Keyboard Shortcuts
 document.addEventListener('keydown', (e) => {
-  if (['INPUT', 'TEXTAREA', 'SELECT'].includes(e.target.tagName)) {
+  if (['INPUT', 'SELECT', 'TEXTAREA'].includes(document.activeElement.tagName)) {
     return;
   }
 
   if (state.currentMode === 'presentation') {
-    if (e.key === 'ArrowRight' || e.key === 'Space') {
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
       e.preventDefault();
       nextSlide();
-    } else if (e.key === 'ArrowLeft' || e.key === 'Backspace') {
+    } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
       e.preventDefault();
       prevSlide();
-    } else if (e.key === 'f' || e.key === 'F') {
+    } else if (e.key.toLowerCase() === 'f') {
       toggleFullScreen();
-    } else if (e.key === 'n' || e.key === 'N') {
+    } else if (e.key.toLowerCase() === 'n') {
       toggleSpeakerNotes();
-    } else if (e.key === 'p' || e.key === 'P') {
-      toggleTimer();
     }
   }
 });
 
-// Ambient Bokeh Gold Dust Canvas (Pure Senior Designer Elegance)
+// Ambient Bokeh Gold Dust Canvas
 function initAmbientBackground() {
   const canvas = document.getElementById('ambientCanvas');
   if (!canvas) return;
@@ -761,17 +1044,13 @@ function initAmbientBackground() {
 
   function animate() {
     ctx.clearRect(0, 0, width, height);
-    for (let i = 0; i < particles.length; i++) {
-      particles[i].update();
-      particles[i].draw();
+    for (let p of particles) {
+      p.update();
+      p.draw();
     }
     requestAnimationFrame(animate);
   }
-
-  const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-  if (!mediaQuery.matches) {
-    animate();
-  }
+  animate();
 }
 
 // Initialization
@@ -809,5 +1088,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Initial Case render
   renderCaseDetails('CIV-2026-084');
 });
