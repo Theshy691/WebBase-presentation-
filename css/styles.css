@@ -1,0 +1,329 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  --bg-deep: #080D1A;
+  --bg-surface: #0E1626;
+  --bg-elevated: #152036;
+  --bg-card: #121B2F;
+  --bg-card-hover: #18243E;
+  
+  --border-subtle: #1F2E4A;
+  --border-strong: #2D4166;
+  --border-gold: #C5A059;
+  
+  --text-primary: #F8FAFC;
+  --text-secondary: #94A3B8;
+  --text-muted: #64748B;
+  
+  --gold-50: #FCF9F2;
+  --gold-100: #F6F0E0;
+  --gold-300: #E5C98F;
+  --gold-400: #D8B76E;
+  --gold-500: #C5A059;
+  --gold-600: #A8833E;
+  --gold-700: #7E622C;
+  
+  --emerald-400: #34D399;
+  --emerald-500: #10B981;
+  --emerald-900: #064E3B;
+  
+  --amber-400: #FBBF24;
+  --amber-500: #F59E0B;
+  --amber-900: #78350F;
+  
+  --rose-400: #F87171;
+  --rose-500: #EF4444;
+  --rose-900: #7F1D1D;
+  
+  --blue-400: #60A5FA;
+  --blue-500: #3B82F6;
+  --blue-900: #1E3A8A;
+  
+  --font-serif: 'Cinzel', serif;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+/* Base Reset & Core Styles */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family: var(--font-sans);
+  background-color: var(--bg-deep);
+  color: var(--text-primary);
+  scroll-behavior: smooth;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-deep);
+  color: var(--text-primary);
+  overflow-x: hidden;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-deep);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gold-500);
+}
+
+/* Focus States for Accessibility */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--gold-500);
+  outline-offset: 2px;
+}
+
+/* Typography Utilities */
+.font-serif {
+  font-family: var(--font-serif);
+}
+
+.font-sans {
+  font-family: var(--font-sans);
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+/* Background Atmosphere */
+.legal-atmosphere {
+  background-image: 
+    radial-gradient(circle at 15% 10%, rgba(197, 160, 89, 0.08) 0%, transparent 40%),
+    radial-gradient(circle at 85% 90%, rgba(59, 130, 246, 0.06) 0%, transparent 40%),
+    linear-gradient(to bottom, rgba(8, 13, 26, 0.95), rgba(8, 13, 26, 1));
+}
+
+.legal-grid-pattern {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(31, 46, 74, 0.25) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(31, 46, 74, 0.25) 1px, transparent 1px);
+}
+
+/* Custom Slide Transitions */
+.slide-container {
+  perspective: 1000px;
+}
+
+.slide-content {
+  animation: slideIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.99);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Subtle elevation card */
+.legal-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.legal-card:hover {
+  border-color: var(--border-strong);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+}
+
+.legal-card-gold {
+  background-color: var(--bg-card);
+  border: 1px solid rgba(197, 160, 89, 0.35);
+  border-radius: 8px;
+}
+
+.legal-card-gold:hover {
+  border-color: var(--gold-500);
+}
+
+/* Badge styles */
+.legal-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.25rem 0.625rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  border-radius: 4px;
+}
+
+.badge-gold {
+  background-color: rgba(197, 160, 89, 0.12);
+  color: var(--gold-400);
+  border: 1px solid rgba(197, 160, 89, 0.3);
+}
+
+.badge-emerald {
+  background-color: rgba(16, 185, 129, 0.12);
+  color: var(--emerald-400);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.badge-amber {
+  background-color: rgba(245, 158, 11, 0.12);
+  color: var(--amber-400);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.badge-blue {
+  background-color: rgba(59, 130, 246, 0.12);
+  color: var(--blue-400);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+/* Precision Button Styles */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  background-color: var(--gold-500);
+  color: #080D1A;
+  font-weight: 600;
+  font-size: 0.875rem;
+  border-radius: 6px;
+  border: 1px solid var(--gold-400);
+  cursor: pointer;
+  transition: all 0.15s ease-in-out;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.btn-primary:hover {
+  background-color: var(--gold-400);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(197, 160, 89, 0.25);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  background-color: var(--bg-elevated);
+  color: var(--text-primary);
+  font-weight: 500;
+  font-size: 0.875rem;
+  border-radius: 6px;
+  border: 1px solid var(--border-subtle);
+  cursor: pointer;
+  transition: all 0.15s ease-in-out;
+}
+
+.btn-secondary:hover {
+  background-color: var(--bg-card-hover);
+  border-color: var(--border-strong);
+  color: #FFFFFF;
+}
+
+/* Timeline & Swimlane Elements */
+.timeline-stem {
+  position: relative;
+}
+
+.timeline-stem::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 15px;
+  width: 2px;
+  background: var(--border-subtle);
+}
+
+/* BPMN Flow node */
+.bpmn-node {
+  position: relative;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-surface);
+  border-radius: 6px;
+  padding: 0.875rem 1rem;
+  transition: all 0.2s ease;
+}
+
+.bpmn-node.active-node {
+  border-color: var(--gold-500);
+  box-shadow: 0 0 16px rgba(197, 160, 89, 0.25);
+}
+
+/* Pulsing beacon */
+.pulse-beacon {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--emerald-400);
+  box-shadow: 0 0 0 rgba(16, 185, 129, 0.4);
+  animation: beaconPulse 2s infinite;
+}
+
+@keyframes beaconPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.5);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgba(16, 185, 129, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+  }
+}
+
+/* Print Styles */
+@media print {
+  body {
+    background-color: #FFFFFF !important;
+    color: #111827 !important;
+  }
+  
+  .no-print {
+    display: none !important;
+  }
+  
+  .legal-card, .legal-card-gold {
+    background: #FFFFFF !important;
+    border: 1px solid #E5E7EB !important;
+    color: #111827 !important;
+    box-shadow: none !important;
+    page-break-inside: avoid;
+  }
+}
