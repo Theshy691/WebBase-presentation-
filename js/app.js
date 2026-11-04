@@ -23,6 +23,8 @@ const state = {
   otpTimer: 60,
   otpCountdownInterval: null,
   otpVerified: false,
+  otpVerifiedCases: {}, // Tracks verified cases individually for RA 10173 compliance
+  toastTimeout: null,
   notesVisible: false,
   
   // Portal & User Authentication State
@@ -393,6 +395,8 @@ function updatePortalView() {
     if (frontPage) frontPage.classList.add('hidden');
     if (userDashboard) userDashboard.classList.remove('hidden');
     const caseData = demoCases[state.activeClientCase] || demoCases['CIV-2026-084'];
+    
+    // Top Bar Badge
     if (portalAuthBadge) {
       portalAuthBadge.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-[#34D399] inline-block mr-1"></span>Client: ${caseData.client} (${caseData.id})`;
       portalAuthBadge.className = 'text-[10px] font-mono px-2 py-0.5 rounded bg-[#34D399]/10 text-[#34D399] border border-[#34D399]/30';
@@ -400,6 +404,29 @@ function updatePortalView() {
     if (portalLoginBtn) {
       portalLoginBtn.textContent = '↪ Sign Out';
       portalLoginBtn.onclick = logoutClient;
+    }
+
+    // Client Workspace Banner Header & Avatar Initials
+    const nameEl = document.getElementById('clientDashboardName');
+    const titleEl = document.getElementById('clientDashboardCaseTitle');
+    const avatarEl = document.getElementById('clientDashboardAvatar');
+    if (nameEl) nameEl.textContent = caseData.client;
+    if (titleEl) titleEl.textContent = `Case Docket: ${caseData.id} • ${caseData.title}`;
+    if (avatarEl) {
+      const parts = caseData.client.split(' ').filter(Boolean);
+      const initials = parts.length >= 2 ? (parts[0][0] + parts[parts.length - 1][0]).toUpperCase() : caseData.client.slice(0, 2).toUpperCase();
+      avatarEl.textContent = initials;
+    }
+
+    // Update Switcher Active Button Highlighting
+    document.querySelectorAll('.client-switcher-btn').forEach(btn => {
+      btn.classList.remove('bg-[#C5A059]', 'text-[#070709]', 'font-bold', 'border-[#C5A059]');
+      btn.classList.add('btn-secondary');
+    });
+    const activeSwitcherBtn = document.getElementById(`switcher-${state.activeClientCase}`);
+    if (activeSwitcherBtn) {
+      activeSwitcherBtn.classList.remove('btn-secondary');
+      activeSwitcherBtn.classList.add('bg-[#C5A059]', 'text-[#070709]', 'font-bold', 'border-[#C5A059]');
     }
 
     // Render active sub-tab content
@@ -414,12 +441,30 @@ function loginAsClient(caseId) {
   closeClientLoginModal();
   closePortalAccessGuideModal();
   updatePortalView();
+  showToast("Logged in as " + (demoCases[state.activeClientCase]?.client || 'Client') + " (Docket " + state.activeClientCase + ")", "success", "Client Session Active");
 }
 
 function logoutClient() {
   state.isClientLoggedIn = false;
   playTactileFeedback('click');
   updatePortalView();
+  showToast("You have been securely signed out of the Client Workspace.", "gold", "Session Closed");
+}
+
+function handleBillingTabClick() {
+  if (state.otpVerifiedCases[state.activeClientCase]) {
+    setClientSubTab('billing-breakdown');
+  } else {
+    requestBillingBreakdown(state.activeClientCase);
+  }
+}
+
+function lockBillingLedger(caseId) {
+  const targetId = caseId || state.activeClientCase;
+  state.otpVerifiedCases[targetId] = false;
+  playTactileFeedback('click');
+  showToast("Financial ledger for " + targetId + " re-locked under RA 10173 safeguard.", "gold", "Ledger Protected");
+  renderBillingBreakdown(targetId);
 }
 
 function setClientSubTab(subTab) {
@@ -616,7 +661,7 @@ function renderCaseDetails(caseId) {
           <span class="pulse-beacon"></span>
           <span class="text-[#9B9BA6]">Portal Sync: Real-Time Synchronized (99.0% SLA Uptime)</span>
         </div>
-        <button onclick="setClientSubTab('billing-breakdown')" class="btn-primary text-xs py-1.5 px-3">
+        <button onclick="handleBillingTabClick()" class="btn-primary text-xs py-1.5 px-3">
           Inspect Billing Breakdown →
         </button>
       </div>
@@ -629,6 +674,30 @@ function renderBillingBreakdown(caseId) {
   const caseData = demoCases[caseId] || demoCases['CIV-2026-084'];
   const container = document.getElementById('billingBreakdownDisplay');
   if (!container) return;
+
+  const isVerified = Boolean(state.otpVerifiedCases[caseId]);
+
+  if (!isVerified) {
+    container.innerHTML = `
+      <div class="editorial-card p-8 text-center max-w-2xl mx-auto space-y-4">
+        <div class="w-12 h-12 rounded-full bg-[#15151C] border border-[#C5A059]/40 flex items-center justify-center mx-auto text-[#C5A059]">
+          <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+        </div>
+        <span class="folio-number">DATA PRIVACY ACT OF 2012 // REPUBLIC ACT NO. 10173</span>
+        <h3 class="font-serif font-bold text-lg text-[#FAF5EB]">Financial Ledger Protected by 2FA Callback</h3>
+        <p class="text-xs text-[#9B9BA6] leading-relaxed max-w-lg mx-auto font-sans">
+          To strictly preserve attorney-client fiduciary confidentiality, detailed monetary balances and appearance retainer breakdowns for <strong class="text-[#FAF5EB]">${caseData.client} (${caseData.id})</strong> require an authorized out-of-band verification callback before disclosure.
+        </p>
+        <div class="pt-2">
+          <button onclick="requestBillingBreakdown('${caseId}')" class="btn-primary text-xs py-2 px-5">
+            🔑 Unlock Financial Ledger with OTP
+          </button>
+        </div>
+        <p class="text-[10px] font-mono text-[#5C5C68]">Simulated Out-of-Band Telephone Verification • Demo 6-Digit Code: 849201</p>
+      </div>
+    `;
+    return;
+  }
 
   const itemsHtml = (caseData.billingItems || []).map(item => `
     <div class="p-3 bg-[#070709] rounded border border-[#1A1A22] flex items-center justify-between text-xs font-mono">
@@ -650,7 +719,10 @@ function renderBillingBreakdown(caseId) {
           <h3 class="text-lg font-serif font-bold text-[#FAF5EB] mt-1.5">Official Billing & Retainer Breakdown</h3>
           <p class="text-xs text-[#5C5C68]">Client: <strong class="text-[#9B9BA6]">${caseData.client}</strong> • Reference: ${caseData.financials.receiptNo}</p>
         </div>
-        <div class="text-right">
+        <div class="flex items-center gap-2">
+          <button onclick="lockBillingLedger('${caseId}')" class="btn-secondary text-xs py-1.5 px-3 border-[#C5A059]/30 text-[#C5A059] hover:text-[#FAF5EB]">
+            🔒 Lock Ledger
+          </button>
           <button onclick="downloadMockReceipt()" class="btn-primary text-xs py-1.5 px-3.5">
             <svg class="w-3.5 h-3.5 inline mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
             View Official E-Receipt (PDF)
@@ -824,22 +896,30 @@ function requestBillingBreakdown(caseId) {
   const modal = document.getElementById('otpVerificationModal');
   if (!modal) return;
 
-  const targetCase = demoCases[caseId] || demoCases['CIV-2026-084'];
-  document.getElementById('otpCaseTitle').textContent = `${targetCase.id} - ${targetCase.title}`;
-  document.getElementById('otpMaskedPhone').textContent = targetCase.phone;
-  modal.classList.remove('hidden');
+  const targetCase = demoCases[caseId] || demoCases[state.activeClientCase] || demoCases['CIV-2026-084'];
+  const titleEl = document.getElementById('otpCaseTitle');
+  const phoneEl = document.getElementById('otpMaskedPhone');
+  const inputEl = document.getElementById('otpInput');
 
+  if (titleEl) titleEl.textContent = `${targetCase.id} - ${targetCase.title}`;
+  if (phoneEl) phoneEl.textContent = targetCase.phone;
+  if (inputEl) inputEl.value = '';
+
+  modal.classList.remove('hidden');
   startOtpCountdown();
 }
 
 function startOtpCountdown() {
   clearInterval(state.otpCountdownInterval);
   state.otpTimer = 60;
+  const timerEl = document.getElementById('otpCountdown');
+  if (timerEl) timerEl.textContent = '60s';
+
   state.otpCountdownInterval = setInterval(() => {
     state.otpTimer--;
-    const timerEl = document.getElementById('otpCountdown');
-    if (timerEl) {
-      timerEl.textContent = `${state.otpTimer}s`;
+    const el = document.getElementById('otpCountdown');
+    if (el) {
+      el.textContent = `${state.otpTimer}s`;
     }
     if (state.otpTimer <= 0) {
       clearInterval(state.otpCountdownInterval);
@@ -860,26 +940,67 @@ function verifyOtp() {
   const modal = document.getElementById('otpVerificationModal');
 
   if (!input || input.value.trim() !== state.otpCode) {
-    alert("Invalid One-Time Password. Please use demo code: " + state.otpCode);
+    showToast("Invalid One-Time Password. For evaluation, use demo code: " + state.otpCode, "error", "Verification Denied");
+    playTactileFeedback('click');
     return;
   }
 
   playTactileFeedback('success');
   clearInterval(state.otpCountdownInterval);
-  modal.classList.add('hidden');
+  if (modal) modal.classList.add('hidden');
 
-  // Immediately display the billing breakdown
+  const currentCase = state.activeClientCase;
+  state.otpVerifiedCases[currentCase] = true;
+
+  showToast("RA 10173 2FA Callback Verified: Financial ledger unlocked for " + (demoCases[currentCase]?.client || 'Client'), "success", "Financial Access Authorized");
   setClientSubTab('billing-breakdown');
 }
 
 function downloadMockReceipt() {
   playTactileFeedback('success');
   const modal = document.getElementById('receiptModal');
-  if (modal) {
-    modal.classList.remove('hidden');
-  } else {
-    alert("Official E-Receipt OR-2026-0981 generated and verified under Atty. Allan P. Belde's notarial seal.");
+  if (!modal) return;
+
+  const caseData = demoCases[state.activeClientCase] || demoCases['CIV-2026-084'];
+
+  // Dynamically populate official receipt fields
+  const noEl = document.getElementById('receiptNoDisplay');
+  const dateEl = document.getElementById('receiptDateDisplay');
+  const clientEl = document.getElementById('receiptClientDisplay');
+  const caseEl = document.getElementById('receiptCaseDisplay');
+  const payForEl = document.getElementById('receiptPaymentForDisplay');
+  const amountEl = document.getElementById('receiptAmountDisplay');
+  const balanceEl = document.getElementById('receiptBalanceDisplay');
+
+  if (noEl) noEl.textContent = caseData.financials.receiptNo;
+  if (dateEl) {
+    const today = new Date();
+    const months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+    const formattedDate = `${months[today.getMonth()]} ${String(today.getDate()).padStart(2, '0')}, ${today.getFullYear()}`;
+    dateEl.textContent = formattedDate;
   }
+  if (clientEl) clientEl.textContent = caseData.client;
+  if (caseEl) caseEl.textContent = `${caseData.id} (${caseData.title})`;
+  if (payForEl) {
+    if (caseData.id === 'CIV-2026-084') {
+      payForEl.textContent = 'Judicial Partition & Pleading Appearance Fee';
+    } else if (caseData.id === 'FAM-2026-019') {
+      payForEl.textContent = 'Guardianship Petition Drafting & Social Assessment Filing';
+    } else {
+      payForEl.textContent = 'Deed of Absolute Sale, Acknowledgment & Notarial Seal';
+    }
+  }
+  if (amountEl) amountEl.textContent = caseData.financials.paidAmount;
+  if (balanceEl) balanceEl.textContent = caseData.financials.balanceDue;
+
+  modal.classList.remove('hidden');
+  showToast(`Official Electronic Receipt ${caseData.financials.receiptNo} rendered under Atty. Belde's seal.`, "gold", "E-Receipt Generated");
+}
+
+// Legal Secretary End-of-Day Dispatch Simulation
+function dispatchDailyAuditToAtty() {
+  playTactileFeedback('success');
+  showToast("End-of-day summary (4 intakes, 3 conflict clearances, 2 court filings, 18 notarial entries) compiled and securely transmitted to Atty. Allan P. Belde.", "success", "Executive Dispatch Confirmed");
 }
 
 // Conflict-of-Interest Checker Simulation
@@ -890,7 +1011,7 @@ function runConflictCheck() {
   const resultBox = document.getElementById('conflictCheckResult');
 
   if (!prospective || !adverse) {
-    alert("Please provide both prospective client and adverse party names for conflict clearance.");
+    showToast("Please provide both prospective client and adverse party names for conflict clearance.", "error", "Missing Information");
     return;
   }
 
@@ -906,6 +1027,7 @@ function runConflictCheck() {
         <p class="leading-relaxed">The adverse party "${adverse}" matches an active client or retained party in current firm records (Case: CIV-2026-084). Under legal ethics and Atty. Belde's business rules, immediate disclosure must be rendered to prospective client "${prospective}". Engagement cannot proceed.</p>
       </div>
     `;
+    showToast(`Conflict flagged: Adverse party "${adverse}" matches an active retainer!`, "error", "Ethical Conflict Detected");
   } else {
     resultBox.innerHTML = `
       <div class="p-4 bg-[rgba(16,185,129,0.08)] border border-[rgba(16,185,129,0.25)] rounded text-xs text-[#34D399]">
@@ -916,31 +1038,81 @@ function runConflictCheck() {
         <p class="leading-relaxed">No active representation conflict exists between "${prospective}" and "${adverse}". Authorized Legal Secretary may proceed with Client Intake and Digital Record creation.</p>
       </div>
     `;
+    showToast(`Conflict clearance approved for ${prospective}.`, "success", "Clearance Approved");
   }
   resultBox.classList.remove('hidden');
 }
 
-// BPMN Step Simulator
+// BPMN Step Simulator (Scoped to Active View Container to Prevent Phantom Delays)
 function startBpmnAnimation() {
   playTactileFeedback('click');
   pauseBpmnAnimation();
-  const nodes = document.querySelectorAll('.bpmn-step-node');
+
+  // Scope query to the currently active view container
+  let container;
+  if (state.currentMode === 'presentation') {
+    container = document.querySelector('.presentation-slide:not(.hidden)');
+  } else {
+    container = document.getElementById('simTab-bpmn-visualizer');
+  }
+
+  const nodes = container ? container.querySelectorAll('.bpmn-step-node') : document.querySelectorAll('.bpmn-step-node');
   if (!nodes.length) return;
 
   state.bpmnStep = 0;
+  // Immediately highlight step 0 without waiting for first interval
+  nodes.forEach(n => n.classList.remove('bpmn-active'));
+  nodes[0].classList.add('bpmn-active');
+
   state.bpmnInterval = setInterval(() => {
+    state.bpmnStep = (state.bpmnStep + 1) % nodes.length;
     nodes.forEach(n => n.classList.remove('bpmn-active'));
     if (nodes[state.bpmnStep]) {
       nodes[state.bpmnStep].classList.add('bpmn-active');
       playTactileFeedback('click');
     }
-    state.bpmnStep = (state.bpmnStep + 1) % nodes.length;
-  }, 1400);
+  }, 1200);
 }
 
 function pauseBpmnAnimation() {
   clearInterval(state.bpmnInterval);
   document.querySelectorAll('.bpmn-step-node').forEach(n => n.classList.remove('bpmn-active'));
+}
+
+// Floating Toast Notification System
+function showToast(message, type = 'gold', title = 'System Notification') {
+  const toast = document.getElementById('systemToast');
+  const titleEl = document.getElementById('systemToastTitle');
+  const msgEl = document.getElementById('systemToastMessage');
+  const iconEl = document.getElementById('systemToastIcon');
+  if (!toast || !msgEl) return;
+
+  if (titleEl) titleEl.textContent = title;
+  msgEl.textContent = message;
+
+  if (type === 'success') {
+    iconEl.innerHTML = `<svg class="w-5 h-5 text-[#34D399]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>`;
+  } else if (type === 'error') {
+    iconEl.innerHTML = `<svg class="w-5 h-5 text-[#F87171]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>`;
+  } else {
+    iconEl.innerHTML = `<svg class="w-5 h-5 text-[#C5A059]" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>`;
+  }
+
+  toast.classList.remove('translate-y-20', 'opacity-0', 'pointer-events-none');
+  toast.classList.add('translate-y-0', 'opacity-100');
+
+  clearTimeout(state.toastTimeout);
+  state.toastTimeout = setTimeout(() => {
+    hideToast();
+  }, 4200);
+}
+
+function hideToast() {
+  const toast = document.getElementById('systemToast');
+  if (toast) {
+    toast.classList.remove('translate-y-0', 'opacity-100');
+    toast.classList.add('translate-y-20', 'opacity-0', 'pointer-events-none');
+  }
 }
 
 // Requirements Dossier Filter

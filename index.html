@@ -1384,8 +1384,8 @@
           <!-- Client Workspace Header Banner -->
           <div class="editorial-card-gold p-5 rounded-lg flex flex-wrap items-center justify-between gap-4">
             <div class="flex items-center gap-3">
-              <div class="w-10 h-10 rounded-full bg-[#070709] border border-[#C5A059] flex items-center justify-center text-sm font-bold text-[#C5A059] font-mono">
-                CL
+              <div id="clientDashboardAvatar" class="w-10 h-10 rounded-full bg-[#070709] border border-[#C5A059] flex items-center justify-center text-sm font-bold text-[#C5A059] font-mono">
+                ES
               </div>
               <div>
                 <div class="flex items-center gap-2">
@@ -1399,9 +1399,9 @@
             <!-- Quick Client Account Switcher (For Evaluation) -->
             <div class="flex items-center gap-2 text-xs font-mono">
               <span class="text-[#5C5C68] hidden sm:inline">Switch Client:</span>
-              <button onclick="selectActiveCase('CIV-2026-084')" class="btn-secondary text-[11px] py-1 px-2.5">Estate Partition</button>
-              <button onclick="selectActiveCase('FAM-2026-019')" class="btn-secondary text-[11px] py-1 px-2.5">Guardianship</button>
-              <button onclick="selectActiveCase('NOT-2026-142')" class="btn-secondary text-[11px] py-1 px-2.5">Deed of Sale</button>
+              <button id="switcher-CIV-2026-084" onclick="selectActiveCase('CIV-2026-084')" class="client-switcher-btn btn-secondary text-[11px] py-1 px-2.5">Estate Partition</button>
+              <button id="switcher-FAM-2026-019" onclick="selectActiveCase('FAM-2026-019')" class="client-switcher-btn btn-secondary text-[11px] py-1 px-2.5">Guardianship</button>
+              <button id="switcher-NOT-2026-142" onclick="selectActiveCase('NOT-2026-142')" class="client-switcher-btn btn-secondary text-[11px] py-1 px-2.5">Deed of Sale</button>
               <button onclick="logoutClient()" class="btn-secondary text-[11px] py-1 px-2.5 border-[#F87171]/40 text-[#F87171]">Sign Out</button>
             </div>
           </div>
@@ -1411,7 +1411,7 @@
             <button id="subTabBtn-case-tracking" onclick="setClientSubTab('case-tracking')" class="client-subtab-btn px-3 py-1.5 rounded border border-[#C5A059] bg-[#C5A059] text-[#070709] font-bold">
               1. Case Status & Tracking
             </button>
-            <button id="subTabBtn-billing-breakdown" onclick="setClientSubTab('billing-breakdown')" class="client-subtab-btn px-3 py-1.5 rounded border border-[#1A1A22] bg-[#0E0E12] text-[#9B9BA6] hover:text-[#F2F2F5]">
+            <button id="subTabBtn-billing-breakdown" onclick="handleBillingTabClick()" class="client-subtab-btn px-3 py-1.5 rounded border border-[#1A1A22] bg-[#0E0E12] text-[#9B9BA6] hover:text-[#F2F2F5]">
               2. Billing Breakdown Only
             </button>
             <button id="subTabBtn-client-database" onclick="setClientSubTab('client-database')" class="client-subtab-btn px-3 py-1.5 rounded border border-[#1A1A22] bg-[#0E0E12] text-[#9B9BA6] hover:text-[#F2F2F5]">
@@ -1501,7 +1501,7 @@
               </div>
             </div>
 
-            <button onclick="alert('Daily Activity Roster compiled and dispatched to Atty. Allan P. Belde for end-of-day sign-off.')" class="btn-secondary w-full py-2 text-xs">
+            <button onclick="dispatchDailyAuditToAtty()" class="btn-secondary w-full py-2 text-xs">
               Transmit End-of-Day Audit to Atty. Belde
             </button>
           </div>
@@ -1621,64 +1621,227 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-xs">
+          <!-- FR-01 -->
           <div class="req-card editorial-card p-4" data-category="functional">
-            <span class="text-[#C5A059] font-mono font-bold">FR-01: Client Registration</span>
-            <p class="text-[#9B9BA6] mt-1">Enables self-service sign up with QR code link to manual, or on-site secretarial assisted enrollment.</p>
+            <span class="text-[#C5A059] font-mono font-bold">FR-01: Client Registration & Intake</span>
+            <p class="text-[#9B9BA6] mt-1">Enables self-service sign up with QR code link to manual, or on-site secretarial assisted enrollment with initial identity verification.</p>
           </div>
+          <!-- FR-02 -->
           <div class="req-card editorial-card p-4" data-category="functional">
             <span class="text-[#C5A059] font-mono font-bold">FR-02: Conflict-of-Interest Filter</span>
-            <p class="text-[#9B9BA6] mt-1">Cross-examines prospective clients against current retainers prior to generating digital file.</p>
+            <p class="text-[#9B9BA6] mt-1">Automated screening engine that cross-examines prospective clients against current retainers and adverse parties prior to docket creation.</p>
           </div>
+          <!-- FR-03 -->
           <div class="req-card editorial-card p-4" data-category="functional">
-            <span class="text-[#C5A059] font-mono font-bold">FR-03: Real-Time Case Tracker</span>
-            <p class="text-[#9B9BA6] mt-1">Displays plain-language case stage timelines and scheduled hearing notifications 24/7.</p>
+            <span class="text-[#C5A059] font-mono font-bold">FR-03: Real-Time Case Progress Tracker</span>
+            <p class="text-[#9B9BA6] mt-1">Displays plain-language case stage timelines, next court trial appearances, and legal jargon decoders accessible 24/7 by retained clients.</p>
           </div>
+          <!-- FR-04 -->
+          <div class="req-card editorial-card p-4" data-category="functional">
+            <span class="text-[#C5A059] font-mono font-bold">FR-04: Centralized Calendar & Scheduling</span>
+            <p class="text-[#9B9BA6] mt-1">Dual-mode scheduling matrix demarcating morning court trial hours (RTC Branch 42 Tayug) from afternoon office consultation appointments.</p>
+          </div>
+          <!-- FR-05 -->
+          <div class="req-card editorial-card p-4" data-category="functional">
+            <span class="text-[#C5A059] font-mono font-bold">FR-05: Retainer Billing & 5s E-Receipt</span>
+            <p class="text-[#9B9BA6] mt-1">Itemized professional fees, stage-based appearance balances, and instant certified electronic receipt generation compliant with BIR & notarial standards.</p>
+          </div>
+          <!-- FR-06 -->
+          <div class="req-card editorial-card p-4" data-category="functional">
+            <span class="text-[#C5A059] font-mono font-bold">FR-06: Verified Client Directory & Vault</span>
+            <p class="text-[#9B9BA6] mt-1">Secure repository of client contact coordinates with physical safe references for original Torrens titles and evidentiary affidavits.</p>
+          </div>
+          <!-- FR-07 -->
+          <div class="req-card editorial-card p-4" data-category="functional">
+            <span class="text-[#C5A059] font-mono font-bold">FR-07: Fiduciary Client Communication</span>
+            <p class="text-[#9B9BA6] mt-1">Automated SMS milestone alerts and appointment reminders eliminating ad-hoc unrecorded Messenger messages and off-hour phone calls.</p>
+          </div>
+          <!-- FR-08 -->
+          <div class="req-card editorial-card p-4" data-category="functional">
+            <span class="text-[#C5A059] font-mono font-bold">FR-08: Document Drafting & Template Archive</span>
+            <p class="text-[#9B9BA6] mt-1">Standardized notarial instruments (extrajudicial settlements, deeds of sale, affidavits) and litigation pleading drafts with Atty. Belde oversight.</p>
+          </div>
+
+          <!-- SEC-01 -->
           <div class="req-card editorial-card p-4" data-category="security">
             <span class="text-[#34D399] font-mono font-bold">SEC-01: Data Privacy Act (RA 10173)</span>
-            <p class="text-[#9B9BA6] mt-1">Portal only stores minimal contact data. Sensitive court files remain physically in office safe.</p>
+            <p class="text-[#9B9BA6] mt-1">Minimal cloud footprint policy: only basic contact coordinates stored digitally; sensitive physical filings stay in on-premise fireproof safes.</p>
           </div>
+          <!-- SEC-02 -->
           <div class="req-card editorial-card p-4" data-category="security">
-            <span class="text-[#34D399] font-mono font-bold">SEC-02: OTP Phone Callback</span>
-            <p class="text-[#9B9BA6] mt-1">Financial balance inquiries require 2FA SMS code + authorized phone call before disclosure.</p>
+            <span class="text-[#34D399] font-mono font-bold">SEC-02: Out-of-Band 2FA OTP Callback</span>
+            <p class="text-[#9B9BA6] mt-1">Financial balance and appearance ledger inquiries require verified 6-digit OTP combined with an authorized secretarial telephone verification.</p>
           </div>
+          <!-- SEC-03 -->
+          <div class="req-card editorial-card p-4" data-category="security">
+            <span class="text-[#34D399] font-mono font-bold">SEC-03: Role-Based Privileges (RBAC)</span>
+            <p class="text-[#9B9BA6] mt-1">Strict privilege segregation: Clients view only their docketed matter; staff have audit-logged operational access; Atty. Belde exercises sole legal authority.</p>
+          </div>
+
+          <!-- FEAS-01 -->
           <div class="req-card editorial-card p-4" data-category="feasibility">
             <span class="text-[#D6BC83] font-mono font-bold">FEAS-01: Economic Viability</span>
-            <p class="text-[#9B9BA6] mt-1">Eliminates paper storage and physical document wear, lowering long-term operating costs.</p>
+            <p class="text-[#9B9BA6] mt-1">Eliminates paper folder degradation and repeated courier/clerical overhead; zero recurring software subscription licensing costs.</p>
           </div>
+          <!-- FEAS-02 -->
           <div class="req-card editorial-card p-4" data-category="feasibility">
             <span class="text-[#D6BC83] font-mono font-bold">FEAS-02: Operational Fit</span>
-            <p class="text-[#9B9BA6] mt-1">Seamless fit for solo practitioner law office without disrupting ethical court appearance workflows.</p>
+            <p class="text-[#9B9BA6] mt-1">Engineered specifically for solo practitioner workflow ergonomics without disrupting active trial appearances or court filing protocols.</p>
+          </div>
+          <!-- FEAS-03 -->
+          <div class="req-card editorial-card p-4" data-category="feasibility">
+            <span class="text-[#D6BC83] font-mono font-bold">FEAS-03: Technical Feasibility</span>
+            <p class="text-[#9B9BA6] mt-1">Standards-compliant semantic stack requiring zero heavy frameworks, running instantaneously on standard office PC browsers and mobile phones.</p>
+          </div>
+          <!-- FEAS-04 -->
+          <div class="req-card editorial-card p-4" data-category="feasibility">
+            <span class="text-[#D6BC83] font-mono font-bold">FEAS-04: Non-Functional SLA Benchmarks</span>
+            <p class="text-[#9B9BA6] mt-1">99.0% availability SLA, sub-2-second page response times, 5-second e-receipt rendering, and WCAG AA high-contrast visual accessibility.</p>
           </div>
         </div>
       </div>
 
       <!-- TAB 5: ATTY. ALLAN BELDE INTERVIEW TRANSCRIPT -->
       <div id="simTab-interview-transcript" class="sim-tab-content hidden space-y-4">
-        <div class="border-b border-[#1A1A22] pb-3">
-          <h2 class="text-lg font-serif font-bold text-[#F2F2F5]">Primary Field Research: Interview Transcript</h2>
-          <p class="text-xs text-[#9B9BA6]">Verbatim responses from Atty. Allan P. Belde, Founder & Solo Practitioner (July 2004 – Present).</p>
+        <div class="border-b border-[#1A1A22] pb-3 flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <h2 class="text-lg font-serif font-bold text-[#F2F2F5]">Primary Field Research: Interview Transcript</h2>
+            <p class="text-xs text-[#9B9BA6]">Verbatim responses from Atty. Allan P. Belde, Founder & Solo Practitioner (July 2004 – Present).</p>
+          </div>
+          <span class="legal-badge badge-gold font-mono">12 CORE RESEARCH INQUIRIES</span>
         </div>
 
         <div class="space-y-3 text-xs font-mono max-h-[600px] overflow-y-auto pr-2">
           <div class="p-3.5 editorial-card">
-            <p class="text-[#C5A059] font-bold">Q: What is the law office's current mission and vision?</p>
-            <p class="text-[#F2F2F5] mt-1 font-sans">"The mission and vision is to uphold the rule of law and represent the client with fidelity and zeal."</p>
+            <div class="flex items-center justify-between mb-1">
+              <span class="text-[#C5A059] font-bold">Q01: Mission & Vision Charter</span>
+              <span class="text-[10px] text-[#5C5C68]">CORE VALUES</span>
+            </div>
+            <p class="text-[#9B9BA6] font-sans">"What is the law office's foundational mission and vision in serving Umingan?"</p>
+            <p class="text-[#F2F2F5] mt-1.5 font-sans leading-relaxed border-l-2 border-[#C5A059] pl-3 italic">
+              "The mission and vision is to uphold the rule of law and represent the client with fidelity and zeal."
+            </p>
           </div>
+
           <div class="p-3.5 editorial-card">
-            <p class="text-[#C5A059] font-bold">Q: What rules do you follow in prioritizing cases?</p>
-            <p class="text-[#F2F2F5] mt-1 font-sans">"The office observes diligence and punctuality in all appearances, submissions, meetings, and other commitments. There is no rigid hierarchy of prioritization as it is calibrated to court deadlines, prescriptive, reglementary, and appeal periods."</p>
+            <div class="flex items-center justify-between mb-1">
+              <span class="text-[#C5A059] font-bold">Q02: Case Prioritization & Reglementary Deadlines</span>
+              <span class="text-[10px] text-[#5C5C68]">ETHICAL DILIGENCE</span>
+            </div>
+            <p class="text-[#9B9BA6] font-sans">"What formal rules do you follow in prioritizing pending matters?"</p>
+            <p class="text-[#F2F2F5] mt-1.5 font-sans leading-relaxed border-l-2 border-[#C5A059] pl-3 italic">
+              "The office observes diligence and punctuality in all appearances, submissions, meetings, and other commitments. There is no rigid hierarchy of prioritization as it is calibrated to court deadlines, prescriptive, reglementary, and appeal periods."
+            </p>
           </div>
+
           <div class="p-3.5 editorial-card">
-            <p class="text-[#C5A059] font-bold">Q: Why is confidentiality of clients important?</p>
-            <p class="text-[#F2F2F5] mt-1 font-sans">"The lawyer-client relationship is of the highest fiduciary character; as a trust relation, it is essential that the engagement is founded on the confidence reposed by the client on the lawyer. Without confidence the client might withhold information or facts necessary in handling a case."</p>
+            <div class="flex items-center justify-between mb-1">
+              <span class="text-[#C5A059] font-bold">Q03: Client Confidentiality & Fiduciary Character</span>
+              <span class="text-[10px] text-[#5C5C68]">CODE OF ETHICS</span>
+            </div>
+            <p class="text-[#9B9BA6] font-sans">"Why is strict confidentiality of clients paramount in legal practice?"</p>
+            <p class="text-[#F2F2F5] mt-1.5 font-sans leading-relaxed border-l-2 border-[#C5A059] pl-3 italic">
+              "The lawyer-client relationship is of the highest fiduciary character; as a trust relation, it is essential that the engagement is founded on the confidence reposed by the client on the lawyer. Without confidence the client might withhold information or facts necessary in handling a case. This fiduciary duty continues perpetually even after the case terminates."
+            </p>
           </div>
+
           <div class="p-3.5 editorial-card">
-            <p class="text-[#C5A059] font-bold">Q: Does the office experience backlogs? How do you handle them?</p>
-            <p class="text-[#F2F2F5] mt-1 font-sans">"Backlog is not an option as legal ethics mandates that a lawyer’s duty should be performed within the timeframe provided by law, otherwise your case or your client's rights will be compromised."</p>
+            <div class="flex items-center justify-between mb-1">
+              <span class="text-[#C5A059] font-bold">Q04: Operational Backlog Tolerance</span>
+              <span class="text-[10px] text-[#5C5C68]">STATUTORY COMPLIANCE</span>
+            </div>
+            <p class="text-[#9B9BA6] font-sans">"Does the chambers experience backlogs, and how are they managed?"</p>
+            <p class="text-[#F2F2F5] mt-1.5 font-sans leading-relaxed border-l-2 border-[#C5A059] pl-3 italic">
+              "Backlog is not an option as legal ethics mandates that a lawyer’s duty should be performed within the timeframe provided by law, otherwise your case or your client's rights will be compromised."
+            </p>
           </div>
+
           <div class="p-3.5 editorial-card">
-            <p class="text-[#C5A059] font-bold">Q: What is the current process for managing client records?</p>
-            <p class="text-[#F2F2F5] mt-1 font-sans">"It is still manually being placed on steel cabinets but we are trying to adopt or shift to a computer-based system of managing and organizing clients' records."</p>
+            <div class="flex items-center justify-between mb-1">
+              <span class="text-[#C5A059] font-bold">Q05: Current Records Management System</span>
+              <span class="text-[10px] text-[#5C5C68]">AS-IS ANALYSIS</span>
+            </div>
+            <p class="text-[#9B9BA6] font-sans">"What is the current method for archiving and retrieving client folders?"</p>
+            <p class="text-[#F2F2F5] mt-1.5 font-sans leading-relaxed border-l-2 border-[#C5A059] pl-3 italic">
+              "It is still manually being placed on steel cabinets but we are trying to adopt or shift to a computer-based system of managing and organizing clients' records to prevent wear, loss, and search delays."
+            </p>
+          </div>
+
+          <div class="p-3.5 editorial-card">
+            <div class="flex items-center justify-between mb-1">
+              <span class="text-[#C5A059] font-bold">Q06: Client Communication Friction</span>
+              <span class="text-[10px] text-[#5C5C68]">COMMUNICATION GAPS</span>
+            </div>
+            <p class="text-[#9B9BA6] font-sans">"How do clients currently inquire about the status of their cases?"</p>
+            <p class="text-[#F2F2F5] mt-1.5 font-sans leading-relaxed border-l-2 border-[#C5A059] pl-3 italic">
+              "Clients reach out via personal phone calls or Messenger chats at unpredictable hours, sometimes while counsel is actively in trial before the judge. A synchronized online tracking portal will allow clients to review case stages 24/7 without interrupting ongoing courtroom trials."
+            </p>
+          </div>
+
+          <div class="p-3.5 editorial-card">
+            <div class="flex items-center justify-between mb-1">
+              <span class="text-[#C5A059] font-bold">Q07: Court Trial Jurisdictions Covered</span>
+              <span class="text-[10px] text-[#5C5C68]">PRACTICE SCOPE</span>
+            </div>
+            <p class="text-[#9B9BA6] font-sans">"What court jurisdictions does your practice regularly attend?"</p>
+            <p class="text-[#F2F2F5] mt-1.5 font-sans leading-relaxed border-l-2 border-[#C5A059] pl-3 italic">
+              "We handle litigation primarily across the Regional Trial Court Branch 42 in Tayug, as well as branches in Rosales and Urdaneta City, alongside Municipal Trial Courts in Umingan, San Quintin, and neighboring towns."
+            </p>
+          </div>
+
+          <div class="p-3.5 editorial-card">
+            <div class="flex items-center justify-between mb-1">
+              <span class="text-[#C5A059] font-bold">Q08: Conflict-of-Interest Screening</span>
+              <span class="text-[10px] text-[#5C5C68]">LEGAL ETHICS</span>
+            </div>
+            <p class="text-[#9B9BA6] font-sans">"How do you evaluate potential representation conflicts before accepting retainers?"</p>
+            <p class="text-[#F2F2F5] mt-1.5 font-sans leading-relaxed border-l-2 border-[#C5A059] pl-3 italic">
+              "Before accepting any case or consultation fee, we rigorously verify the adverse party. Representing opposing parties—even indirectly—violates legal ethics and damages public trust in the legal profession. An automated pre-screening check protects both the firm and the prospective client."
+            </p>
+          </div>
+
+          <div class="p-3.5 editorial-card">
+            <div class="flex items-center justify-between mb-1">
+              <span class="text-[#C5A059] font-bold">Q09: Pro Bono & Community Counsel</span>
+              <span class="text-[10px] text-[#5C5C68]">COMMUNITY SERVICE</span>
+            </div>
+            <p class="text-[#9B9BA6] font-sans">"Does the firm maintain commitments for indigent community members?"</p>
+            <p class="text-[#F2F2F5] mt-1.5 font-sans leading-relaxed border-l-2 border-[#C5A059] pl-3 italic">
+              "Yes. Part of our practice provides free legal assistance and counseling to qualified indigent clients in Umingan. Legal defense must remain accessible regardless of financial stature."
+            </p>
+          </div>
+
+          <div class="p-3.5 editorial-card">
+            <div class="flex items-center justify-between mb-1">
+              <span class="text-[#C5A059] font-bold">Q10: Data Privacy & Physical Document Safes</span>
+              <span class="text-[10px] text-[#5C5C68]">RA 10173 SAFEGUARDS</span>
+            </div>
+            <p class="text-[#9B9BA6] font-sans">"How should a digital system balance accessibility with statutory data privacy?"</p>
+            <p class="text-[#F2F2F5] mt-1.5 font-sans leading-relaxed border-l-2 border-[#C5A059] pl-3 italic">
+              "A law office handles highly sensitive family disputes and original Torrens land titles. Original evidentiary instruments must stay in fireproof on-premise safes, while the web system manages schedules, basic coordinates, and encrypted milestones under the Data Privacy Act."
+            </p>
+          </div>
+
+          <div class="p-3.5 editorial-card">
+            <div class="flex items-center justify-between mb-1">
+              <span class="text-[#C5A059] font-bold">Q11: Certified Retainer Receipts & Transparency</span>
+              <span class="text-[10px] text-[#5C5C68]">ACCOUNTING DILIGENCE</span>
+            </div>
+            <p class="text-[#9B9BA6] font-sans">"Why is rapid electronic receipting important for clients?"</p>
+            <p class="text-[#F2F2F5] mt-1.5 font-sans leading-relaxed border-l-2 border-[#C5A059] pl-3 italic">
+              "Clear, itemized billing breakdowns reassure clients on exactly what court pleading, appearance, or notarial act their funds are applied to, complying with both Supreme Court standards and BIR official receipting requirements."
+            </p>
+          </div>
+
+          <div class="p-3.5 editorial-card">
+            <div class="flex items-center justify-between mb-1">
+              <span class="text-[#C5A059] font-bold">Q12: End-of-Day Roster Dispatch Protocol</span>
+              <span class="text-[10px] text-[#5C5C68]">EXECUTIVE OVERSIGHT</span>
+            </div>
+            <p class="text-[#9B9BA6] font-sans">"How does the solo practitioner maintain control over daily administrative volume?"</p>
+            <p class="text-[#F2F2F5] mt-1.5 font-sans leading-relaxed border-l-2 border-[#C5A059] pl-3 italic">
+              "At the close of business, all new client inquiries, registered notarial instruments, and court deadlines for the coming week must be consolidated and verified. No court appearance or pleading deadline can slip through."
+            </p>
           </div>
         </div>
       </div>
@@ -1988,21 +2151,21 @@
 
       <div class="border border-[#070709]/20 p-4 rounded bg-white text-xs font-mono space-y-2 mb-4">
         <div class="flex justify-between border-b border-dashed border-[#070709]/30 pb-2">
-          <span>RECEIPT NO: <strong>OR-2026-0981</strong></span>
-          <span>DATE: <strong>NOV 04, 2026</strong></span>
+          <span>RECEIPT NO: <strong id="receiptNoDisplay">OR-2026-0981</strong></span>
+          <span>DATE: <strong id="receiptDateDisplay">NOV 04, 2026</strong></span>
         </div>
         <div class="pt-1">
-          <p>RECEIVED FROM: <strong class="text-sm">Eduardo M. Santos</strong></p>
-          <p>IN RE CASE: <strong>CIV-2026-084 (Estate of Santos)</strong></p>
-          <p>PAYMENT FOR: <strong>Judicial Partition & Pleading Appearance Fee</strong></p>
+          <p>RECEIVED FROM: <strong id="receiptClientDisplay" class="text-sm">Eduardo M. Santos</strong></p>
+          <p>IN RE CASE: <strong id="receiptCaseDisplay">CIV-2026-084 (Estate of Santos)</strong></p>
+          <p>PAYMENT FOR: <strong id="receiptPaymentForDisplay">Judicial Partition & Pleading Appearance Fee</strong></p>
         </div>
         <div class="border-t border-[#070709]/20 pt-2 flex justify-between text-sm font-bold">
           <span>AMOUNT SETTLED:</span>
-          <span class="text-base text-[#15803D]">₱ 30,000.00</span>
+          <span id="receiptAmountDisplay" class="text-base text-[#15803D]">₱ 30,000.00</span>
         </div>
         <div class="flex justify-between text-[11px] text-[#070709]/70 pt-1">
           <span>REMAINING BALANCE:</span>
-          <span>₱ 15,000.00</span>
+          <span id="receiptBalanceDisplay">₱ 15,000.00</span>
         </div>
       </div>
 
@@ -2018,6 +2181,20 @@
           Close
         </button>
       </div>
+    </div>
+  </div>
+
+  <!-- Floating Toast Notification System -->
+  <div id="systemToast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none max-w-md w-full px-4">
+    <div class="p-4 rounded-lg bg-[#0E0E12] border border-[#C5A059] shadow-2xl flex items-start gap-3">
+      <div id="systemToastIcon" class="mt-0.5 shrink-0 text-[#C5A059]">
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+      </div>
+      <div class="flex-1">
+        <h5 id="systemToastTitle" class="font-serif font-bold text-xs text-[#FAF5EB] uppercase tracking-wider">System Notification</h5>
+        <p id="systemToastMessage" class="text-xs text-[#9B9BA6] mt-0.5 leading-relaxed font-sans"></p>
+      </div>
+      <button onclick="hideToast()" class="text-[#5C5C68] hover:text-[#FAF5EB] text-xs font-mono ml-2 pointer-events-auto">✕</button>
     </div>
   </div>
 
