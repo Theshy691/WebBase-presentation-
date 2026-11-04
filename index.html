@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>An Integrated Case, Records, & Scheduling System | Belde's Notarial & Legal Services</title>
   <meta name="description" content="A Business Case Presentation and Interactive System Simulation presented to Saint Louis University by Group 2 for Living in the IT Era.">
+  <link rel="icon" type="image/jpeg" href="assets/logo.jpg">
 
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -46,15 +47,7 @@
       
       <!-- Brand & Academic Context -->
       <div class="flex items-center gap-3">
-        <div class="w-8 h-8 rounded bg-[#111114] border border-[#C5A059] flex items-center justify-center text-[#C5A059]">
-          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/>
-            <path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/>
-            <path d="M7 21h10"/>
-            <path d="M12 3v18"/>
-            <path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/>
-          </svg>
-        </div>
+        <img src="assets/logo.jpg" alt="Belde's Law Office Official Seal" class="w-8 h-8 rounded-full border border-[#C5A059]/60 object-cover shrink-0 shadow-xs">
         <div>
           <h1 class="text-xs sm:text-sm font-serif font-bold text-[#EDEDF0] tracking-wide uppercase">
             Belde's Notarial & Legal Services
@@ -128,7 +121,13 @@
       <!-- SLIDE 1: Title & Academic Credentials -->
       <section class="presentation-slide flex-1 flex flex-col justify-center items-center text-center py-6">
         <div class="max-w-4xl mx-auto">
-          <div class="inline-flex items-center gap-2 px-3 py-1 rounded bg-[#111114] border border-[#C5A059]/40 text-[#C5A059] text-xs font-mono uppercase tracking-wider mb-8">
+          <div class="mb-5 flex justify-center">
+            <div class="p-1 rounded-full border border-[#C5A059]/40 bg-[#111114]">
+              <img src="assets/logo.jpg" alt="Belde's Law Office Official Seal" class="w-24 h-24 sm:w-28 sm:h-28 rounded-full object-cover shadow-lg">
+            </div>
+          </div>
+
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded bg-[#111114] border border-[#C5A059]/40 text-[#C5A059] text-xs font-mono uppercase tracking-wider mb-6">
             <span class="w-1.5 h-1.5 rounded-full bg-[#C5A059]"></span>
             Saint Louis University • Baguio City
           </div>
@@ -218,11 +217,14 @@
 
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
             <div class="space-y-4">
-              <div class="legal-card p-5 text-xs">
-                <h3 class="font-serif font-bold text-sm text-[#C5A059] mb-1">Location & Heritage</h3>
-                <p class="text-[#A0A0AB] leading-relaxed">
-                  Located along Cariño St., Poblacion West, Umingan, Pangasinan. Serving local clients and surrounding regional courts across Tayug and eastern Pangasinan for over twenty years.
-                </p>
+              <div class="legal-card p-5 text-xs flex items-center gap-4">
+                <img src="assets/logo.jpg" alt="Belde's Law Office Official Seal" class="w-16 h-16 rounded-full border border-[#C5A059]/50 object-cover shrink-0">
+                <div>
+                  <h3 class="font-serif font-bold text-sm text-[#C5A059] mb-1">Location & Heritage</h3>
+                  <p class="text-[#A0A0AB] leading-relaxed">
+                    Located along Cariño St., Poblacion West, Umingan, Pangasinan. Serving local clients and surrounding regional courts for over twenty years.
+                  </p>
+                </div>
               </div>
 
               <div class="legal-card p-5 text-xs">
@@ -715,9 +717,10 @@
             </div>
           </div>
 
-          <div class="p-5 bg-[#111114] rounded border border-[#C5A059]/40 text-center">
+          <div class="p-6 bg-[#111114] rounded border border-[#C5A059]/40 text-center flex flex-col items-center">
+            <img src="assets/logo.jpg" alt="Belde's Law Office Official Seal" class="w-14 h-14 rounded-full border border-[#C5A059]/60 object-cover mb-3 shadow-md">
             <h3 class="font-serif font-bold text-base text-[#C5A059] mb-1">Open for Questions & Academic Defense</h3>
-            <p class="text-xs text-[#A0A0AB]">Thank you for your guidance, Facilitator Mabitazan.</p>
+            <p class="text-xs text-[#A0A0AB]">Saint Louis University • Living in the IT Era • Facilitator Ma. Clarissa B. Mabitazan</p>
           </div>
         </div>
       </section>
@@ -778,9 +781,12 @@
         <!-- Live Case Tracker Section -->
         <div>
           <div class="flex flex-wrap items-center justify-between gap-4 mb-4">
-            <div>
-              <h2 class="text-lg font-serif font-bold text-[#EDEDF0]">Live Client Case Tracker</h2>
-              <p class="text-xs text-[#A0A0AB]">Enter a demo case number to inspect real-time progress, scheduled hearings, and legal terms.</p>
+            <div class="flex items-center gap-3">
+              <img src="assets/logo.jpg" alt="Belde's Law Office Official Seal" class="w-10 h-10 rounded-full border border-[#C5A059]/60 object-cover shrink-0 shadow-xs">
+              <div>
+                <h2 class="text-lg font-serif font-bold text-[#EDEDF0]">Live Client Case Tracker</h2>
+                <p class="text-xs text-[#A0A0AB]">Enter a demo case number to inspect real-time progress, scheduled hearings, and legal terms.</p>
+              </div>
             </div>
             <div class="flex items-center gap-2">
               <span class="text-xs font-mono text-[#666672]">Try Demo Case:</span>
@@ -1121,8 +1127,8 @@
   <div id="otpVerificationModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-xs flex items-center justify-center p-4">
     <div class="bg-[#111114] border border-[#C5A059] rounded-lg max-w-md w-full p-6 shadow-2xl">
       <div class="flex items-center justify-between border-b border-[#222228] pb-3 mb-4">
-        <div class="flex items-center gap-2">
-          <span class="w-2.5 h-2.5 rounded-full bg-[#C5A059]"></span>
+        <div class="flex items-center gap-2.5">
+          <img src="assets/logo.jpg" alt="Belde's Law Office Seal" class="w-6 h-6 rounded-full border border-[#C5A059]/60 object-cover shrink-0">
           <h3 class="font-serif font-bold text-sm text-[#EDEDF0]">Financial Data Privacy Verification</h3>
         </div>
         <button onclick="document.getElementById('otpVerificationModal').classList.add('hidden')" class="text-[#666672] hover:text-[#EDEDF0] text-xs">✕</button>

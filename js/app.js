@@ -463,9 +463,7 @@ function submitAppointmentBooking(e) {
 
   resultContainer.innerHTML = `
     <div class="p-6 bg-[#111114] border border-[#C5A059] rounded-lg">
-      <div class="w-10 h-10 rounded-full bg-[#18181D] border border-[#C5A059] flex items-center justify-center mx-auto mb-3 text-[#C5A059]">
-        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
-      </div>
+      <img src="assets/logo.jpg" alt="Belde's Law Office Seal" class="w-12 h-12 rounded-full border border-[#C5A059] object-cover mx-auto mb-3 shadow-md">
       <h3 class="text-center font-serif text-lg font-bold text-[#EDEDF0]">Appointment Scheduled Successfully</h3>
       <p class="text-center text-xs text-[#A0A0AB] mt-1">Belde's Notarial & Legal Services Centralized Calendar</p>
 
